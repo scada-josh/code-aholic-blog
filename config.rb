@@ -3,16 +3,17 @@
 ###
 
 # Time.zone = "UTC"
+Time.zone = "Bangkok"
 
 activate :blog do |blog|
   # This will add a prefix to all links, template references and source paths
-  # blog.prefix = "blog"
+  blog.prefix = "/src/blogs/"
 
-  # blog.permalink = "{year}/{month}/{day}/{title}.html"
+  blog.permalink = "{year}/{month}/{day}/{title}.html"
   # Matcher for blog source files
-  # blog.sources = "{year}-{month}-{day}-{title}.html"
+  blog.sources = "{year}-{month}-{day}-{title}.html"
   # blog.taglink = "tags/{tag}.html"
-  # blog.layout = "layout"
+  blog.layout = "/layouts"
   # blog.summary_separator = /(READMORE)/
   # blog.summary_length = 250
   # blog.year_link = "{year}.html"
@@ -20,8 +21,8 @@ activate :blog do |blog|
   # blog.day_link = "{year}/{month}/{day}.html"
   # blog.default_extension = ".markdown"
 
-  blog.tag_template = "tag.html"
-  blog.calendar_template = "calendar.html"
+  blog.tag_template = "/src/blogs/tag.html"
+  blog.calendar_template = "/src/blogs/calendar.html"
 
   # Enable pagination
   # blog.paginate = true
@@ -29,7 +30,10 @@ activate :blog do |blog|
   # blog.page_link = "page/{num}"
 end
 
-page "/feed.xml", layout: false
+page "/src/blogs/feed.xml", layout: false
+
+
+activate :directory_indexes
 
 ###
 # Compass
@@ -71,6 +75,14 @@ page "/feed.xml", layout: false
 # Reload the browser automatically whenever files change
 # activate :livereload
 
+# Reload the browser automatically whenever files change
+configure :development do
+    activate :php
+    activate :bower
+    activate :livereload
+
+end
+
 # Methods defined in the helpers block are available in templates
 # helpers do
 #   def some_helper
@@ -84,10 +96,23 @@ set :js_dir, 'javascripts'
 
 set :images_dir, 'images'
 
+set :helper_dir, 'helper'
+
 # Build-specific configuration
 configure :build do
+
+  # Any files you want to ignore:
+  ignore '/javascripts/javascript-blog-main/*'
+
+  ignore '/stylesheets/stylesheet-blog-main/*'
+
+  ignore '/src/blogs/index-original.html.erb.tmp'
+
+
+
   # For example, change the Compass output style for deployment
   # activate :minify_css
+  activate :php
 
   # Minify Javascript on build
   # activate :minify_javascript
@@ -96,8 +121,18 @@ configure :build do
   # activate :asset_hash
 
   # Use relative URLs
-  # activate :relative_assets
+  activate :relative_assets
 
   # Or use a different image path
   # set :http_prefix, "/Content/images/"
+end
+
+# config.rb
+# Add bower's directory to sprockets asset path
+after_configuration do
+  #@bower_config = JSON.parse(IO.read("#{root}.bowerrc"))
+  #sprockets.append_path File.join "#{root}", @bower_config["directory"]
+
+  sprockets.append_path File.join "#{root}", "bower_components"
+  #sprockets.import_asset 'jquery'
 end
