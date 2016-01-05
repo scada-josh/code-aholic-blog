@@ -1,0 +1,21 @@
+---
+title: "การใช้งาน Middleman - 02"
+date: 2016-01-04 
+tags: HTML
+layout: "layout-moderna-blog-details"
+baseURL: "../../../../../../"
+
+home_isActive: ""
+home_href: "../../../../../desktop/HOME/"
+
+portfolio_isActive: ""
+portfolio_href: "../../../../../desktop/PORTFOLIO/"
+
+blog_isActive: "active"
+blog_href: "../../../../../blogs/"
+
+contact_isActive: ""
+contact_href: "../../../../../desktop/CONTACT/"
+---
+
+การใช้งาน Middleman - 02

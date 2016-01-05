@@ -26,4 +26,10 @@ gem "builder", "~> 3.0"
 
 gem 'nokogiri'
 
+gem 'middleman-dragonfly_thumbnailer'
+
+gem 'padrino'
+
+gem "middleman-favicon-maker", "~> 3.7"
+
 
