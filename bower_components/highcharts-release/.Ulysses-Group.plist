@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>childOrder</key>
+	<array>
+		<string>adapters</string>
+		<string>modules</string>
+		<string>themes</string>
+	</array>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>highcharts-3d.js</string>
+		</array>
+		<array>
+			<string>highcharts-3d.src.js</string>
+		</array>
+		<array>
+			<string>highcharts-more.js</string>
+		</array>
+		<array>
+			<string>highcharts-more.src.js</string>
+		</array>
+		<array>
+			<string>highcharts.js</string>
+		</array>
+		<array>
+			<string>highcharts.src.js</string>
+		</array>
+		<array>
+			<string>README.md</string>
+		</array>
+	</array>
+</dict>
+</plist>

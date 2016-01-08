@@ -38,6 +38,8 @@ activate :directory_indexes
 activate :dragonfly_thumbnailer
 
 
+
+
 ###
 # Compass
 ###
@@ -83,6 +85,7 @@ configure :development do
     activate :php
     activate :bower
     activate :livereload
+    
 
 end
 
@@ -93,6 +96,9 @@ end
 #   end
 # end
 
+
+
+
 set :css_dir, 'stylesheets'
 
 set :js_dir, 'javascripts'
@@ -101,8 +107,13 @@ set :images_dir, 'images'
 
 set :helper_dir, 'helper'
 
+
+set :blog_dir, 'src/blogs/'
+
 # Build-specific configuration
 configure :build do
+
+
 
   # Any files you want to ignore:
   ignore '/javascripts/javascript-blog-main/*'
@@ -111,6 +122,7 @@ configure :build do
 
   ignore '/src/blogs/index-original.html.erb.tmp'
   ignore '/src/blogs_2016-01-04/*'
+
 
 
 

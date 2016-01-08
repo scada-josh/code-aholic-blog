@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>childOrder</key>
+	<array>
+		<string>apidoc_config</string>
+		<string>art</string>
+		<string>build</string>
+		<string>doc_config</string>
+		<string>examples</string>
+		<string>img</string>
+		<string>lib</string>
+		<string>licenses</string>
+		<string>notes</string>
+		<string>tests</string>
+		<string>theme</string>
+		<string>tools</string>
+	</array>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>authors.txt</string>
+		</array>
+		<array>
+			<string>license.txt</string>
+		</array>
+		<array>
+			<string>readme.md</string>
+		</array>
+	</array>
+</dict>
+</plist>

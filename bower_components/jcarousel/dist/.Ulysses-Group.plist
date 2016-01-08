@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>jquery.jcarousel-autoscroll.js</string>
+		</array>
+		<array>
+			<string>jquery.jcarousel-autoscroll.min.js</string>
+		</array>
+		<array>
+			<string>jquery.jcarousel-control.js</string>
+		</array>
+		<array>
+			<string>jquery.jcarousel-control.min.js</string>
+		</array>
+		<array>
+			<string>jquery.jcarousel-core.js</string>
+		</array>
+		<array>
+			<string>jquery.jcarousel-core.min.js</string>
+		</array>
+		<array>
+			<string>jquery.jcarousel-pagination.js</string>
+		</array>
+		<array>
+			<string>jquery.jcarousel-pagination.min.js</string>
+		</array>
+		<array>
+			<string>jquery.jcarousel-scrollintoview.js</string>
+		</array>
+		<array>
+			<string>jquery.jcarousel-scrollintoview.min.js</string>
+		</array>
+		<array>
+			<string>jquery.jcarousel.js</string>
+		</array>
+		<array>
+			<string>jquery.jcarousel.min.js</string>
+		</array>
+		<array>
+			<string>README.md</string>
+		</array>
+	</array>
+</dict>
+</plist>

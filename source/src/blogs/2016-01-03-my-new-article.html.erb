@@ -2,8 +2,10 @@
 title: "My First Blogger"
 date: 2016-01-03 12:43 UTC
 tags:
+thumb: "2.jpg"
 layout: "layout-moderna-blog-details"
 baseURL: "../../../../../../"
+baseURI: "../../../../../.."
 
 home_isActive: ""
 home_href: "../../../../../desktop/HOME/"
@@ -17,9 +19,35 @@ blog_href: "../../../../../blogs/"
 contact_isActive: ""
 contact_href: "../../../../../desktop/CONTACT/"
 
+introText: "This is an example article. You probably want to delete it and write your own articles!This is an example article. You probably want to delete it and write your own articles!This is an example article. You probably want to delete it and write your own articles!This is an example article. You probably want to delete it and write your own articles!This is an example article. You probably want to delete it and write your own articles!This is an example article. You probably want to delete it and write your own articles!"
 ---
 
-My First Blogger
+READMORE
+
+<section id="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+
+        <%= partial blog_dir + "partials_2016-01-03-my-new-article/_content" %>
+
+
+      </div>
+      <div class="col-lg-4">
+        <%= partial blog_dir + "partials/_right-sidebar" %>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
 
 
 

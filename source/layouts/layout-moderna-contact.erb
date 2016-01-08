@@ -7,19 +7,13 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 
-<link rel="apple-touch-icon-precomposed" sizes="152x152" href="<%= current_page.data.baseURL %>apple-touch-icon-152x152-precomposed.png" />
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<%= current_page.data.baseURL %>apple-touch-icon-144x144-precomposed.png" />
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<%= current_page.data.baseURL %>apple-touch-icon-114x114-precomposed.png" />
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<%= current_page.data.baseURL %>apple-touch-icon-72x72-precomposed.png" />
-<link rel="apple-touch-icon-precomposed" href="<%= current_page.data.baseURL %>apple-touch-icon-precomposed.png" />
-<link rel="shortcut icon" href="<%= current_page.data.baseURL %>favicon.png" />
-<link rel="icon" type="image/ico" href="<%= current_page.data.baseURL %>favicon.ico" />
 
+<%= partial "layouts/layout-blog-moderna-main-partials/_favicon" %>
 
 <link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700|Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 
 <!-- css -->
-<%= stylesheet_link_tag "stylesheet-blog-moderna-main" %>
+<%= stylesheet_link_tag "stylesheet-moderna-contact" %>
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -33,9 +27,9 @@
     
     <%= partial "layouts/layout-blog-moderna-main-partials/_header" %>
 
-    <%= partial "layouts/layout-blog-moderna-main-partials/_breadcrumb-moderna-main" %>
+    <%= partial "layouts/layout-blog-moderna-main-partials/_breadcrumb-moderna-contact" %>
 
-
+	<%= partial "layouts/layout-blog-moderna-main-partials/_featured_example" %>
 
     <!-- Main Content -->
     <%= yield %>
@@ -46,7 +40,7 @@
 <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
 
 <!-- javascript -->
-<%= javascript_include_tag "javascript-blog-moderna-main" %>
+<%= javascript_include_tag "javascript-moderna-contact" %>
 
 </body>
 </html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>base.js</string>
+		</array>
+		<array>
+			<string>chart-bar.js</string>
+		</array>
+		<array>
+			<string>chart-box.js</string>
+		</array>
+		<array>
+			<string>chart-bullet.js</string>
+		</array>
+		<array>
+			<string>chart-discrete.js</string>
+		</array>
+		<array>
+			<string>chart-line.js</string>
+		</array>
+		<array>
+			<string>chart-pie.js</string>
+		</array>
+		<array>
+			<string>chart-tristate.js</string>
+		</array>
+		<array>
+			<string>defaults.js</string>
+		</array>
+		<array>
+			<string>footer.js</string>
+		</array>
+		<array>
+			<string>header.js</string>
+		</array>
+		<array>
+			<string>interact.js</string>
+		</array>
+		<array>
+			<string>rangemap.js</string>
+		</array>
+		<array>
+			<string>simpledraw.js</string>
+		</array>
+		<array>
+			<string>utils.js</string>
+		</array>
+		<array>
+			<string>vcanvas-base.js</string>
+		</array>
+		<array>
+			<string>vcanvas-canvas.js</string>
+		</array>
+		<array>
+			<string>vcanvas-vml.js</string>
+		</array>
+	</array>
+</dict>
+</plist>

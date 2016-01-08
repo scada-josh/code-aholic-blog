@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>childOrder</key>
+	<array>
+		<string>CSW</string>
+		<string>SOS</string>
+		<string>WFS</string>
+	</array>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>CSW.js</string>
+		</array>
+		<array>
+			<string>HTTP.js</string>
+		</array>
+		<array>
+			<string>Script.js</string>
+		</array>
+		<array>
+			<string>SOS.js</string>
+		</array>
+		<array>
+			<string>WFS.js</string>
+		</array>
+	</array>
+</dict>
+</plist>

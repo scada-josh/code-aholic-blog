@@ -10,8 +10,9 @@
             <li><a href="#">Development</a></li> -->
 
             <% blog.tags.each do |tag, articles| %>
-              <li><%= link_to "#{tag} (#{articles.size})", '../..' + tag_path(tag) %></li>
-
+              
+              <li><a href="<%= current_page.data.baseURI %><%= tag_path(tag) %>"><%= "#{tag} (#{articles.size})" %></a></li>
+              
             <% end %>
 
           </ul>

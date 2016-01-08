@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>BeautifulSoup.py</string>
+		</array>
+		<array>
+			<string>closure_library_jscompiler.py</string>
+		</array>
+		<array>
+			<string>closure_ws.py</string>
+		</array>
+		<array>
+			<string>exampleparser.py</string>
+		</array>
+		<array>
+			<string>jsmin.c</string>
+		</array>
+		<array>
+			<string>jsmin.py</string>
+		</array>
+		<array>
+			<string>mergejs.py</string>
+		</array>
+		<array>
+			<string>minimize.py</string>
+		</array>
+		<array>
+			<string>oldot.py</string>
+		</array>
+		<array>
+			<string>README.txt</string>
+		</array>
+		<array>
+			<string>release.sh</string>
+		</array>
+		<array>
+			<string>shrinksafe.py</string>
+		</array>
+		<array>
+			<string>toposort.py</string>
+		</array>
+		<array>
+			<string>uglify_js.py</string>
+		</array>
+		<array>
+			<string>update_dev_dir.sh</string>
+		</array>
+	</array>
+</dict>
+</plist>

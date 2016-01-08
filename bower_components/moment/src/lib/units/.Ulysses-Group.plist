@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>aliases.js</string>
+		</array>
+		<array>
+			<string>constants.js</string>
+		</array>
+		<array>
+			<string>day-of-month.js</string>
+		</array>
+		<array>
+			<string>day-of-week.js</string>
+		</array>
+		<array>
+			<string>day-of-year.js</string>
+		</array>
+		<array>
+			<string>hour.js</string>
+		</array>
+		<array>
+			<string>millisecond.js</string>
+		</array>
+		<array>
+			<string>minute.js</string>
+		</array>
+		<array>
+			<string>month.js</string>
+		</array>
+		<array>
+			<string>offset.js</string>
+		</array>
+		<array>
+			<string>quarter.js</string>
+		</array>
+		<array>
+			<string>second.js</string>
+		</array>
+		<array>
+			<string>timestamp.js</string>
+		</array>
+		<array>
+			<string>timezone.js</string>
+		</array>
+		<array>
+			<string>units.js</string>
+		</array>
+		<array>
+			<string>week-year.js</string>
+		</array>
+		<array>
+			<string>week.js</string>
+		</array>
+		<array>
+			<string>year.js</string>
+		</array>
+	</array>
+</dict>
+</plist>

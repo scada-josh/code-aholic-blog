@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>childOrder</key>
+	<array>
+		<string>Google</string>
+		<string>Vector</string>
+	</array>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>data_Layer_Text_textfile.txt</string>
+		</array>
+		<array>
+			<string>data_Layer_Text_textfile_2.txt</string>
+		</array>
+		<array>
+			<string>data_Layer_Text_textfile_overflow.txt</string>
+		</array>
+		<array>
+			<string>georss.txt</string>
+		</array>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>owl.animate.js</string>
+		</array>
+		<array>
+			<string>owl.autoheight.js</string>
+		</array>
+		<array>
+			<string>owl.autoplay.js</string>
+		</array>
+		<array>
+			<string>owl.autorefresh.js</string>
+		</array>
+		<array>
+			<string>owl.carousel.js</string>
+		</array>
+		<array>
+			<string>owl.hash.js</string>
+		</array>
+		<array>
+			<string>owl.lazyload.js</string>
+		</array>
+		<array>
+			<string>owl.navigation.js</string>
+		</array>
+		<array>
+			<string>owl.support.js</string>
+		</array>
+		<array>
+			<string>owl.support.modernizr.js</string>
+		</array>
+		<array>
+			<string>owl.video.js</string>
+		</array>
+	</array>
+</dict>
+</plist>

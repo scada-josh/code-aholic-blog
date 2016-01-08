@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>childOrder</key>
+	<array>
+		<string>ajax</string>
+		<string>annotating</string>
+		<string>axes-interacting</string>
+		<string>axes-multiple</string>
+		<string>axes-time</string>
+		<string>axes-time-zones</string>
+		<string>basic-options</string>
+		<string>basic-usage</string>
+		<string>canvas</string>
+		<string>categories</string>
+		<string>image</string>
+		<string>interacting</string>
+		<string>navigate</string>
+		<string>percentiles</string>
+		<string>realtime</string>
+		<string>resize</string>
+		<string>selection</string>
+		<string>series-errorbars</string>
+		<string>series-pie</string>
+		<string>series-toggle</string>
+		<string>series-types</string>
+		<string>shared</string>
+		<string>stacking</string>
+		<string>symbols</string>
+		<string>threshold</string>
+		<string>tracking</string>
+		<string>visitors</string>
+		<string>zooming</string>
+	</array>
+	<key>createMarkedFile</key>
+	<false/>
+</dict>
+</plist>
