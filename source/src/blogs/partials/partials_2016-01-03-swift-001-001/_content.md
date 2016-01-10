@@ -21,6 +21,12 @@
 
 ![image](../../images/thumbnail/home-bg.jpg)
 
+![image](../../../images/thumbnail/home-bg.jpg)
+
+![image](../../images/thumbnail/test.jpg)
+
+
+
 # (GitHub-Flavored) Markdown Editor
 
 Basic useful feature list:
@@ -201,6 +207,8 @@ a start and end fence lines to delimit the code block.
 
 A simple table looks like this:
 
+<div class="tables-start"></div>
+
 First Header | Second Header | Third Header
 ------------ | ------------- | ------------
 Content Cell | Content Cell  | Content Cell
@@ -219,6 +227,12 @@ First Header | Second Header | Third Header
 :----------- | :-----------: | -----------:
 Left         | Center        | Right
 Left         | Center        | Right
+
+<div class="tables-end"></div>
+
+
+<table class="table table-hover"> <thead> <tr> <th>#</th> <th>First Name</th> <th>Last Name</th> <th>Username</th> </tr> </thead> <tbody> <tr> <th scope="row">1</th> <td>Mark</td> <td>Otto</td> <td>@mdo</td> </tr> <tr> <th scope="row">2</th> <td>Jacob</td> <td>Thornton</td> <td>@fat</td> </tr> <tr> <th scope="row">3</th> <td>Larry</td> <td>the Bird</td> <td>@twitter</td> </tr> </tbody> </table>
+
 
 
 ### Shortcuts

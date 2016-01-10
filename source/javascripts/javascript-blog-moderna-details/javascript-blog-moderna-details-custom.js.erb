@@ -1,0 +1,14 @@
+(function() {
+	
+    $('div.tables-begin').nextUntil('div.tables-end', 'table')
+    					 .addClass('table table-bordered')
+    					 .css( "background-color", "red" );
+})();
+
+
+$(document).ready(function(){
+    // your code here
+    $('div.tables-begin').nextUntil('div.tables-end', 'table')
+    					 .addClass('table table-bordered')
+    					 .css( "background-color", "red" );
+});
