@@ -32,18 +32,22 @@
 
 
 
-            <% blog.articles[0...10].each do |article| %>
-            <li>
-              <a href="#"><img src="<%= current_page.data.baseURL %>images/moderna/dummies/blog/65x65/thumb3.jpg" class="pull-left" alt="" /></a>
+            <% blog.articles[0...5].each do |article| %>
+            <% if article.title != 'index' %>
 
-              <h6>
-                
-                <a href="<%= current_page.data.baseURI %><%= article.url %>"><%= truncate(article.title, :length => 8) %></a>
-              </h6>
-              <p>
-               <%= "Mazim alienum appellantur eu cu ullum officiis pro pri" %>
-             </p>
-           </li>
+              <li>
+                <a href="#"><img src="<%= current_page.data.baseURL %>/../images/moderna/dummies/blog/65x65/thumb3.jpg" class="pull-left" alt="" /></a>
+
+                <h6>
+                  
+                  <a href="<%= current_page.data.baseURI %><%= article.url %>"><%= truncate(article.title, :length => 25) %></a>
+                </h6>
+                <p>
+                 <%= "Mazim alienum appellantur eu cu ullum officiis pro pri" %>
+               </p>
+              </li>
+
+            <% end %>
             <% end %>
 
           </ul>

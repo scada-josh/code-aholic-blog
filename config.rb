@@ -28,6 +28,7 @@ activate :blog do |blog|
   # blog.paginate = true
   # blog.per_page = 10
   # blog.page_link = "page/{num}"
+
 end
 
 page "/src/blogs/feed.xml", layout: false
@@ -109,6 +110,10 @@ set :helper_dir, 'helper'
 
 
 set :blog_dir, 'src/blogs/'
+set :categoryURL_middlemanIndex, "/src/blogs/middleman/2016/01/01/middleman-index/"
+set :categoryURL_html5Index, "/src/blogs/html5/2012/01/01/html5-index/"
+set :categoryURL_swiftProgrammingIndex, "/src/blogs/swift-2/2016/01/01/swift-programming-index/"
+set :categoryURL_coronaSDKIndex, "/src/blogs/coronasdk/2016/01/12/coronasdk-index/"
 
 # Build-specific configuration
 configure :build do
@@ -117,11 +122,24 @@ configure :build do
 
   # Any files you want to ignore:
   ignore '/javascripts/javascript-blog-main/*'
+  ignore '/javascripts/javascript-blog-moderna-details/*'
+  ignore '/javascripts/javascript-blog-moderna-main/*'
+  ignore '/javascripts/javascript-moderna-contact/*'
+  ignore '/javascripts/javascript-moderna-home/*'
+  ignore '/javascripts/javascript-moderna-portfolio/*'
 
   ignore '/stylesheets/stylesheet-blog-main/*'
+  ignore '/stylesheets/stylesheet-blog-moderna-details/*'
+  ignore '/stylesheets/stylesheet-blog-moderna-main/*'
+  ignore '/stylesheets/stylesheet-moderna-contact/*'
+  ignore '/stylesheets/stylesheet-moderna-home/*'
+  ignore '/stylesheets/stylesheet-moderna-portfolio/*'
 
   ignore '/src/blogs/index-original.html.erb.tmp'
   ignore '/src/blogs_2016-01-04/*'
+
+  ignore '/helper/*'
+  ignore '/lib/*'
 
 
 
@@ -184,3 +202,39 @@ after_configuration do
   sprockets.append_path File.join "#{root}", "source"
   #sprockets.import_asset 'jquery'
 end
+
+
+
+
+
+helpers do
+  def categories(page)
+    category_array(page.data[:categories])
+  end
+
+  def category_path(category)
+    "/category/#{category.parameterize}.html"
+  end
+
+  def all_categories
+    @all_categories ||= Hash[all_categories_unsorted.sort]
+  end
+
+  def category_array(categories)
+    (categories || "Uncategorized").split(/,\s*/)
+  end
+
+
+  private
+
+  def all_categories_unsorted
+    Hash.new { [] }.tap do |all_categories|
+      blog.articles.each do |article|
+        categories(article).each do |ac|
+          all_categories[ac] <<= article
+        end
+      end
+    end
+  end
+end
+
