@@ -31,6 +31,7 @@ activate :blog do |blog|
 
 end
 
+
 page "/src/blogs/feed.xml", layout: false
 
 
@@ -97,6 +98,9 @@ end
 #   end
 # end
 
+set :markdown, :strikethrough => true
+set :markdown_engine, :kramdown
+
 
 
 
@@ -108,16 +112,20 @@ set :images_dir, 'images'
 
 set :helper_dir, 'helper'
 
+set :secrete_published, 'false'
+
 
 set :blog_dir, 'src/blogs/'
 set :categoryURL_middlemanIndex, "/src/blogs/middleman/2016/01/01/middleman-index/"
 set :categoryURL_html5Index, "/src/blogs/html5/2012/01/01/html5-index/"
-set :categoryURL_swiftProgrammingIndex, "/src/blogs/swift-2/2016/01/01/swift-programming-index/"
+set :categoryURL_swift2Index, "/src/blogs/swift-2/2016/01/01/swift-programming-index/"
 set :categoryURL_coronaSDKIndex, "/src/blogs/coronasdk/2016/01/12/coronasdk-index/"
+set :categoryURL_iosDevelopmentIndex, "/src/blogs/ios-development/2016/01/17/ios-development-index/"
 
 # Build-specific configuration
 configure :build do
 
+  activate :syntax, :line_numbers => true
 
 
   # Any files you want to ignore:
@@ -140,6 +148,8 @@ configure :build do
 
   ignore '/helper/*'
   ignore '/lib/*'
+
+  # ignore '/src/blogs/Swift 2/*'
 
 
 

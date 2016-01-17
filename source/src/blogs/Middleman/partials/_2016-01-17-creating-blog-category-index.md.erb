@@ -1,0 +1,137 @@
+# การสร้าง index ให้กับ Category
+
+#### 1. สร้างโฟลเดอร์ไว้เก็บ Category ที่ต้องการ
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ในที่นี้ เราต้องการสร้าง category ใหม่ ชื่อว่า `iOS Development`
+
+
+![image](<%= current_page.data.baseURL %>images/categories/Middleman/creating-blog-category-index-001.png)
+
+
+---
+
+#### 2. สร้างไฟล์เอาไว้แสดงรายการ Blog แยกตาม Category
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ให้สร้างไฟล์ที่ใช้เป็นหน้า index ของ category ขึ้นมาใหม่ ชื่อว่า `2016-01-17-ios-development-index.html.erb`
+
+
+รูปแบบของการตั้งขื่อ `yyyy-mm-dd-categoryName-index.html.erb`
+
+
+<pre class="prettyprint linenums">
+---
+title: "index"
+
+date: <mark>2016-01-17</mark>
+tags: 
+thumb: "2.jpg"
+published: true
+category: <mark>iOS Development</mark>
+layout: "layout-moderna-blog-details"
+baseURL: "../../../../../../../"
+baseURI: "../../../../../../.."
+
+home_isActive: ""
+home_href: "../../../../../../desktop/HOME/"
+
+portfolio_isActive: ""
+portfolio_href: "../../../../../../desktop/PORTFOLIO/"
+
+blog_isActive: "active"
+blog_href: "../../../../../../blogs/"
+
+contact_isActive: ""
+contact_href: "../../../../../../desktop/CONTACT/"
+
+introText: <mark>"iOS Development Index Page"</mark>
+
+categoryName: <mark>"iOS Development"</mark>
+---
+
+&lt;section id=&quot;content&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;row&quot;&gt;
+      &lt;div class=&quot;col-lg-8&quot;&gt;
+
+          &lt;ul&gt;
+
+            &lt;% blog.articles.each do |article| %&gt;
+            &lt;% if article.data.category == current_page.data.categoryName &amp;&amp; article.title != 'index' %&gt;
+            &lt;li&gt;
+              &lt;h6&gt;
+                &lt;a href=&quot;&lt;%= current_page.data.baseURI %&gt;&lt;%= article.url %&gt;&quot;&gt;&lt;%= truncate(article.title, :length =&gt; 50) %&gt;&lt;/a&gt;
+              &lt;/h6&gt;
+              &lt;p&gt;
+               &lt;%= article.data.introText %&gt;
+             &lt;/p&gt;
+           &lt;/li&gt;
+            &lt;% end %&gt;
+            &lt;% end %&gt;
+
+          &lt;/ul&gt;
+
+      &lt;/div&gt;
+      &lt;div class=&quot;col-lg-4&quot;&gt;
+        &lt;%= partial blog_dir + &quot;partials/_right-sidebar&quot; %&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</pre>
+
+ให้ทำการแก้ไขในส่วนที่ <mark>Mark Highlight</mark> ไว้ในตัวอย่างข้างบน
+
+---
+
+#### 3. สร้างลิ้งค์ไปยัง Category ที่เราสร้างขึ้น
+
+เปิดไฟล์ `config.erb` และให้ทำการเพิ่มตัวแปรระบบที่ลิ้งค์ไปยังหน้า index ที่เราสร้างขึ้น
+
+<pre class="prettyprint linenums">
+set :categoryURL_iosDevelopmentIndex, "/src/blogs/ios-development/2016/01/17/ios-development-index/"
+</pre>
+
+<br/>
+เปิดไฟล์ `/source/src/blogs/partials/_right-sidebar-categories.erb` และเพิ่มเติมโค้ดลงไป
+
+<pre class="prettyprint linenums">
+&lt;div class=&quot;widget&quot;&gt;
+  &lt;h5 class=&quot;widgetheading&quot;&gt;Categories&lt;/h5&gt;
+  &lt;ul class=&quot;cat&quot;&gt;
+    &lt;li&gt;
+        &lt;i class=&quot;icon-angle-right&quot;&gt;&lt;/i&gt;
+        &lt;a href=&quot;&lt;%= current_page.data.baseURI %&gt;&lt;%= categoryURL_middlemanIndex %&gt;&quot;&gt;Middleman&lt;/a&gt;
+    &lt;/li&gt;
+<mark>    &lt;li&gt;
+        &lt;i class=&quot;icon-angle-right&quot;&gt;&lt;/i&gt;
+        &lt;a href=&quot;&lt;%= current_page.data.baseURI %&gt;&lt;%= categoryURL_iosDevelopmentIndex %&gt;&quot;&gt;iOS Development&lt;/a&gt;
+    &lt;/li&gt;</mark>
+    &lt;li&gt;
+        &lt;i class=&quot;icon-angle-right&quot;&gt;&lt;/i&gt;
+        &lt;a href=&quot;&lt;%= current_page.data.baseURI %&gt;&lt;%= categoryURL_swift2Index %&gt;&quot;&gt;Swift 2&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;i class=&quot;icon-angle-right&quot;&gt;&lt;/i&gt;
+        &lt;a href=&quot;&lt;%= current_page.data.baseURI %&gt;&lt;%= categoryURL_coronaSDKIndex %&gt;&quot;&gt;CoronaSDK&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+</pre>
+
+---
+
+#### 4. ทำการ Build และดูผลลัพธ์
+
+เปิดโปรแกรม Terminal และรันคำสั่งต่อไปนี้ เพื่อ build :
+
+<strong>Macbooks-MacBook-Air:code-aholic-blog Macbookair$</strong> `bundle exec middleman build --verbose`
+
+เปิด Browser แล้วใส่ URL : `http://localhost/code-aholic-blog/build/src/blogs/` เพื่อดูผลลัพธ์
+
+
+![image](<%= current_page.data.baseURL %>images/categories/Middleman/creating-blog-category-index-002.png)
+
+จะปรากฏลิ้งค์ไปยัง category `iOS Development` ที่เราเพิ่งสร้างขึ้นมา (ตามรูป)
+
+---

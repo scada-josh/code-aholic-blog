@@ -1,0 +1,196 @@
+# Optionals
+
+> Note : 
+> 
+> 1. An optional value either contains a value or contains nil to indicate that value is missing
+> 2. ถ้าคุณใส่เครื่องหมาย `?` หลังชนิดของตัวแปร, ตัวแปรนั้นจะเป็นแบบ optional ทันที
+> 3. ถ้าคุณต้องการเข้าถึงข้อมูลค่าของตัวแปรแบบ optional, คุณจะต้องทำการ unwrap ด้วยเครื่องหมาย `!` (exclamation mark)
+
+---
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Optional เป็นฟีเจอร์พิเศษทีมีในภาษา Swift ใช้เพื่อตรวจสอบและป้องกันการนำ instance ที่ไม่มีค่าไปใช้งาน
+
+ในบทนี้จะกล่าวถึง
+
+1. การประกาศ Optional type
+2. การใช้งาน <i>optional binding</i> เพื่อตรวจสอบว่ามีค่าเป็น nil หรือมีค่าพร้อมใช้งาน
+3. การใช้งาน <i>optional chaining</i> เพื่อ query a sequence of optional values. 
+
+## Optional Types
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Optional ในภาษา Swift ทำให้ภาษานี้มีความปลอดภัยสูง สำหรับ instance ที่อาจจะมีค่าเป็น nil ควรประกาศให้เป็นชนิด optional, นั่นหมายความว่า ถ้า instance ไม่ถูกประกาศให้เป็นชนิด optional แสดงว่า เรามั่นใจว่า instance ไม่มีค่าเป็น nil อย่างแน่นอน
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เราไปดูวิธีการประกาศตัวแปรชนิด optional กันเลย, สร้าง Playground ขึ้นมาใหม่ ตั้งชื่อว่า "Optionals"
+
+#### Listing 8.1 Declaring an optional type
+
+<pre class="prettyprint linenums">
+import UIKit
+
+var errorCodeString: String?errorCodeString = "404"
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ในส่วนนี้, คุณได้ประกาศตัวแปร `errorCodeString` เพื่อเก็บค่า error code ในรูปแบบของข้อความ (string) และถัดมา คุณได้กำหนดชนิดของตัวแปรให้ชนิด <b>String</b>, จะแตกต่างกับที่ประกาศที่เคยทำมาแล้ว นั่นก็คือ ข้างหลัง <b>Sring</b> จะมีเครื่องหมาย `?` อยู่ด้วย ซึ่งเครื่องหมาย `?` นี่แหละ ที่ทำให้ตัวแปร `errorCodeString` เป็นชนิด Sting แบบ optional
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; มาถึงตอนนี้ คุณได้ทำการประกาศตัวแปรและกำหนดค่าให้กับตัวแปรแบบ optional เรียบร้อยแล้ว
+
+#### Listing 8.2 Logging the value of the optional to the console
+
+<pre class="prettyprint linenums">
+import UIKit
+
+var errorCodeString: String?errorCodeString = "404"<b>print(errorCodeString)</b>
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เพราะว่าเรากำหนดค่าให้กับ `errorCodeString` เท่ากับ 404, ทำให้เราสามารถ log ค่าออกมาดูได้แบบไม่มีปัญหาใดๆ แต่จะเกิดอะไรขึ้น ถ้าคุณไม่กำหนดค่าให้กับ `errorCodeString​`, ทดสอบได้ด้วยการใส่ comment บรรทัดที่กำหนดค่าให้กับ `errorCodeString` 
+
+<br/>
+#### Listing 8.3 Logging the nil value of the optional to the console
+
+<pre class="prettyprint linenums">
+import UIKit
+
+var errorCodeString: String? 
+// errorCodeString = "404" 
+print(errorCodeString)
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ตรวจสอบค่าผลลัพธ์ที่ได้จาก console จะพบว่าค่าที่แสดงออกมา คือ `nil`
+
+#### Listing 8.4 Adding a condition
+
+<pre class="prettyprint linenums">
+import UIKit
+
+var errorCodeString: String?
+    errorCodeString = "404"
+//print(errorCodeString)
+
+if errorCodeString != nil {
+    let theError = errorCodeString!
+    print(theError)
+}
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ในส่วนนี้เป็นการกำหนดเงื่อนไข กรณีตัวแปร `errorCodeString` ไม่ใช่ค่า `nil` (จำไว้ว่า เครื่องหมาย `!=` หมายความว่า "is not equal to")
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ลำดับถัดมา คุณได้สร้างค่าคงที่ `theError` ขึ้นมา เพื่อที่จะเก็บค่า `errorCodeString`  ถึงตรงนี้คุณจะพบว่ามีเครื่องหมาย `!` ต่อท้ายตัวแปร `errorCodeString` ซึ่งนี่เป็นสัญลักษณ์ `!` บ่งบอกว่าเป็นการทำแบบ <i>`forced unwrapping.`</i>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `Forced unwrapping` เป็นการเข้าถึงค่าที่อยู่ภายใน optional, ซึ่งเราจะได้ค่า "404" และกำหนดค่านี้ ให้กับค่าคงที่ `theError`, การกระทำเช่นนี้ เรียกว่า "forced" unwrapping เพราะว่ามันพยายามเข้าถึงค่าที่ซ่อนอยู่ภายใต้ optional การใช้เครื่องหมาย `!` จะเข้าถึงค่าที่ซ่อนอยู่ภายใต้ Optional ได้จะต้องมีค่าที่ไม่ใช่ `nil` (ถ้าค่าที่ซ่อนอยู่ภายใต้ optional มีค่าเป็น `nil`, การ unwrapping ค่า `nil` จะทำให้เกิด runtime error)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; มีข้อควรระวังในการเข้าถึงข้อมูลภายใต้ Optional ด้วยวิธี `forced unwrapping` คือ ถ้าใน Optional ไม่มีค่า จะทำให้โปรแกรมเกิด runtime error, แต่เราได้ทำการตรวจสอบก่อนว่า `errorCodeString` ไม่ใช่ค่า `nil` ก่อนมาทำการ force unwrapping จึงทำโค้ดของเราปลอดภัย
+
+---
+
+
+## Optional Binding (ปลอดภัย เป็นระเบียบ)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Optional binding</b> คือ pattern ในการตรวจสอบว่าภายใต้ optional มีค่าหรือไม่?
+
+Here is the basic syntax:
+<pre class="prettyprint linenums">
+if let <mark>temporaryConstant</mark> = <mark>anOptional</mark> {
+    // Do something with <mark>temporaryConstant</mark>
+
+} else {
+    // There was no value in <mark>anOptional</mark>; i.e., <mark>anOptional</mark> is nil
+    
+}
+</pre>
+
+<br/>
+
+#### Listing 8.5 Optional binding
+
+<pre class="prettyprint linenums">
+import UIKit
+
+var errorCodeString: String?
+    errorCodeString = "404"
+
+if let theError = errorCodeString {
+    print(theError)
+}
+</pre>
+
+
+#### Listing 8.6 Nesting optional binding
+
+<pre class="prettyprint linenums">
+import UIKit
+
+var errorCodeString: String?
+errorCodeString = "404"
+
+if let theError = errorCodeString {
+    // print(theError)
+    if let errorCodeInteger = Int(theError) {
+        print("\(theError): \(errorCodeInteger)")
+    }
+}
+</pre>
+
+#### Listing 8.7 Unwrapping multiple optionals
+
+<pre class="prettyprint linenums">
+import UIKit
+
+var errorCodeString: String?
+errorCodeString = "404"
+
+var errorCodeString: String?
+errorCodeString = "404"
+
+if let theError = errorCodeString, errorCodeInteger = Int(theError) {
+        print("\(theError): \(errorCodeInteger)")
+}
+</pre>
+
+#### Listing8.8 Optionalbindingandwhereclauses
+
+<pre class="prettyprint linenums">
+import UIKit
+
+var errorCodeString: String?
+errorCodeString = "404"
+
+if let theError = errorCodeString, errorCodeInteger = Int(theError) where errorCodeInteger == 404 {
+        print("\(theError): \(errorCodeInteger)")
+}
+</pre>
+
+
+---
+
+
+## Implicitly Unwrapped Optionals (สะดวก แต่อันตราย)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ไม่ควรใช้วิธีนี้ ถ้า instance มีโอกาสเป็น `nil`
+
+<pre class="prettyprint linenums">
+import UIKit
+
+var errorCodeString: String!
+errorCodeString = "404"
+print(errorCodeString)
+</pre>
+
+
+---
+
+
+## Optional Chaining
+
+---
+
+
+## Modifying an Optional in Place
+
+---
+
+
+## The Nil Coalescing Operator
+
+---
+
+
+## Silver Challenge
+Earlier in the chapter we told you that accessing an optional’s value when it is nil will result in a runtime error. Make this mistake by force-unwrapping an optional when it is nil. Next, examine the error and understand what the error is telling you.

@@ -1,0 +1,60 @@
+---
+title: "index"
+
+date: 2016-01-17 
+tags: 
+thumb: "2.jpg"
+published: true
+category: iOS Development
+layout: "layout-moderna-blog-details"
+baseURL: "../../../../../../../"
+baseURI: "../../../../../../.."
+
+home_isActive: ""
+home_href: "../../../../../../desktop/HOME/"
+
+portfolio_isActive: ""
+portfolio_href: "../../../../../../desktop/PORTFOLIO/"
+
+blog_isActive: "active"
+blog_href: "../../../../../../blogs/"
+
+contact_isActive: ""
+contact_href: "../../../../../../desktop/CONTACT/"
+
+introText: "iOS Development Index Page"
+
+categoryName: "iOS Development"
+---
+
+
+<section id="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+
+          <ul>
+
+            <% blog.articles.each do |article| %>
+            <% if article.data.category == current_page.data.categoryName && article.title != 'index' %>
+            <li>
+              <h6>
+                <a href="<%= current_page.data.baseURI %><%= article.url %>"><%= truncate(article.title, :length => 50) %></a>
+              </h6>
+              <p>
+               <%= article.data.introText %>
+             </p>
+           </li>
+            <% end %>
+            <% end %>
+
+          </ul>
+
+      </div>
+      <div class="col-lg-4">
+        <%= partial blog_dir + "partials/_right-sidebar" %>
+      </div>
+
+    </div>
+  </div>
+</section>
