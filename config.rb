@@ -121,10 +121,29 @@ set :categoryURL_html5Index, "/src/blogs/html5/2012/01/01/html5-index/"
 set :categoryURL_swift2Index, "/src/blogs/swift-2/2016/01/01/swift-programming-index/"
 set :categoryURL_coronaSDKIndex, "/src/blogs/coronasdk/2016/01/12/coronasdk-index/"
 set :categoryURL_iosDevelopmentIndex, "/src/blogs/ios-development/2016/01/17/ios-development-index/"
+set :categoryURL_udemyCourseCreationIndex, "/src/blogs/udemy-course-creation/2016/01/17/udemy-course-creation-index/"
+set :categoryURL_macOSxIndex, "/src/blogs/mac-os-x/2016/01/17/mac-os-x-index/"
+set :categoryURL_webDevelopmentIndex, "/src/blogs/web-development/2016/01/18/web-development-index/"
+
 
 # Build-specific configuration
 configure :build do
 
+  # activate :i18n
+  # activate :i18n, :path => "/langs/:locale/"
+  activate :i18n, :path => "/src/desktop/:locale/",
+           :lang_map => { 
+                          :eng => :english,
+                          :en => :en,
+                          :es => :es, 
+                          :th => :th 
+                        }, 
+           :templates_dir => "src/desktop/localizable",
+           :mount_at_root => false # All languages will be prefixed
+
+
+           
+  
   activate :syntax, :line_numbers => true
 
 

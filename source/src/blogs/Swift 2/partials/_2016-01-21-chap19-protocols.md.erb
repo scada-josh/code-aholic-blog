@@ -1,0 +1,49 @@
+# Protocols
+
+
+## Formatting a Table of Data
+
+
+
+
+![separate-line][1]
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;สร้างไฟล์ playground ใหม่ ชื่อว่า `Protocols.playground`
+
+#### Listing 19.1 Setting up a table
+
+
+<pre class="prettyprint linenums">
+import UIKit
+
+func printTable(data: [[Int]]) {
+    for row in data {
+        // Create an empty string
+        var out = ""
+        // Append each item in this row to our string
+        for item in row {
+            out += " \(item) |"
+        }
+        // Done - print it!
+        print(out) }
+}
+
+let data = [
+            [30, 6],
+            [40, 18],
+            [50, 20]
+           ]
+
+printTable(data)
+</pre>
+
+
+
+![separate-line-with-indent][2]
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+
+
