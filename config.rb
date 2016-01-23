@@ -133,13 +133,14 @@ configure :build do
   # activate :i18n, :path => "/langs/:locale/"
   activate :i18n, :path => "/src/desktop/:locale/",
            :lang_map => { 
-                          :eng => :english,
                           :en => :en,
                           :es => :es, 
                           :th => :th 
                         }, 
            :templates_dir => "src/desktop/localizable",
            :mount_at_root => false # All languages will be prefixed
+
+
 
 
            

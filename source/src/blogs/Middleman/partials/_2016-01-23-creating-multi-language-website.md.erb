@@ -1,0 +1,57 @@
+# Multi-language
+
+รายละเอียดเพิ่มเติมดูที่นี่ [Middleman - Localization (i18n)](https://middlemanapp.com/advanced/localization/ "Localization (i18n)")
+
+## 1. แก้ไขไฟล์ config.rb
+
+<pre class="prettyprint linenums">
+# Build-specific configuration
+configure :build do
+
+  # activate :i18n
+  # activate :i18n, :path => "/langs/:locale/"
+<mark>  activate :i18n, :path => "/src/desktop/:locale/",
+           :lang_map => { 
+                          :en => :en,
+                          :es => :es, 
+                          :th => :th 
+                        }, 
+           :templates_dir => "src/desktop/localizable",
+           :mount_at_root => false # All languages will be prefixed </mark>
+           
+end
+</pre>
+
+
+## 2. สร้างโฟลเดอร์ locales อยู่นอกสุดของโปรเจ็ค (ในระดับ root)
+
+<br/>
+
+#### ไฟล์ `locals/en.yml`
+
+<pre class="prettyprint linenums">
+---
+en:
+  hello: "Hello"
+</pre>
+
+<br/>
+
+#### ไฟล์ `locals/es.yml`
+
+<pre class="prettyprint linenums">
+---
+es:
+  hello: "Hola"
+</pre>
+
+<br/>
+
+#### ไฟล์ `locals/th.yml`
+
+<pre class="prettyprint linenums">
+---
+th:
+  hello: "สวัสดี"
+</pre>
+
