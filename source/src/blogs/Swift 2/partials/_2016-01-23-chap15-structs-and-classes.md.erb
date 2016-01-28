@@ -1,0 +1,873 @@
+# ทำความรู้จัก Structs และ Classes
+
+![separate line][1]	
+
+> Note : 
+> 
+> 1. Both structures and enumerations are <i>**value types**</i>
+> 2. Recall that optionals are used when an instance may become nil
+> 3. อย่างหนึ่งที่ใน classes มี แต่ใน structures ไม่มีคือ `classes สามารถทำ inheritance ได้` นั่นเอง!!! <br/>(One of the main features of classes that structures do not have is <i>**inheritance**</i>.)
+> 4. Recall from Chapter 12 that the first parameter name is by default not used when calling a function or method.
+> 5. ในการประกาศ `type method` 
+>  		<br/>- ถ้าเป็นข้อมูล แบบ `value type` จะใช้คีย์เวิร์ด `static`An [example](http://url.com/ "Title")
+> 		<br/>- ถ้าเป็นข้อมูล แบบ `reference type` จะใช้คีย์เวิร์ด `class` 
+> 6. Key concepts `Function currying` in Swift (ที่มา [Function Currying in Swift](http://code.tutsplus.com/tutorials/function-currying-in-swift--cms-24767 "Title"))
+> 		<br/>- creating functions that return other functions
+> 		<br/>- reducing functions with multiple arguments into a series of functions each with one argument
+> 7. `เกี่ยวกับชนิดของตัวแปร` 
+> 		<br/>- ถ้าจำแนกตามการประกาศ จะแยกได้ 2 แบบ คือ
+> 			<br/>- - Primitive type
+> 			<br/>- - User Define
+> 		<br/>- ถ้าจำแนกตามการ รับ-ส่ง ค่าตัวแปร จะแยกได้ 2 แบบ คือ
+> 			<br/>- - Value type
+> 			<br/>- - Reference type
+
+
+---
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Structures (โดยทั่วไป เรียกว่า `structs`) และ `classes` เป็นเรื่องสำคัญ หากคุณต้องการสร้างแอปพลิเคชั่น ซึ่งจะใช้ในการสร้าง Model ให้เราใช้งานได้
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ต่อจากนี้เราจะเปลี่ยนจากการใช้ `playground` มาเป็น <i>`command-line tool`</i> 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; คุณจะได้เห็นถึงความเหมือนและความแตกต่างของ structs และ classes
+
+<br/>
+
+![separate line][1]	
+
+# A New Project
+
+![separate line][1]	
+
+1. เปิดโปรแกรม Xcode
+
+	![xcode program][4]
+	
+2. สร้างโปรเจ็คใหม่ File > New > Project...(⇧⌘N)
+3. เลือกเทมเพล็ต OS X > Application > Command Line Tool 
+
+	![command-line tool template][3]
+	
+	<br/>
+	
+	เปิด main.swift จะได้หน้าจอแบบนี้
+	
+	![หน้าจอ main.swift][5]
+	
+	<br/>
+	
+	พื้นที่การใช้งานต่างๆ ของโปรแกรม Xcode
+	
+	![พื้นที่การใช้งานต่างๆ ของโปรแกรม Xcode][6]
+	
+	Build and run (Command-R, ⌘+R)
+	
+---
+
+<br/>
+
+![separate line][1]	
+
+# Structures
+
+![separate line][1]	
+
+> A struct is a type that groups a set of related chunks of data together in memory
+
+
+(1) สร้างไฟล์ใหม่ File > New > File...(⌘N)
+
+(2) เลือกเทมเพล็ต OS X > Source > Swift File
+
+(3) ตั้งชื่อไฟล์ `Town.swift`
+
+	
+#### **การประกาศเพื่อใช้งาน struct (Town.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+
+struct Town {
+    
+}
+</pre>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ในตอนนี้เราได้ใช้คีย์เวิร์ด `struct` เพื่อประกาศใช้งาน struct ในกรณีนี้เราตั้งชื่อให้เป็น `Town` และระหว่างเครื่องหมาย `{}` เราสามารถประกาศตัวแปร (variables) เพื่อเก็บข้อมูลต่างๆได้
+
+> ในทางเทคนิคแล้ว ตัวแปร ใน struct เราจะเรียกว่า `properties` โดย properties สามารถเป็นตัวแปร (variable, `var`)หรือค่าคงที่ (constant, `let`) ก็ได้
+
+
+#### **เพิ่ม properties เข้าไปใน struct (Town.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+
+struct Town {
+    var population = 5422
+    var numberOfStoplights = 4
+}
+</pre>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เราเพิ่ม properties ที่สามารถเปลี่ยนแปลงค่าได้ (mutable) จำนวน 2 ตัว ให้กับ `Town` คือ 
+
+* `population` 
+* `numberOfStoplights`
+
+<br/>
+
+#### **Creating an instance of Town (main.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+
+var myTown = Town()
+print("Population: \(myTown.population), number of stoplights: \(myTown.numberOfStoplights)")
+</pre>
+
+<br/>
+เราได้ทำ 3 จุดที่น่าสนใจ คือ
+
+1. สร้าง instance ขึ้นมาใหม่ โดยมีชนิดข้อมูลเป็นแบบ Town (Town type)<br/>
+	...คำสั่ง `Town()` เป็นการสร้าง instance ข้อมูลแบบ struct ขึ้นมาใหม่ พร้อมทั้งเรียกใช้ default initializer ด้วย
+2. กำหนดค่า instance ที่สร้างขึ้นมาใหม่ ให้กับตัวแปร `myTown`
+3. แสดงค่า properties จำนวน 2 ตัว ของ struct ออกมาแสดงผลบนหน้าจอ console ด้วยคำสั่ง print()<br/>
+	...สังเกตว่า เราใช้ `dot syntax` ในการเข้าถึง properties แต่ละตัวใน struct
+
+<br/>
+**<i>Build and run (Command-R, ⌘+R)</i>**
+
+![หน้าจอ แสดงผลลัพธ์][7]
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Instance methods
+
+![separate line][1]	
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; สร้างฟังก์ชันใหม่ให้กับ `Town` (ชนิดข้อมูลแบบ struct) เพื่อแสดงค่า properties ต่างๆ ออกมาแสดงบนหน้าจอ console
+
+#### **เพิ่มเมธอดที่ใช้อธิบายรายละเอียดของ Town (Town.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+
+struct Town {
+    var population = 5422
+    var numberOfStoplights = 4
+    
+<mark>    func printTownDescription() {
+        print("Population: \(population) number of stoplights: \(numberOfStoplights)");
+    }</mark>
+}
+</pre>
+
+**printTownDescription()** คือ เมธอด เพราะว่ามันคือฟังก์ชันที่ใช้งานร่วมกับชนิดข้อมูล
+
+<br/>
+
+#### **เรียกใช้งาน new instance method (main.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+
+var myTown = Town()
+// print("Population: \(myTown.population), number of stoplights: \(myTown.numberOfStoplights)")
+
+<mark>myTown.printTownDescription()</mark>
+</pre>
+
+<br/>
+**<i>Build and run (Command-R, ⌘+R)</i>**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; จะเห็นว่ายังคงได้ผลลัพธ์เหมือนเดิม
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Mutating methods
+
+![separate line][1]	
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เมธอด `printTownDescription()` สามารถใช้แสดงค่าต่างๆ ออกมาทาง console ได้เป็นอย่างดี 
+
+แต่...ถ้าเราต้องการเปลียนแปลงค่า properties ใน struct สามารถทำได้ไหม????
+คำตอบ คือ สามารถสร้างเมธอดที่สามารถเปลี่ยนแปลงค่า properties ใน struct ได้ เราจะต้องใส่คีย์เวิร์ด `mutating` เข้าไปด้วย
+
+
+<br/>
+
+#### **A mutating method to increase population (Town.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+
+struct Town {
+    var population = 5422
+    var numberOfStoplights = 4
+    
+    func printTownDescription() {
+        print("Population: \(population) number of stoplights: \(numberOfStoplights)");
+    }
+    
+<mark>    <strong>mutating</strong> func changePopulation(amount: Int) {
+            population += amount
+    }</mark>
+}
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เมธอด `changePopulation(Int)` ต้องการพารามิเตอร์ 1 ตัว เพื่อใช้สำหรับเพิ่มค่าให้กับ `population`, population += amount
+
+
+<br/>
+
+#### **A Increasing the population (main.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+
+var myTown = Town()
+
+myTown.changePopulation(500)
+myTown.printTownDescription()
+</pre>
+
+<br/>
+**<i>Build and run (Command-R, ⌘+R)</i>**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; จะเห็นว่าค่าของ population จะถูกเพิ่มขึ้นอีก 500 
+ทำให้ค่าที่แสดงออกมาทางหน้าจอ console คือ `Population: 5922 number of stoplights: 4`
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Classes
+
+![separate line][1]	
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Classes ก็คล้ายๆ กับ struct แต่จะแตกต่างกันเล็กน้อย จะได้ชี้ให้เห็นจุดที่แตกต่างกันต่อไป
+
+## A monster class
+
+(1) สร้างไฟล์ใหม่ File > New > File...(⌘N)
+
+(2) เลือกเทมเพล็ต OS X > Source > Swift File
+
+(3) ตั้งชื่อไฟล์ `Monster.swift`
+
+<br/>
+
+#### **Monster setup (Monster.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+class Monster {
+    
+}
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ในตอนนี้เราได้ใช้คีย์เวิร์ด `class` เพื่อประกาศใช้งาน class ในกรณีนี้เราตั้งชื่อให้เป็น `Monster`
+
+<br/>
+
+#### **Defining the Monster class(Monster.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+class Monster {
+    
+    var town: Town?
+    var name = "Monster"
+    
+    func terrorizeTown() {
+        if town != nil {
+            print("\(name) is terrorizing a town!")
+        } else {
+            print("\(name) hasn't found a town to terrorize yet...")
+        }
+    }
+}
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; จะเห็นว่า คลาส `Monster` มีการประกาศ property ชื่อว่า `town` พร้อมทั้งระบุให้เป็น optional (`Town?`), จำกันได้ไหมครับ ตัวแปร optionals จะถูกใช้เมือ instance อาจจะมีค่าเป็น nil
+
+
+<br/>
+
+#### **Setting a generic monster loose (main.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+
+var myTown = Town()
+
+myTown.changePopulation(500)
+myTown.printTownDescription()
+
+<mark>let gm = Monster()
+gm.town = myTown
+gm.terrorizeTown()</mark>
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เราได้สร้าง instance ชื่อว่า `gm` ขึ้นมา โดยกำหนให้ชนิดข้อมูลเป็นแบบ Monster(), สังเกตว่า ในการประกาศ instance นี้เราใช้คีย์เวิร์ด `let` เพราะเราไม่ต้องการเปลี่ยนแปลงค่าใดๆ ของ `gm`
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; จากนั้น เราได้กำหนดค่าที่ได้จาก `myTown` ให้กับ `gm.town`
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; สุดท้าย เราได้เรียกฟังก์ชัน `terrorizeTown()` ของ Monster ขึ้นมาเพื่อทำงาน
+
+<br/>
+**<i>Build and run (Command-R, ⌘+R)</i>**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; จะเห็นว่าค่าที่แสดงออกมาทางหน้าจอ console คือ `Monster is terrorizing a town!`
+
+
+## Inheritance
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Inheritance คือ ความสัมพันธ์ของคลาสหนึ่ง (subclass)กับอีกคลาสหนึ่ง (superclass) โดยที่ subclass จะสืบทอด properties และ method มาจาก superclass
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ต่อไปเราจะสร้าง subclass จากคลาส Monster ซึ่งเราจะเรียกว่า `zombie`
+
+### A zombie subclass
+
+(1) สร้างไฟล์ใหม่ File > New > File...(⌘N)
+
+(2) เลือกเทมเพล็ต OS X > Source > Swift File
+
+(3) ตั้งชื่อไฟล์ `Zombie.swift`
+
+<br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; สำหรับคลาส Zombie จะทำการ inherit มาจากคลาส Monster
+
+#### **Zombie creation (Zombie.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+
+class Zombie: Monster {
+    
+    var walksWithLimp = true
+    
+    override func terrorizeTown() {
+        town?.changePopulation(-10)
+        super.terrorizeTown()
+    }
+}
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; คลาสใหม่นี้ประกาศชนิดข้อมูล ที่เรียกว่า `Zombie`, โดย `Zombie` สืบทอดมาจาก `Monster` หมายความว่า `Zombie` มี properties และ methods เหมือนกับที่ `Monster` มี นั่นคือ 
+
+* town property, ซึ่งมีชนิดข้อมูลแบบ optional (**Town?**)
+* และฟังก์ชั่น terrorizeTown()
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `Zombie` สร้าง properties ขึ้นมาใหม่ คือ `walksWithLimp` มีชนิดข้อมูลแบบ **Bool** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; สุดท้าย, `Zombie` ทำการ overrides ฟังก์ชั่น terrorizeTown(). การทำ `Overriding a method` หมายความว่า subclass ประกาศฟังก์ชันเหมือนกับที่ superclass มี
+
+<br/>
+
+#### **Zombie inheritance**
+![คลาสไดอะแกรม แสดงการสืบทอดจากคลาส Monster ไปยังคลาส Zombie][8]
+
+<br/>
+
+### Preventing overriding
+
+#### **PreventingoverridingofterrorizeTown()(Zombie.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+
+class Zombie: Monster {
+        
+    var walksWithLimp = true
+        
+    final override func terrorizeTown() {
+        town?.changePopulation(-10)
+        super.terrorizeTown()
+    }
+}
+</pre>
+
+
+#### **Zombie bosses causing trouble (ZombieBoss.swift)**
+<pre class="prettyprint linenums">
+import Foundation
+class ZombieBoss: Zombie {
+    override func terrorizeTown() {
+            print("terrorizing town...")
+    }
+}
+</pre>
+
+
+### Your town has a zombie problem
+					
+	
+#### **Who’s afraid of fredTheZombie? (main.swift)**
+
+<pre class="prettyprint linenums">
+import Foundation
+
+var myTown = Town()
+
+myTown.changePopulation(500)
+
+let fredTheZombie = Zombie()
+fredTheZombie.town = myTown
+fredTheZombie.terrorizeTown()
+fredTheZombie.town?.printTownDescription()
+</pre>
+
+<span class="pullquote-left">
+				เราสร้าง instance ของ **Zombie** ขึ้นมา ชื่อว่า `fredTheZombie`</span>
+
+
+**<i>Build and run (Command-R, ⌘+R)</i>**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; จะเห็นว่าค่าที่แสดงออกมาทางหน้าจอ console คือ `Population: 5912 number of stoplights: 4`
+
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Method Parameter Names
+
+![separate line][1]	
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; จำได้ไหม ในบทที่ 12 เราเคยรับรู้มาว่า `ชื่อพารามิเตอร์ตัวแรก` ไม่ต้องใส่ เวลาเราเรียกใช้งาน ฟังก์ชัน หรือ เมธอด
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เพื่อให้เห็นภาพการใช้งานมากยิ่งขึ้น ให้เปิดไฟล์ `Zombie.swift` และเพิ่มเมธอดใหม่เข้าไป ในเมธอดนี้จะเปลี่ยนชื่อและสถานะ walksWithLimp แต่ละ instance ของคลาส Zombie
+
+#### **changeName(_:walksWithLimp:) (Zombie.swift)**
+
+<pre class="prettyprint linenums">
+import Foundation
+
+class Zombie: Monster {
+    
+    var walksWithLimp = true
+    
+    override func terrorizeTown() {
+        town?.changePopulation(-10)
+        super.terrorizeTown()
+    }
+    
+<mark>    func changeName(name: String, walksWithLimp: Bool) {
+        self.name = name
+        self.walksWithLimp = walksWithLimp
+    }</mark>
+}
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **changeName(_:walksWithLimp:)** คือเมธอดอย่างง่าย ทำหน้าที่เปลี่ยน properties ชื่อและสถานะ walksWithLimp แต่ละ instance ของคลาส Zombie เพราะว่าเราไม่ต้องระบุพารามิเตอร์ตัวแรก ในที่นี้คือ `name` เวลาเรียกเมธอด มันเป็นสไตล์ของภาษา swift ที่จะต้องใส่ชื่อพารามิเตอร์ตัวแรกไว้ท้ายชื่อของเมธอด [ เช่น change + name = changeName() เป็นต้น ]
+
+
+
+<span class="pullquote-left">
+				This convention is a common pattern in naming methods in iOS and Mac OS X frameworks, and helps to identify all of the method’s parameters.</span>
+				
+<br/>
+
+#### **Fred the Zombie (main.swift)**
+
+<pre class="prettyprint linenums">
+import Foundation
+
+var myTown = Town()
+
+myTown.changePopulation(500)
+myTown.printTownDescription()
+
+let gm = Monster()
+gm.town = myTown
+gm.terrorizeTown()
+
+let fredTheZombie = Zombie()
+fredTheZombie.town = myTown
+fredTheZombie.terrorizeTown()
+fredTheZombie.town?.printTownDescription()
+
+<mark>fredTheZombie.changeName("Fred the Zombie", walksWithLimp: false)</mark>
+</pre>
+
+
+**<i>Build and run (Command-R, ⌘+R)</i>**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ผลลัพธ์ คือ 
+
+* properties `name` ของ `fredTheZombie` จะถูกเปลี่ยนเป็น `Fred the Zombie`
+* properties `walksWithLimp` ของ `fredTheZombie` จะถูกเปลี่ยนเป็น `false`
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Bronze Challenge
+
+![separate line][1]	
+
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Silver Challenge
+
+![separate line][1]	
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# For the More Curious: Type Methods
+
+![separate line][1]	
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ในบทนี้, คุณได้ประกาศ instance method ซึ่งถูกเรียกใช้จาก instance ของชนิดข้อมูล (instance of a type), ตัวอย่างเช่น `terrorizeTown()` คือ instance method ซึ่งสามารถเรียกใช้ได้จาก instance ของชนิดข้อมูล Monster
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เราสามารถประกาศ `type method` ซึ่งก็คือ เมธอดที่สามารถเรียกใช้ได้เลย โดยไม่ต้องสร้าง instance <br/>(You can additionally define methods that are called on the type itself. These are called type methods. Type methods are useful for working with type-level information.)
+
+<br/>
+
+#### **Imagine a struct named Square:**
+
+<pre class="prettyprint linenums">
+struct Square {
+    static func numberOfSides() -> Int {
+    	return 4 
+    }
+}
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; สำหรับข้อมูลแบบ `value type`, เราจะใช้คีย์เวิร์ด `static` ในการประกาศ เมธอดในชนิดข้อมูล (type method) ในกรณีนี้  คือ `numberOfSides()` ซึ่งเป็นเมธอดที่ส่งค่า `4` กลับออกมา
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; สำหรับข้อมูลแบบ `reference type`, เราจะใช้คีย์เวิร์ด `class` ในการประกาศ เมธอดในชนิดข้อมูล (type method) จากโค้ดข้างล่าง `makeSpookyNoise()` คือ type method ในคลาส `Zombie`
+
+
+<pre class="prettyprint linenums">
+import Foundation
+
+class Zombie: Monster {
+    
+<mark>    class func makeSpookyNoise() -> String {
+        return "Brains..."
+    }</mark>
+    
+    var walksWithLimp = true
+    
+    override func terrorizeTown() {
+        town?.changePopulation(-10)
+        super.terrorizeTown()
+    }
+    
+    func changeName(name: String, walksWithLimp: Bool) {
+        self.name = name
+        self.walksWithLimp = walksWithLimp
+    }
+}
+</pre>
+
+<br/>
+
+การใช้งาน type method 
+
+<pre class="prettyprint linenums">
+let sides = Square.numberOfSides() // sides is 4
+let spookyNoise = Zombie.makeSpookyNoise() // spookyNoise is "Brains..."
+</pre>
+
+<span class="pullquote-left">
+`Type methods` can work with type-level information on a given type. This means that type methods can call other type methods and can even work with type properties, which we will discuss in Chapter 16. Note, however, that type methods cannot call instance methods or work with any instance properties. The reason for this limitation is that an instance is not available for use at the type level.</span>
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# For the More Curious: Function Currying
+
+![separate line][1]	
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; After working through this chapter, you might be wondering about the `mutating` keyword. Why is it needed to allow you to modify a struct or enum? The concept of function currying helps to explain the answer.
+
+สร้างไฟล์ playground ขึ้นมาใหม่ ชื่อว่า `Curry.playground`
+
+`Function currying` อนุญาตให้คุณนำฟังก์ชันที่มีอยู่แล้วมาใช้งานหรือทำซ้ำได้ 
+
+การนำฟังก์ชันที่มีอยู่แล้วมาทำซ้ำ เราเรียกว่า `curried function` 
+
+
+เพิ่มฟังก์ชันให้กับ playground ซึ่งส่งค่ากลับเป็นข้อความทักทาย (greeting)
+
+<br/>
+
+#### **A simple greeting function**
+<pre class="prettyprint linenums">
+import UIKit
+
+<mark>func greetName(name: String, withGreeting greeting: String) -> String {
+    return "\(greeting) \(name)"
+}</mark>
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; สำหรับ ฟังก์ชัน `greetName(_:withGreeting:)` รับค่าอากิวเมนต์ 2 ตัว คือ `name` และ `greeting` พร้อมทั้งส่งค่ากลับเป็นข้อความทักทาย
+
+<br/>
+
+#### **Using greetName(_:withGreeting:)**
+<pre class="prettyprint linenums">
+import UIKit
+
+func greetName(name: String, withGreeting greeting: String) -> String {
+    return "\(greeting) \(name)"
+}
+
+<mark>let personalGreeting = greetName("Matt", withGreeting: "Hello,")
+print(personalGreeting)</mark>
+</pre>
+
+<br/>
+
+ต่อไปเราจะทำการ, rewrite greetName(_:withGreeting:) ให้เป็น `curried function`
+
+#### **Curried greetingForName(_:)**
+<pre class="prettyprint linenums">
+import UIKit
+
+<mark>func greetingForName(name: String) -> (String) -> String {
+    
+    func greeting(greeting: String) -> String {
+        return "\(greeting) \(name)"
+    }
+    return greeting
+}</mark>
+</pre>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ฟังก์ชัน `greetingForName(_:)` รับอากิวเมนต์ 1 ค่า ซึ่งก็คือ `name` มีชนิดข้อมูลแบบ String และส่งค่ากลับเป็นชนิดฟังก์ชัน ในที่นี้คือ ฟังก์ชัน `greeting(_:)` นั่นเอง
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; จะเห็นว่าเราได้สร้าง `nested function` โดยมีฟังก์ชัน `greeting(_:)` อยู่ภายในฟังก์ชัน `greetingForName(_:)` 
+
+<br/>
+เพิ่มโค้ดต่อไปนี้เพื่อเรียกใช้ `curried function`
+
+#### **Using the curried function**
+<pre class="prettyprint linenums">
+import UIKit
+
+func greetingForName(name: String) -> (String) -> String {
+    
+    func greeting(greeting: String) -> String {
+        return "\(greeting) \(name)"
+    }
+    return greeting
+}
+
+<mark>let greeterFunction = greetingForName("Matt")
+let theGreeting = greeterFunction("Hello,")
+print(theGreeting)</mark>
+</pre>
+
+
+ลำดับการทำงาน :
+
+1. เราเรียกใช้งานฟังก์ชัน `greetingForName(_:)` โดยการส่งค่าอากิวเมนต์ `("Matt")` ไปให้ฟังก์ชัน
+2. ผลลัพธ์ที่ส่งกลับมา จะถูกกำหนดให้ค่าคงที่ ชื่อว่า `greeterFunction`
+3. `greeterFunction` จะเก็บค่าฟังก์ชันที่ต้องการรับอากิวเมนต์ที่เป็น String และส่งค่าที่เป็น String กลับไป <br/>โดยมีรูปแบบคือ `(String) -> String` 
+
+
+Thankfully, Swift supplies a more convenient syntax for writing curried functions. The example below is equivalent to what you have just written.
+
+
+<br/>
+
+
+#### **A more concise curried function**
+<pre class="prettyprint linenums">
+import UIKit
+
+<mark>func greeting(greeting: String)(name: String) -> String {
+    return "\(greeting) \(name)"
+}
+
+let friendlyGreeting = greeting("Hello,")
+let newGreeting = friendlyGreeting(name: "Matt")
+print(newGreeting)</mark>
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; จากโค้ดข้างบนจะเห็นว่า ฟังก์ชัน `greeting(_:name:)` มี syntax ที่แตกต่างจากเดิมเล็กน้อย โดยจะเป็นการแยก argument ที่เป็นพารามิเตอร์แต่ละตัว ด้วยเครื่องหมายวงเล็บ `()`
+
+
+**<i>Build and run (Command-R, ⌘+R)</i>**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; จะเห็นว่ามีการเขียนโค้ดที่กระชับ (concise) ขึ้น แต่ยังคงได้ผลลัพธ์เหมือนเดิม
+
+<br/>
+
+มาถึงตอนนี้ คุณได้เข้าใจแล้วว่า `function currying` ทำงานยังไง, 
+
+let’s return to the mutating keyword. สร้าง struct ขึ้นมาใหม่ ชื่อว่า `Person`
+
+#### **Creating a Person**
+<pre class="prettyprint linenums">
+import UIKit
+
+struct Person {
+    var firstName = "Matt"
+    var lastName = "Mathias"
+    
+    mutating func changeName(fn: String, ln: String) {
+        firstName = fn
+        lastName = ln
+    }
+}
+</pre>
+
+Create a new instance of the Person.
+
+#### **Creating a new instance of Person**
+<pre class="prettyprint linenums">
+import UIKit
+
+struct Person {
+    var firstName = "Matt"
+    var lastName = "Mathias"
+    
+    mutating func changeName(fn: String, ln: String) {
+        firstName = fn
+        lastName = ln
+    }
+}
+
+<mark>var p = Person()</mark>
+</pre>
+
+
+
+There is nothing new here either, but here is where things start to get interesting. It turns out that Swift’s instance methods, the very ones that you learned about in this chapter, are actually curried functions. Type in the following code to see this in action.
+
+#### **Instance methods are curried functions**
+<pre class="prettyprint linenums">
+import UIKit
+
+struct Person {
+    var firstName = "Matt"
+    var lastName = "Mathias"
+    
+    mutating func changeName(fn: String, ln: String) {
+        firstName = fn
+        lastName = ln
+    }
+}
+
+var p = Person()
+<mark>let changer = Person.changeName</mark>
+</pre>
+
+คุณสามารถเข้าถึงฟังก์ชัน `changeName()` ใน ชนิดข้อมูล struct ชื่อว่า `Person` ได้ โดยที่คุณไม่จำเป็นต้องเรียกใช้งานฟังก์ชัน `changeName()` โดยตรง (ตามตัวอย่าง คุณไม่ใส่ เครื่องหมาย `()` หลังจาก `changeName`), ในกรณีนี้ คุณจะเก็บค่าฟังก์ชันไว้กับค่าคงที่ ชื่อว่า `changer`
+
+ถ้าคุณอยากรู้ว่า `changer` คืออะไร? ให้คุณกดปุ่ม Option + click บนตัวแปร `changer`, คุณจะเห็นบางอย่าง เหมือนกับรูปที่แสดงข้างล่าง
+
+#### **A curried function signature**
+![press option + click][10]	
+
+อ้าว!!!...แล้ว `signature` คืออะไร? สั้นๆ คือ มันกำลังจะบอกคุณว่า `changer` คือ `curried function` นั่นเอง
+
+มีอะไรพิเศษ อีกนิดนึงคือ `changer` เก็บค่าฟังก์ชัน
+
+* `ที่รับ argument แค่ตัวเดียว` ซึ่งเป็น instance ของชนิดข้อมูล struct ที่ชื่อว่า `Person` และเป็นแบบ inout parameter ด้วย
+* `ส่งค่ากลับ มาเป็นฟังก์ชัน` ซึ่งเป็นฟังก์ชันที่ต้องการ arguments จำนวน 2 ตัว คือ `fn` และ `ln` เพื่อกำหนดค่าให้กับ `firstname` และ `lastname` ตามลำดับ
+
+<span class="pullquote-left">
+Recall from Chapter 12 that an inout parameter allows a function to modify the value passed into that parameter. <br/>The changes on the inout parameter made within the function also persist outside of the function after it is called. <br/>In other words, the modifications replace the parameter’s original value.</span>
+
+<br/>
+
+Putting all of this information together, a mutating function is simply a curried function whose 
+
+* อากิวเมนต์ตัวแรก คือ `self` ในที่นี้คือ ตัวแปร `p` นั่นเอง , ถูกส่งผ่านเข้าไปแบบ `inout parameter` (มีเครื่องหมาย `&` นำหน้า). <br/>เพราะว่า `value types` จะถูก copy ตอนที่ส่งเข้าไป, 
+ 
+	* สำหรับ nonmutating methods `self` is actually a copy of the value. 
+	* สำหรับ mutation methods, ในกรณีที่เราต้องการเปลี่ยนแปลงค่า, self จะต้องประกาศให้เป็นแบบ `inout`, และกำหนดให้เป็น mutating ด้วย นี่เป็นวิธีการในแบบของภาษา Swift
+
+<br/>
+
+#### **changer in action**
+<pre class="prettyprint linenums">
+import UIKit
+
+struct Person {
+    var firstName = "Matt"
+    var lastName = "Mathias"
+    
+    mutating func changeName(fn: String, ln: String) {
+        firstName = fn
+        lastName = ln
+    }
+}
+
+var <mark><b>p</b></mark> = Person()
+let changer = Person.changeName
+<mark>changer(&<b>p</b>)("John", ln: "Gallagher")
+p.firstName // John</mark>
+</pre>
+
+ลำดับการทำงาน :
+
+1. คุณเรียกใช้งานฟังก์ชัน `changer`ผ่านทาง instance ของ Person ซึ่งเราต้องการเปลี่ยนแปลงค่า
+2. ถัดมา คุณส่ง string จำนวน 2 ตัว คือ "John" และ "Gallagher" เป็นพารามิเตอร์ไปให้ `curried function` ซึ่งก็คือ `firstname` และ `lastname` ตามลำดับ, พารามิเตอร์ทั้ง 2 ตัว จะเปลี่ยนแปลง properties แต่ละ instance ของ Person
+3. สุดท้าย คุณได้ทำการแสดงค่าผลลัพธ์ของฟังก์ชันที่เรียกใช้ออกมา เพื่อให้แน่ใจว่า firstname ถูกเปลียนแปลงให้เป็น `"John"`
+
+
+<span class="pullquote-left">
+Remember that you need to prefix inout parameters with an & to ensure that you pass in the instance’s reference to the function. </span>
+
+
+<br/>
+
+#### **Using changeName(_:ln:) instead of changer**
+<pre class="prettyprint linenums">
+import UIKit
+
+struct Person {
+    var firstName = "Matt"
+    var lastName = "Mathias"
+    
+    mutating func changeName(fn: String, ln: String) {
+        firstName = fn
+        lastName = ln
+    }
+}
+
+var p = Person()
+<mark>p.changeName("John", ln: "Gallagher")
+p.firstName // John</mark>
+</pre>
+
+**<i>Build and run (Command-R, ⌘+R)</i>**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; จะเห็นว่าเราสามารถเรียกใช้โดยตรงก็ได้ นั่นคือ เราไม่เรียกแบบ `function currying` ก็ได้ โดยยังคงได้ผลลัพธ์เหมือนเดิม
+
+
+
+---
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/categories/Swift%202/structs-classes-001.png
+[4]: <%= current_page.data.baseURL %>images/categories/Swift%202/structs-classes-002.png
+[5]: <%= current_page.data.baseURL %>images/categories/Swift%202/structs-classes-003.png
+[6]: <%= current_page.data.baseURL %>images/categories/Swift%202/structs-classes-004.png
+[7]: <%= current_page.data.baseURL %>images/categories/Swift%202/structs-classes-005.png
+[8]: <%= current_page.data.baseURL %>images/categories/Swift%202/structs-classes-006.png
+[9]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png
+[10]: <%= current_page.data.baseURL %>images/categories/Swift%202/structs-classes-007.png
+

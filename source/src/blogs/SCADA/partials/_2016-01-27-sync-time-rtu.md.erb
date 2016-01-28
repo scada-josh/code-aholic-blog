@@ -1,0 +1,42 @@
+# การตั้งค่า Sync Time ให้กับ Router RTU
+
+![separate line][1]	
+
+
+> ขั้นตอนการปฏิบติ : 
+> 
+> 1. เปิด Web Browser (ยกเว้น IE), URL : `http://ip_address_rtu/index.jsp` ตัวอย่างเช่น `http://10.202.70.7/`
+> 2. ใส่ User & Password
+> 		* กรณียี่ห้อ One plus ให้ใช้ User : `adm` และ Password : `123456`
+> 		* กรณียี่ห้อ Westermo ให้ใช้ User : `???` และ Password : `???` (รอข้อมูลจาก คุณโน๊ต)
+> 3. ระบุ IP Address ของ NTP Time Servers ที่ต้องการให้ RTU Router ทำการ Sync ในที่นี้คือ `172.29.8.4`
+> 4. กดปุ่ม Apply
+
+---
+
+![separate line][1]	
+
+## ขั้นตอนการปฏิบัติ แบบละเอียด :
+
+![separate line][1]	
+
+
+### (1) เปิด Web Browser
+![เปิด Brower][4]	
+
+### (2) ใส่ User & Password
+![หน้าจอ Login][5]	
+
+### (3) ระบุ IP Address ของ NTP Time Servers
+![ระบุ Sync Time][6]	
+
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png
+
+[4]: <%= current_page.data.baseURL %>images/categories/SCADA/scada-sync-time-rtu-001.png
+[5]: <%= current_page.data.baseURL %>images/categories/SCADA/scada-sync-time-rtu-002.png
+[6]: <%= current_page.data.baseURL %>images/categories/SCADA/scada-sync-time-rtu-003.png

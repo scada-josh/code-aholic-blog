@@ -1,0 +1,210 @@
+# การสลับหน้า Page View - Web Application
+
+![separate line][1]	
+
+> Note : 
+> 
+> 1. เพิ่ม Library ที่เกี่ยวข้อง เข้ามาใน Web Application
+> 2. สร้าง Content ขึ้นมาภายใน `<div>...</div>` โดยให้แสดงแค่ `Main` ส่วนที่เหลือให้ซ่อนไว้โดยใส่ `style="display:none"`
+> 3. เรียกใช้งาน Router เพื่อสลับหน้าจอระหว่าง `default` กับ `add`
+> 4. สร้าง javascript ขึ้นมาเพื่อควบคุมการแสดงผล
+
+---
+
+
+
+
+##  (1) เพิ่ม Library ที่เกี่ยวข้อง
+
+<pre class="prettyprint linenums">
+//= require jquery-modern/dist/jquery
+//= require jquery-ui/jquery-ui.min
+</pre>
+
+---
+
+## (2) สร้าง Content พร้อมกำหนด class และ id
+
+* กำหนดคลาสให้เป็น `canvas-rtuInformation`
+* สร้าง id ให้กับแต่ละพื้นที่
+	+ หน้าจอแสดงผลหลัก (default) ให้มี `id="canvas-rtuInformation-default"`
+	+ หน้าจอแสดงผลเพิ่มข้อมูล (add) ให้มี `id="canvas-rtuInformation-add"`
+
+#### **สร้าง Canvas สำหรับหน้าจอหลัก (default)**
+<pre class="prettyprint linenums">
+&lt;div class=&quot;box canvas-rtuInformation&quot; id=&quot;canvas-rtuInformation-default&quot;&gt;
+    &lt;div class=&quot;box-title&quot;&gt;
+        &lt;h3&gt;&lt;i class=&quot;fa fa-file&quot;&gt;&lt;/i&gt; Main Box&lt;/h3&gt;
+        &lt;div class=&quot;box-tool&quot;&gt;
+            &lt;a data-action=&quot;collapse&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fa fa-chevron-up&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a data-action=&quot;close&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fa fa-times&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;box-content&quot; style=&quot;height:400px;&quot;&gt;
+        &lt;!-- &lt;p&gt;Blank page&lt;/p&gt; --&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+#### **สร้าง Canvas สำหรับหน้าจอเพิ่มข้อมูล (add)**
+<pre class="prettyprint linenums">
+&lt;div class=&quot;box canvas-rtuInformation&quot; id=&quot;canvas-rtuInformation-add&quot; style=&quot;display:none&quot;&gt;
+    &lt;div class=&quot;box-title&quot;&gt;
+        &lt;h3&gt;&lt;i class=&quot;fa fa-file&quot;&gt;&lt;/i&gt; Add Box&lt;/h3&gt;
+        &lt;div class=&quot;box-tool&quot;&gt;
+            &lt;a data-action=&quot;collapse&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fa fa-chevron-up&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a data-action=&quot;close&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fa fa-times&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;box-content&quot; style=&quot;height:400px;&quot;&gt;
+        &lt;!-- &lt;p&gt;Blank page&lt;/p&gt; --&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+
+---
+
+## (3) สร้าง Event ให้กับปุ่มเพื่อเรียกใช้งาน
+
+#### **กำหนด id ให้กับปุ่ม**
+<pre class="prettyprint linenums">
+&lt;div class=&quot;btn-group&quot;&gt;
+        &lt;a class=&quot;btn btn-circle show-tooltip goto-addEvent&quot; title=&quot;Add new record&quot; href=&quot;#&quot; <mark>id=&quot;rtuList-goto-add&quot;</mark>&gt;
+        &lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt;
+        &lt;/a&gt;
+    &lt;/div&gt;
+</pre>
+
+
+#### **สร้าง function ใน javascript เพื่อรองรับการเรียกใช้งาน**
+<pre class="prettyprint linenums">
+(function ($) {
+    "use strict";
+
+    ///////////////////////////////////////////////////// Your
+    // var venueAddress = "Grand Place, 1000, Brussels"; // Venue
+    
+    /////////////////////////////////////////////////// Adress
+
+    var fn = {
+
+        // Launch Functions
+        Launch: function () {
+            fn.OpenLayers();
+            //fn.Routers();
+            fn.Apps();
+        },
+
+        // OpenLayers
+        OpenLayers: function () {
+        	console.log('OpenLayers');
+        },
+
+<mark>        // Routers
+        Routers: function (canvasID) {
+            console.log('Routers');
+        },</mark>
+
+        // Apps
+        Apps: function () {
+        	console.log('Apps');
+
+<mark>            // Go Add
+            $('#rtuList-goto-add').click(function () {
+                fn.Routers('add');
+            });</mark>
+            
+        }
+
+    };
+
+    $(document).ready(function () {
+        fn.Launch();
+    });
+
+})(jQuery);
+</pre>
+
+
+
+---
+
+## (4) สร้าง javascript ขึ้นมาเพื่อควบคุมการแสดงผล
+
+#### **สร้าง function ใน javascript เพื่อรองรับการเรียกใช้งาน**
+<pre class="prettyprint linenums">
+(function ($) {
+    "use strict";
+
+    ///////////////////////////////////////////////////// Your
+    // var venueAddress = "Grand Place, 1000, Brussels"; // Venue
+    
+    /////////////////////////////////////////////////// Adress
+
+    var fn = {
+
+        // Launch Functions
+        Launch: function () {
+            fn.OpenLayers();
+            //fn.Routers();
+            fn.Apps();
+        },
+
+
+
+        // OpenLayers
+        OpenLayers: function () {
+        	console.log('OpenLayers');
+        },
+
+        // Routers
+        Routers: function (canvasID) {
+            console.log('Routers');
+
+<mark>            if (canvasID != "default") {
+                $("#main-content > .canvas-rtuInformation:visible").hide("slide", { direction: "left" }, 1000, function(){
+                    $('#canvas-rtuInformation-' + canvasID).fadeIn(300);
+
+                });
+            } else {
+                $("#main-content > .canvas-rtuInformation:visible").fadeOut(300, function(){
+                    $('#canvas-rtuInformation-' + canvasID).show("slide", { direction: "left" }, 1000, function(){});
+                });
+            }</mark>
+        },
+
+        // Apps
+        Apps: function () {
+        	console.log('Apps');
+
+            // Go Register
+            $('#rtuList-goto-add').click(function () {
+                fn.Routers('add');
+            });
+
+        }
+    };
+
+    $(document).ready(function () {
+        fn.Launch();
+    });
+
+})(jQuery);
+</pre>
+
+---
+
+
+
+
+
+
+
+
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png

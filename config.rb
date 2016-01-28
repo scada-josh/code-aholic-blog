@@ -112,7 +112,9 @@ set :images_dir, 'images'
 
 set :helper_dir, 'helper'
 
-set :secrete_published, 'false'
+set :files_dir, 'files'
+
+# set :secrete_published, 'false'
 
 
 set :blog_dir, 'src/blogs/'
@@ -124,6 +126,10 @@ set :categoryURL_iosDevelopmentIndex, "/src/blogs/ios-development/2016/01/17/ios
 set :categoryURL_udemyCourseCreationIndex, "/src/blogs/udemy-course-creation/2016/01/17/udemy-course-creation-index/"
 set :categoryURL_macOSxIndex, "/src/blogs/mac-os-x/2016/01/17/mac-os-x-index/"
 set :categoryURL_webDevelopmentIndex, "/src/blogs/web-development/2016/01/18/web-development-index/"
+set :categoryURL_scadaIndex, "/src/blogs/scada/2016/01/25/scada-index/"
+set :categoryURL_rtuIndex, "/src/blogs/rtu/2016/01/27/rtu-index/"
+set :categoryURL_wlmaIndex, "/src/blogs/wlma/2016/01/27/wlma-index/"
+set :categoryURL_projectsIndex, "/src/blogs/projects/2016/01/28/projects-index/"                       
 
 
 # Build-specific configuration
