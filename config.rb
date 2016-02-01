@@ -130,6 +130,8 @@ set :categoryURL_scadaIndex, "/src/blogs/scada/2016/01/25/scada-index/"
 set :categoryURL_rtuIndex, "/src/blogs/rtu/2016/01/27/rtu-index/"
 set :categoryURL_wlmaIndex, "/src/blogs/wlma/2016/01/27/wlma-index/"
 set :categoryURL_projectsIndex, "/src/blogs/projects/2016/01/28/projects-index/"                       
+set :categoryURL_restfulWebServiceIndex, "/src/blogs/restful-web-service/2016/01/29/restful-web-service-index/"
+
 
 
 # Build-specific configuration

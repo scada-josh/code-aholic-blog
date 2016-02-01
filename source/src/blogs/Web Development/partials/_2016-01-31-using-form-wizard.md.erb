@@ -1,0 +1,343 @@
+# การใช้งาน Form Wizard
+
+![separate line][1]	
+
+
+![ภาพหน้าจอ ที่ต้องการทำให้เสร็จ][4]	
+
+## เรียกใช้ Library
+![separate line][1]	
+
+<pre class="prettyprint linenums">
+&lt;!--page specific plugin scripts--&gt;
+        &lt;script src=&quot;assets/bootstrap-wizard/jquery.bootstrap.wizard.js&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;assets/jquery-validation/dist/jquery.validate.min.js&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;assets/jquery-validation/dist/additional-methods.min.js&quot;&gt;&lt;/script&gt;
+</pre>
+
+หรือ
+
+<pre class="prettyprint linenums">
+//= require helper/bootstrap-wizard/jquery.bootstrap.wizard
+//= require helper/jquery-validation/dist/jquery.validate.min
+//= require helper/jquery-validation/dist/additional-methods.min
+</pre>
+
+---
+
+## เพิ่ม User Interface
+![separate line][1]	
+
+<pre class="prettyprint linenums">
+&lt;div class=&quot;row canvas-rtuInformation&quot; id=&quot;canvas-rtuInformation-add&quot; style=&quot;display:none&quot;&gt;
+    &lt;div class=&quot;col-md-12&quot;&gt;
+        &lt;div class=&quot;box box-pink&quot;&gt;
+            &lt;div class=&quot;box-title&quot;&gt;
+                &lt;h3&gt;&lt;i class=&quot;fa fa-bars&quot;&gt;&lt;/i&gt; Form Wizard - Filled Style with Validation&lt;/h3&gt;
+                &lt;div class=&quot;box-tool&quot;&gt;
+                    &lt;a data-action=&quot;collapse&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fa fa-chevron-up&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+                    &lt;a data-action=&quot;close&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;fa fa-times&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;box-content&quot;&gt;
+                &lt;form action=&quot;#&quot; class=&quot;form-horizontal&quot; id=&quot;<mark>wizard-validation</mark>&quot;&gt;
+                   &lt;div class=&quot;form-wizard&quot; id=&quot;<mark>form-wizard-2</mark>&quot;&gt;
+                      &lt;ul class=&quot;row steps steps-fill&quot;&gt;
+                         &lt;li class=&quot;col-xs-12 col-sm-6 col-lg-3&quot;&gt;
+                            &lt;a href=&quot;#tab2-1&quot; data-toggle=&quot;tab&quot; class=&quot;step active&quot;&gt;
+                                &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;
+                                &lt;span class=&quot;desc&quot;&gt;&lt;i class=&quot;fa fa-check&quot;&gt;&lt;/i&gt; Account Setup&lt;/span&gt;   
+                            &lt;/a&gt;
+                         &lt;/li&gt;
+                         &lt;li class=&quot;col-xs-12 col-sm-6 col-lg-3&quot;&gt;
+                            &lt;a href=&quot;#tab2-2&quot; data-toggle=&quot;tab&quot; class=&quot;step&quot;&gt;
+                                &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;
+                                &lt;span class=&quot;desc&quot;&gt;&lt;i class=&quot;fa fa-check&quot;&gt;&lt;/i&gt; Profile Setup&lt;/span&gt;   
+                            &lt;/a&gt;
+                         &lt;/li&gt;
+                         &lt;li class=&quot;col-xs-12 col-sm-6 col-lg-3&quot;&gt;
+                            &lt;a href=&quot;#tab2-3&quot; data-toggle=&quot;tab&quot; class=&quot;step&quot;&gt;
+                                &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;
+                                &lt;span class=&quot;desc&quot;&gt;&lt;i class=&quot;fa fa-check&quot;&gt;&lt;/i&gt; Billing Setup&lt;/span&gt;   
+                            &lt;/a&gt;
+                         &lt;/li&gt;
+                         &lt;li class=&quot;col-xs-12 col-sm-6 col-lg-3&quot;&gt;
+                            &lt;a href=&quot;#tab2-4&quot; data-toggle=&quot;tab&quot; class=&quot;step&quot;&gt;
+                                &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;
+                                &lt;span class=&quot;desc&quot;&gt;&lt;i class=&quot;fa fa-check&quot;&gt;&lt;/i&gt; Confirm&lt;/span&gt;   
+                            &lt;/a&gt; 
+                         &lt;/li&gt;
+                      &lt;/ul&gt;
+                      &lt;div class=&quot;progress progress-striped&quot;&gt;
+                         &lt;div class=&quot;progress-bar progress-bar-primary&quot;&gt;&lt;/div&gt;
+                      &lt;/div&gt;
+                      &lt;div class=&quot;tab-content&quot;&gt;
+                         &lt;div class=&quot;tab-pane active&quot; id=&quot;tab2-1&quot;&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label for=&quot;firstname2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;First Name&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;firstname2&quot; id=&quot;firstname2&quot; class=&quot;form-control&quot; data-rule-required=&quot;true&quot;&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label for=&quot;lastname2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Last Name&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;lastname2&quot; id=&quot;lastname2&quot; class=&quot;form-control&quot; data-rule-required=&quot;true&quot;&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                         &lt;/div&gt;
+                         &lt;div class=&quot;tab-pane&quot; id=&quot;tab2-2&quot;&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label for=&quot;username2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Username&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;username2&quot; id=&quot;username2&quot; class=&quot;form-control&quot; data-rule-required=&quot;true&quot; data-rule-minlength=&quot;3&quot;&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label for=&quot;password2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Password&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;input type=&quot;password&quot; name=&quot;password2&quot; id=&quot;password2&quot; class=&quot;form-control&quot; data-rule-required=&quot;true&quot; data-rule-minlength=&quot;6&quot;&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label for=&quot;re-password2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Password Again&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;input type=&quot;password&quot; name=&quot;re-password2&quot; id=&quot;re-password2&quot; class=&quot;form-control&quot; data-rule-required=&quot;true&quot; data-rule-minlength=&quot;6&quot; data-rule-equalTo=&quot;#password2&quot;&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label for=&quot;email2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Email&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;email2&quot; id=&quot;email2&quot; class=&quot;form-control&quot; data-rule-required=&quot;true&quot; data-rule-email=&quot;true&quot;&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                         &lt;/div&gt;
+                         &lt;div class=&quot;tab-pane&quot; id=&quot;tab2-3&quot;&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label for=&quot;country2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Country&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;country2&quot; id=&quot;country2&quot; class=&quot;form-control&quot;&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label for=&quot;city2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;City&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;city2&quot; id=&quot;city2&quot; class=&quot;form-control&quot;&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Gender&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;label class=&quot;radio-inline&quot;&gt;
+                                        &lt;input type=&quot;radio&quot; name=&quot;gender&quot;&gt; Male
+                                    &lt;/label&gt;
+                                    &lt;label class=&quot;radio-inline&quot;&gt;
+                                        &lt;input type=&quot;radio&quot; name=&quot;gender&quot;&gt; Female
+                                    &lt;/label&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label for=&quot;textarea2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;More info&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;textarea name=&quot;textarea2&quot; id=&quot;textarea2&quot; rows=&quot;5&quot; class=&quot;form-control&quot;&gt;&lt;/textarea&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                         &lt;/div&gt;
+                         &lt;div class=&quot;tab-pane&quot; id=&quot;tab2-4&quot;&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;First Name&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;span class=&quot;text&quot;&gt;Penny&lt;/span&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;last Name&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;span class=&quot;text&quot;&gt;Rodrigez&lt;/span&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Gender&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;span class=&quot;text&quot;&gt;Female&lt;/span&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Username&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;span class=&quot;text&quot;&gt;PennyRod&lt;/span&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;form-group&quot;&gt;
+                                &lt;label class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Email&lt;/label&gt;
+                                &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+                                    &lt;span class=&quot;text&quot;&gt;pennyrod@domain.com&lt;/span&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                         &lt;/div&gt;
+                      &lt;/div&gt;
+                      &lt;div class=&quot;form-group&quot;&gt;
+                        &lt;div class=&quot;col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2&quot;&gt;
+                            &lt;a href=&quot;javascript:;&quot; class=&quot;btn button-previous&quot;&gt;Back&lt;/a&gt;
+                            &lt;a href=&quot;javascript:;&quot; class=&quot;btn btn-primary button-next&quot;&gt;Continue&lt;/a&gt;
+                            &lt;a href=&quot;javascript:;&quot; class=&quot;btn btn-success button-submit&quot;&gt;Submit&lt;/a&gt;
+                        &lt;/div&gt;
+                      &lt;/div&gt;
+                   &lt;/div&gt;
+                &lt;/form&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- END Main Content --&gt;
+</pre>
+
+---
+
+## เพิ่มคำสั่ง JavaScript (jQuery)
+
+จะเห็นว่า เราสร้าง Form Wizard แบบมีการตรวจสอบความถูกต้อง(validate) ของข้อมูลด้วย
+
+เรากำหนด id ให้ 2 จุด คือ `wizard-validation`, `form-wizard-2`
+
+
+![separate line][1]	
+
+<pre class="prettyprint linenums">
+    //----------------------------- Form Wizard -------------------------//
+    if (jQuery().bootstrapWizard) {
+
+        //Validation of wizard form
+        if (jQuery().validate) {
+            var removeSuccessClass = function(e) {
+                $(e).closest('.form-group').removeClass('has-success');
+            }
+            var jq_validator = $('#wizard-validation').validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block', // default input error message class
+                errorPlacement: function(error, element) {
+                    if(element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                focusInvalid: false, // do not focus the last invalid input
+
+                invalidHandler: function (event, validator) { //display error alert on form submit              
+                    
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change dony by hightlight
+                    $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    setTimeout(function(){removeSuccessClass(element);}, 3000);
+                },
+
+                success: function (label) {
+                    label.closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                }
+            });
+        }
+        
+        //Look at onNext function to see how add validation to wizard
+        $('#form-wizard-2').bootstrapWizard({
+            'nextSelector': '.button-next',
+            'previousSelector': '.button-previous',
+            onTabClick: function (tab, navigation, index) {
+                alert('on tab click disabled');
+                return false;
+            },
+            onNext: function (tab, navigation, index) {
+                var valid = $("#wizard-validation").valid();
+                if(!valid) {
+                    jq_validator.focusInvalid();
+                    return false;
+                }
+
+                var total = navigation.find('li').length;
+                var current = index + 1;
+                // set wizard title
+                $('.step-title', $('#form-wizard-2')).text('Step ' + (index + 1) + ' of ' + total);
+                // set done steps
+                jQuery('li', $('#form-wizard-2')).removeClass("done");
+                var li_list = navigation.find('li');
+                for (var i = 0; i < index; i++) {
+                    jQuery(li_list[i]).addClass("done");
+                }
+
+                if (current == 1) {
+                    $('#form-wizard-2').find('.button-previous').hide();
+                } else {
+                    $('#form-wizard-2').find('.button-previous').show();
+                }
+
+                if (current >= total) {
+                    $('#form-wizard-2').find('.button-next').hide();
+                    $('#form-wizard-2').find('.button-submit').show();
+                } else {
+                    $('#form-wizard-2').find('.button-next').show();
+                    $('#form-wizard-2').find('.button-submit').hide();
+                }
+                var $percent = (current / total) * 100;
+                $('#form-wizard-2').find('.progress-bar').css('width', $percent+'%');
+
+                $('html, body').animate({scrollTop: $("#form-wizard-2").offset().top}, 900);
+            },
+            onPrevious: function (tab, navigation, index) {
+                var total = navigation.find('li').length;
+                var current = index + 1;
+                // set wizard title
+                $('.step-title', $('#form-wizard-2')).text('Step ' + (index + 1) + ' of ' + total);
+                // set done steps
+                jQuery('li', $('#form-wizard-2')).removeClass("done");
+                var li_list = navigation.find('li');
+                for (var i = 0; i < index; i++) {
+                    jQuery(li_list[i]).addClass("done");
+                }
+
+                if (current == 1) {
+                    $('#form-wizard-2').find('.button-previous').hide();
+                } else {
+                    $('#form-wizard-2').find('.button-previous').show();
+                }
+
+                if (current >= total) {
+                    $('#form-wizard-2').find('.button-next').hide();
+                    $('#form-wizard-2').find('.button-submit').show();
+                } else {
+                    $('#form-wizard-2').find('.button-next').show();
+                    $('#form-wizard-2').find('.button-submit').hide();
+                }
+                var $percent = (current / total) * 100;
+                $('#form-wizard-2').find('.progress-bar').css('width', $percent+'%');
+
+                $('html, body').animate({scrollTop: $("#form-wizard-2").offset().top}, 900);
+            },
+            onTabShow: function (tab, navigation, index) {
+                var total = navigation.find('li').length;
+                var current = index + 1;
+                var $percent = (current / total) * 100;
+                $('#form-wizard-2').find('.progress-bar').css({
+                    width: $percent + '%'
+                });
+            }
+        });
+
+        $('#form-wizard-2').find('.button-previous').hide();
+        $('#form-wizard-2 .button-submit').click(function () {
+            alert('Finished!');
+        }).hide();
+    }
+</pre>
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png
+
+[4]: <%= current_page.data.baseURL %>images/categories/Web%20Development/using-form-wizard-001.png

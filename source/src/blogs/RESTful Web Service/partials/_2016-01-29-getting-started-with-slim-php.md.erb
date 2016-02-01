@@ -1,0 +1,188 @@
+# เริ่มต้นใช้งาน Slim PHP
+
+
+![separate line][1]	
+
+![ภาพแสดงหน้าเว็บ Packagist][4]	
+
+
+สามารถค้นหา Package เพิ่มเติมได้ที่นี่ [packagist.org](https://packagist.org "packagist")
+
+สามารถดู Slides เกี่ยวกับ ได้ที่นี่ [เริ่มต้นใช้งาน Slim PHP](http://slides.com/scada-josh/slim-php-installation/fullscreen?token=7eSRurhNvwckXKnK97CP6dn1WpUr "packagist")
+
+
+
+![separate line][1]	
+
+##  Step 1 - Installing Composer 
+
+![separate line][1]	
+
+> ผลลัพธ์จะได้ composer.phar
+
+1. `$ cd /path/to/my/project`
+2. `$ curl -s http://getcomposer.org/installer | php`
+
+<br/>
+
+ตรวจสอบการติดตั้ง Composer
+
+`$ php composer.phar`
+
+<br/>
+
+ทดลองใช้งานคำสั่งใน Composer
+
+`$ php composer.phar about`
+
+...ผลลัพธ์จะแสดงข้อความอธิบายข้อมูลเกี่ยวกับ Composer
+
+
+![separate line][1]	
+
+##  Step 2 - Understanding composer.json
+
+![separate line][1]	
+
+1. สร้างไฟล์ composer.json
+<pre class="prettyprint linenums">
+$ touch composer.json
+</pre>
+ให้ config. ไฟล์ composer.json ด้วย JSON Object <br/> ...กรณีนี้ เราต้องการติดตั้งและใช้งาน Slim PHP และ NotORM framework
+
+![separate line][1]	
+
+##  Step 3 - Installation Requirements
+
+![separate line][1]	
+
+* กรณีติดตั้งใหม่
+<pre class="prettyprint linenums">
+$ php composer.phar install
+</pre>
+
+* กรณีต้องการอัพเดตข้อมูล
+
+<pre class="prettyprint linenums">
+$ php composer.phar update
+</pre>
+
+จะเห็นว่ามีโฟลเดอร์เก็บ package ที่ชื่อว่า “vendors”  ถ้าเราต้องการเปลี่ยนชื่อ โฟลเดอร์ที่เก็บให้เพิ่ม config เข้าไปในไฟล์ composer.json
+
+<pre class="prettyprint linenums">
+{
+    "require": {
+        "slim/slim": "2.*",
+        "vrana/notorm": "dev-master"
+    },
+    "config" : {
+        "vendor-dir" : "packages"
+    }
+}
+</pre>
+
+![separate line][1]	
+
+##  Step 4 - Autoloading
+
+![separate line][1]	
+
+สร้างไฟล์ index.php และให้เรียกใช้ Slim PHP และ NotORM framework 
+
+<pre class="prettyprint linenums">
+&lt;?php
+    
+    require_once '../packages/autoload.php';
+
+?&gt;
+</pre>
+
+
+![separate line][1]	
+
+##  Step 5 - ทดลองใช้งาน Slim framework
+
+![separate line][1]	
+
+(5.1) สร้างไฟล์ .htaccess
+<pre class="prettyprint linenums">
+RewriteEngine On 
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteRule ^(.*)$ %{ENV:BASE}index.php [QSA,L]
+</pre>
+
+(5.2) ทดลองสร้าง RESTful Web Service ด้วย Slim PHP framework
+<pre class="prettyprint linenums">
+&lt;?php
+require_once '../packages/autoload.php';
+
+$app = new \Slim\Slim();
+
+
+/**
+ *
+ * @apiName HelloWorld
+ * @apiGroup TEST SERVICE
+ * @apiVersion 0.1.0
+ *
+ * @api {get} /hello/:name Test First Service (v 0.1.0)
+ * @apiDescription คำอธิบาย : Hello World, Test Service
+ *
+ * localhost : http://localhost/iFire-Reporter-API/src/hello/:name
+ *
+ * remote host : http://128.199.166.211/iFire-Reporter-API/src/hello/:name
+ *
+ * @apiExample Example usage:
+ * &quot;Using Advanced REST Client&quot; : (localhost)   chrome-extension://hgmloofddffdnphfgcellkdfbfbjeloo/RestClient.html#RequestPlace:projectEndpoint/31
+ * &quot;Using Advanced REST Client&quot; : (remote host) chrome-extension://hgmloofddffdnphfgcellkdfbfbjeloo/RestClient.html#RequestPlace:projectEndpoint/30
+ *
+ * @apiParam {String} name     New name of the user
+ *
+ * @apiSampleRequest http://localhost/iFire-Reporter-API/src/hello/:name
+ *
+ * @apiSuccess {String} msg แสดงข้อความทักทายผู้ใช้งาน
+ *
+ * @apiSuccessExample Example data on success:
+ * {
+ *   &quot;msg&quot;: &quot;Hello, anusorn&quot;
+ * }
+ *
+ * @apiError UserNotFound The &lt;code&gt;id&lt;/code&gt; of the User was not found.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       &quot;error&quot;: &quot;UserNotFound&quot;
+ *     }
+ *
+ */
+$app-&gt;get('/hello/:name', function ($name) {
+
+    $return_m = array(&quot;msg&quot; =&gt; &quot;Hello, $name&quot;);
+    echo json_encode($return_m);
+
+});
+
+$app-&gt;run();
+
+?&gt;
+</pre>
+
+(5.3) เรียกใช้ Service และสังเกตผลลัพธ์
+<pre class="prettyprint linenums">
+http://localhost/iFire-Reporter-API/src/hello/:name
+</pre>
+
+ผลลัพธ์
+<pre class="prettyprint linenums">
+{
+    "msg": "Hello, anusorn"
+}
+</pre>
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png
+
+[4]: <%= current_page.data.baseURL %>images/categories/RESTful%20Web%20Service/restful-web-service-getting-started-with-slim-php-001.png
