@@ -4,6 +4,8 @@
 
 ## ติดตั้งไฟล์ javascript และ css
 
+![separate-line][1] 
+
 <pre class="prettyprint linenums">
 //= require datatables/media/js/jquery.dataTables.min
 //= require datatables/media/js/dataTables.bootstrap.min
@@ -105,13 +107,15 @@
 	&lt;/table&gt;
 </pre>
 
+
 ![separate-line][1] 
+
 
 (2)    กำหนดค่า `id` ให้กับตาราง (table) ในที่นี้เราจะกำหนดให้เป็น `mainRtuDataTable` พร้อมกับ ลงทะเบียน `id` ไว้ส่วนของ frontmatter ด้วย เพื่อไม่ให้มีการกำหนดค่า `id` ซ้ำในเพจนั้นๆ
 	
 <pre class="prettyprint linenums">
-	#     *** Page DOM ID registered ***
-	#     >> mainRtuDataTable (ตาราง Datatable แสดงผลรายการ RTU ที่มี)
+#     *** Page DOM ID registered ***
+#     >> mainRtuDataTable (ตาราง Datatable แสดงผลรายการ RTU ที่มี)
 </pre>
 
 ![separate-line][1] 
@@ -119,7 +123,44 @@
 (3)    ในส่วนของ JavaScript ให้สร้าง Object ขึ้นมาใหม่ ชื่อว่า `_objectRTU_RtuList` เพื่อใช้ในเพจนี้
 
 <pre class="prettyprint linenums">
-var _objectRTU_RtuList = new function() {}
+(function ($) {
+    &quot;use strict&quot;;
+
+    ///////////////////////////////////////////////////// Your
+    // var venueAddress = &quot;Grand Place, 1000, Brussels&quot;; // Venue
+    var mainRtuDataTable;
+    /////////////////////////////////////////////////// Adress
+
+    var fn = {
+
+        // Launch Functions
+        Launch: function () {
+            fn.OpenLayers();
+            fn.FormWizard();
+            fn.MainRtuDataTable();
+            fn.Apps();
+        },
+
+        // OpenLayers
+        &lt;%= partial &quot;javascript-rmr-home-rtu-rtuList/partials/_fn_OpenLayers&quot; %&gt;
+        // Routers
+        &lt;%= partial &quot;javascript-rmr-home-rtu-rtuList/partials/_fn_Routers&quot; %&gt;
+        // Form Wizard
+        &lt;%= partial &quot;javascript-rmr-home-rtu-rtuList/partials/_fn_FormWizard&quot; %&gt;
+        // Main RTU DataTable
+        &lt;%= partial &quot;javascript-rmr-home-rtu-rtuList/partials/_fn_MainRtuDataTable&quot; %&gt;
+        // Logout
+        &lt;%= partial &quot;javascript-rmr-home-rtu-rtuList/partials/_fn_Logout&quot; %&gt;
+        // Apps
+        &lt;%= partial &quot;javascript-rmr-home-rtu-rtuList/partials/_fn_Apps&quot; %&gt;
+
+    };
+
+    $(document).ready(function () {
+        fn.Launch();
+    });
+
+})(jQuery);
 </pre>
 
 ![separate-line][1] 
@@ -127,52 +168,102 @@ var _objectRTU_RtuList = new function() {}
 (4)    กำหนดส่วนของ DataTable Configuration
 
 <pre class="prettyprint linenums">
-var _objectRTU_RtuList = new function() {
+MainRtuDataTable: function () {
+    // console.log('MainRtuDataTable');
 
-    this.mainRtuDataTable;
+    //------------------------ mainRtuDataTable -----------------------//
+    if (jQuery().dataTable) {
 
-	if (jQuery().dataTable) {
-	    this.mainRtuDataTable = $('#mainRtuDataTable').DataTable( {
-	        "aLengthMenu": [
-	                [5, 10, 15, 25, 50, 100, -1],
-	                [5, 10, 15, 25, 50, 100, "All"]
-	            ],
-	        "iDisplayLength": 5,
-	        "oLanguage": {
-	                "sLengthMenu": "_MENU_ Records per page",
-	                "sInfo": "_START_ - _END_ of _TOTAL_",
-	                "sInfoEmpty": "0 - 0 of 0",
-	                "oPaginate": {
-	                    "sPrevious": "Prev",
-	                    "sNext": "Next"
-	                }
-	        },
-	        "aoColumnDefs": [
-	                {
-	                    'bSortable': true,
-	                    "bAutoWidth": true,
-	                    'aTargets': [0]
-	                },{
-	                    "render": function ( data, type, row ) {
-	                        return "-";
-	                    },
-	                    "targets": 3
-	                }
-	        ],
-	        "order" : [] //disable default sorting, eg sorting on 1st column
-	    });
-	}
-}
+        mainRtuDataTable = $('#mainRtuDataTable').DataTable( {
+            &quot;aLengthMenu&quot;: [
+                    [5, 10, 15, 25, 50, 100, -1],
+                    [5, 10, 15, 25, 50, 100, &quot;All&quot;]
+                ],
+            &quot;iDisplayLength&quot;: 5,
+            &quot;oLanguage&quot;: {
+                    &quot;sLengthMenu&quot;: &quot;_MENU_ Records per page&quot;,
+                    &quot;sInfo&quot;: &quot;_START_ - _END_ of _TOTAL_&quot;,
+                    &quot;sInfoEmpty&quot;: &quot;0 - 0 of 0&quot;,
+                    &quot;oPaginate&quot;: {
+                        &quot;sPrevious&quot;: &quot;Prev&quot;,
+                        &quot;sNext&quot;: &quot;Next&quot;
+                    }
+            },
+            &quot;aoColumnDefs&quot;: [
+                    {
+                        'bSortable': true,
+                        &quot;bAutoWidth&quot;: true,
+                        'aTargets': [0]
+                    }
+            ],
+            &quot;order&quot; : [] //disable default sorting, eg sorting on 1st column
+            
+        });
+    }
+},
 </pre>
+
 
 <br/>
 สังเกตผลลัพธ์...
 ![image](<%= current_page.data.baseURL %>images/categories/Web%20Development/datatable-fig-001.png)
 
+
 ![separate-line][1] 
 
-(5)   เพิ่มปุ่ม Control ![image](<%= current_page.data.baseURL %>images/categories/Web%20Development/datatable-fig-002.png) 
+(5)   เพิ่มปุ่ม Control ![ภาพปุ่ม][4] 
 
+<pre class="prettyprint linenums">
+MainRtuDataTable: function () {
+    // console.log('MainRtuDataTable');
+
+    //------------------------ mainRtuDataTable -----------------------//
+    if (jQuery().dataTable) {
+
+        mainRtuDataTable = $('#mainRtuDataTable').DataTable( {
+            &quot;aLengthMenu&quot;: [
+                    [5, 10, 15, 25, 50, 100, -1],
+                    [5, 10, 15, 25, 50, 100, &quot;All&quot;]
+                ],
+            &quot;iDisplayLength&quot;: 5,
+            &quot;oLanguage&quot;: {
+                    &quot;sLengthMenu&quot;: &quot;_MENU_ Records per page&quot;,
+                    &quot;sInfo&quot;: &quot;_START_ - _END_ of _TOTAL_&quot;,
+                    &quot;sInfoEmpty&quot;: &quot;0 - 0 of 0&quot;,
+                    &quot;oPaginate&quot;: {
+                        &quot;sPrevious&quot;: &quot;Prev&quot;,
+                        &quot;sNext&quot;: &quot;Next&quot;
+                    }
+            },
+            &quot;aoColumnDefs&quot;: [
+                    {
+                        'bSortable': true,
+                        &quot;bAutoWidth&quot;: true,
+                        'aTargets': [0]
+                    }<mark>,{
+                        &quot;render&quot;: function ( data, type, row ) {
+
+                            var tmpListEventControls = &quot;&quot;;
+                            //tmpListEventControls = '&lt;td class=&quot;text-center &quot; style=&quot;vertical-align:middle&quot;&gt;';
+                            tmpListEventControls += '&lt;div class=&quot;btn-group&quot;&gt;';
+                            tmpListEventControls += '&lt;a class=&quot;btn btn-sm show-tooltip&quot; title=&quot;&quot; href=&quot;#&quot; data-original-title=&quot;View&quot;&gt;&lt;i class=&quot;fa fa-search-plus&quot;&gt;&lt;/i&gt;&lt;/a&gt;';
+                            tmpListEventControls += '&lt;a class=&quot;btn btn-sm show-tooltip&quot; title=&quot;&quot; href=&quot;javascript:;&quot; data-original-title=&quot;Edit&quot;&gt;&lt;i class=&quot;fa fa-edit&quot;&gt;&lt;/i&gt;&lt;/a&gt;';
+                            tmpListEventControls += '&lt;a class=&quot;btn btn-sm btn-danger show-tooltip&quot; title=&quot;&quot; href=&quot;#&quot; data-original-title=&quot;Delete&quot;&gt;&lt;i class=&quot;fa fa-trash-o&quot;&gt;&lt;/i&gt;&lt;/a&gt;';
+                            tmpListEventControls += '&lt;/div&gt;';
+                            //tmpListEventControls += '&lt;/td&gt;';
+
+                            return tmpListEventControls;
+                        },
+                        &quot;targets&quot;: 4
+                    },{ 
+                        &quot;sClass&quot;: &quot;EventsManagerDataTable_Controls&quot;, &quot;aTargets&quot;: [4] 
+                    }</mark>
+            ],
+            &quot;order&quot; : [] //disable default sorting, eg sorting on 1st column
+        });
+    }
+},
+</pre>
 
 ![separate-line][1]
 
@@ -187,12 +278,206 @@ var _objectRTU_RtuList = new function() {
 
 ---
 
-## ใช้งานร่วมกับข้อมูลจริง
+## 2. ใช้งานร่วมกับข้อมูลจริง
+![separate-line][1] 
+
+2.1) เพิ่มความสามารถในการเรียกใช้งาน Ajax ให้กับ DataTable
 
 ---
 
+#### 2.1) <ins>เพิ่มความสามารถในการเรียกใช้งาน Ajax ให้กับ DataTable</ins>
 
-[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png ""
-[2]: <%= current_page.data.baseURL %>images/icons/course-syllabus.png "course syllabus"
-[3]: <%= current_page.data.baseURL %>images/icons/idea.png "idea"
+<pre class="prettyprint linenums">
+MainRtuDataTable: function () {
+    // console.log('MainRtuDataTable');
+
+    //------------------------ mainRtuDataTable -----------------------//
+    if (jQuery().dataTable) {
+
+        mainRtuDataTable = $('#mainRtuDataTable').DataTable( {
+<mark>            &quot;processing&quot;: true,
+            &quot;ajax&quot;: {
+                &quot;url&quot;: &quot;../../../../api/rtuManager/listRTUFromBranch.json&quot;,
+                &quot;type&quot;: &quot;GET&quot;,
+                &quot;dataSrc&quot;: &quot;rows&quot;,
+                &quot;success&quot;: function(data) {
+                    console.log(data);
+                },
+                &quot;error&quot;: function(jqXHR, textStatus, errorThrown){
+                    alert('init error: ' + textStatus);
+                }
+            },</mark>
+            &quot;aLengthMenu&quot;: [
+                    [5, 10, 15, 25, 50, 100, -1],
+                    [5, 10, 15, 25, 50, 100, &quot;All&quot;]
+                ],
+            &quot;iDisplayLength&quot;: 5,
+            &quot;oLanguage&quot;: {
+                    &quot;sLengthMenu&quot;: &quot;_MENU_ Records per page&quot;,
+                    &quot;sInfo&quot;: &quot;_START_ - _END_ of _TOTAL_&quot;,
+                    &quot;sInfoEmpty&quot;: &quot;0 - 0 of 0&quot;,
+                    &quot;oPaginate&quot;: {
+                        &quot;sPrevious&quot;: &quot;Prev&quot;,
+                        &quot;sNext&quot;: &quot;Next&quot;
+                    }
+            },
+            &quot;aoColumnDefs&quot;: [
+                    {
+                        'bSortable': true,
+                        &quot;bAutoWidth&quot;: true,
+                        'aTargets': [0]
+                    },{
+                        &quot;render&quot;: function ( data, type, row ) {
+
+                            var tmpListEventControls = &quot;&quot;;
+                            //tmpListEventControls = '&lt;td class=&quot;text-center &quot; style=&quot;vertical-align:middle&quot;&gt;';
+                            tmpListEventControls += '&lt;div class=&quot;btn-group&quot;&gt;';
+                            tmpListEventControls += '&lt;a class=&quot;btn btn-sm show-tooltip&quot; title=&quot;&quot; href=&quot;#&quot; data-original-title=&quot;View&quot;&gt;&lt;i class=&quot;fa fa-search-plus&quot;&gt;&lt;/i&gt;&lt;/a&gt;';
+                            tmpListEventControls += '&lt;a class=&quot;btn btn-sm show-tooltip&quot; title=&quot;&quot; href=&quot;javascript:;&quot; data-original-title=&quot;Edit&quot;&gt;&lt;i class=&quot;fa fa-edit&quot;&gt;&lt;/i&gt;&lt;/a&gt;';
+                            tmpListEventControls += '&lt;a class=&quot;btn btn-sm btn-danger show-tooltip&quot; title=&quot;&quot; href=&quot;#&quot; data-original-title=&quot;Delete&quot;&gt;&lt;i class=&quot;fa fa-trash-o&quot;&gt;&lt;/i&gt;&lt;/a&gt;';
+                            tmpListEventControls += '&lt;/div&gt;';
+                            //tmpListEventControls += '&lt;/td&gt;';
+
+                            return tmpListEventControls;
+                        },
+                        &quot;targets&quot;: 4
+                    },{ 
+                        &quot;sClass&quot;: &quot;EventsManagerDataTable_Controls&quot;, &quot;aTargets&quot;: [4] 
+                    }
+            ],
+            &quot;order&quot; : [] //disable default sorting, eg sorting on 1st column
+            
+        });
+    }
+},
+</pre>
+
+<br/>
+สังเกต ผลจาก Console
+
+#### 2.2) <ins>ใส่ข้อมูลที่ได้จากการเรียก RESTful Web Service</ins>
+
+<pre class="prettyprint linenums">
+{
+  "result": "success",
+  "count": 1701,
+  "rows": [
+    {
+      "dma": "13-02-05",
+      "dm": "DM-13-02-05-01",
+      "ip_address": "10.202.69.65",
+      "logger_code": "SIXNET",
+      "comm_type": "GPRS",
+      "status": "001",
+      "remark": ""
+    },
+    {
+      "dma": "17-05-06",
+      "dm": "DM-17-05-06-01",
+      "ip_address": "10.50.128.58",
+      "logger_code": "WAGO",
+      "comm_type": "GPRS",
+      "status": "001",
+      "remark": ""
+    }
+  ]
+}
+</pre>
+
+<pre class="prettyprint linenums">
+MainRtuDataTable: function () {
+    // console.log('MainRtuDataTable');
+
+    //------------------------ mainRtuDataTable -----------------------//
+    if (jQuery().dataTable) {
+
+        mainRtuDataTable = $('#mainRtuDataTable').DataTable( {
+            &quot;processing&quot;: true,
+            &quot;ajax&quot;: {
+                &quot;url&quot;: &quot;../../../../api/rtuManager/listRTUFromBranch.json&quot;,
+                &quot;type&quot;: &quot;GET&quot;,
+                &quot;dataSrc&quot;: &quot;rows&quot;,
+                // &quot;success&quot;: function(data) {
+                //     console.log(data);
+                // },
+                // &quot;error&quot;: function(jqXHR, textStatus, errorThrown){
+                //     alert('init error: ' + textStatus);
+                // }
+            },
+            &quot;aLengthMenu&quot;: [
+                    [5, 10, 15, 25, 50, 100, -1],
+                    [5, 10, 15, 25, 50, 100, &quot;All&quot;]
+                ],
+            &quot;iDisplayLength&quot;: 5,
+            &quot;oLanguage&quot;: {
+                    &quot;sLengthMenu&quot;: &quot;_MENU_ Records per page&quot;,
+                    &quot;sInfo&quot;: &quot;_START_ - _END_ of _TOTAL_&quot;,
+                    &quot;sInfoEmpty&quot;: &quot;0 - 0 of 0&quot;,
+                    &quot;oPaginate&quot;: {
+                        &quot;sPrevious&quot;: &quot;Prev&quot;,
+                        &quot;sNext&quot;: &quot;Next&quot;
+                    }
+            },
+            &quot;aoColumnDefs&quot;: [
+                    {
+                        'bSortable': true,
+                        &quot;bAutoWidth&quot;: true,
+                        'aTargets': [0]
+                    },<mark>{
+                        // The `data` parameter refers to the data for the cell (defined by the
+                        // `data` option, which defaults to the column being worked with, in
+                        // this case `data: 0`.
+                        &quot;render&quot;: function ( data, type, row ) {
+                            //return '&lt;input type=&quot;checkbox&quot; /&gt;';
+                            return row.dm;
+                        },
+                        &quot;targets&quot;: 0
+                    },{
+                        &quot;render&quot;: function ( data, type, row ) {
+                            return '-';
+                        },
+                        &quot;targets&quot;: 1
+                    },{
+                        &quot;render&quot;: function ( data, type, row ) {
+                            return row.ip_address;
+                        },
+                        &quot;targets&quot;: 2
+                    },{
+                        &quot;render&quot;: function ( data, type, row ) {
+                            return '-';
+                        },
+                        &quot;targets&quot;: 3
+                    },</mark>{
+                        &quot;render&quot;: function ( data, type, row ) {
+
+                            var tmpListEventControls = &quot;&quot;;
+                            //tmpListEventControls = '&lt;td class=&quot;text-center &quot; style=&quot;vertical-align:middle&quot;&gt;';
+                            tmpListEventControls += '&lt;div class=&quot;btn-group&quot;&gt;';
+                            tmpListEventControls += '&lt;a class=&quot;btn btn-sm show-tooltip&quot; title=&quot;&quot; href=&quot;#&quot; data-original-title=&quot;View&quot;&gt;&lt;i class=&quot;fa fa-search-plus&quot;&gt;&lt;/i&gt;&lt;/a&gt;';
+                            tmpListEventControls += '&lt;a class=&quot;btn btn-sm show-tooltip&quot; title=&quot;&quot; href=&quot;javascript:;&quot; data-original-title=&quot;Edit&quot;&gt;&lt;i class=&quot;fa fa-edit&quot;&gt;&lt;/i&gt;&lt;/a&gt;';
+                            tmpListEventControls += '&lt;a class=&quot;btn btn-sm btn-danger show-tooltip&quot; title=&quot;&quot; href=&quot;#&quot; data-original-title=&quot;Delete&quot;&gt;&lt;i class=&quot;fa fa-trash-o&quot;&gt;&lt;/i&gt;&lt;/a&gt;';
+                            tmpListEventControls += '&lt;/div&gt;';
+                            //tmpListEventControls += '&lt;/td&gt;';
+
+                            return tmpListEventControls;
+                        },
+                        &quot;targets&quot;: 4
+                    },{ 
+                        &quot;sClass&quot;: &quot;EventsManagerDataTable_Controls&quot;, &quot;aTargets&quot;: [4] 
+                    }
+            ],
+            &quot;order&quot; : [] //disable default sorting, eg sorting on 1st column
+            
+        });
+    }
+
+},
+</pre>
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/icons/course-syllabus.png
+[3]: <%= current_page.data.baseURL %>images/icons/idea.png
+
+[4]: <%= current_page.data.baseURL %>images/categories/Web%20Development/datatable-fig-002.png
 

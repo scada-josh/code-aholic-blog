@@ -1,0 +1,102 @@
+# การสร้าง RESTful Web Service สำหรับดึงข้อมูล RTU จากระบบ WLMA
+![separate line][1]	
+
+> Note : 
+> 
+> 1. ทดสอบ sql statement
+> 2. สร้าง RESTful Web Service อย่างง่าย ขึ้นมาเพื่อทดสอบการับ-ส่ง ข้อมูล
+> 3. เชื่อมต่อฐานข้อมูล DB2
+
+---
+
+<br/>
+
+## ทดสอบ SQL Statement
+![separate line][1]	
+
+<pre class="prettyprint linenums">
+SELECT  CORE_AREA_meter.area_code AS DMA, 
+	CORE_AREA_meter.meter_code AS DM, 
+	iim_equip.IP_ADDRESS AS IPaddress, 
+	iim_equip.LOGGER_CODE AS LoggerCode, 
+	iim_equip.STATUS AS Status, 
+	iim_equip.REMARK AS Remark
+FROM  CORE_AREA_meter, iim_equip
+WHERE CORE_AREA_meter.meter_code = iim_equip.equip_code
+</pre>
+
+![ภาพแสดงหน้าจอโปรแกรม Aqua Data Studio 4.5.2][4]
+<p class="text-center"> <strong> <ins>ภาพแสดง</ins> <i>หน้าจอโปรแกรม Aqua Data Studio 4.5.2</i></strong> </p>
+
+---
+
+<br/>
+
+## สร้าง RESTful Web Service อย่างง่าย ขึ้นมา
+![separate line][1]	
+
+<pre class="prettyprint linenums">
+$app->get('/rtuManager/listRTUFromBranch/',function() use ($app, $pdo, $conn_db2, $key) { listRTUFromBranch($app, $pdo, $conn_db2, $key); });
+</pre>
+
+
+<pre class="prettyprint linenums">
+/* RTU Manager Partial */
+&lt;%= partial &quot;/RtuManager/_informationOnload&quot; %&gt;
+<mark>&lt;%= partial &quot;/RtuManager/_listRTUFromBranch&quot; %&gt;</mark>;
+</pre>
+
+<pre class="prettyprint linenums">
+/**
+*
+* @apiName <mark>ListRTUFromBranch</mark>
+* @apiGroup <mark>RTU Manager</mark>
+* @apiVersion 0.1.0
+*
+* @api {get} <mark>/rtuManager/listRTUFromBranch/</mark> List RTU From Branch
+* @apiDescription คำอธิบาย : ในส่วนนี้จะมีหน้าที่แสดงรายการข้อมูล RTU จำแนกตามประปาสาขา
+*
+*
+*
+* @apiSampleRequest <mark>/rtuManager/listRTUFromBranch/</mark>
+*
+* @apiSuccess {String} msg แสดงข้อความทักทายผู้ใช้งาน
+*
+* @apiSuccessExample Example data on success:
+* {
+*   "msg": "Hello, anusorn"
+* }
+*
+* @apiError UserNotFound The <code>id</code> of the User was not found.
+* @apiErrorExample {json} Error-Response:
+*     HTTP/1.1 404 Not Found
+*     {
+*       "error": "UserNotFound"
+*     }
+*
+*/
+
+function listRTUFromBranch($app, $pdo, $conn_db2, $key) {
+
+	$return_m = array("msg" => "สวัสดี");
+
+	$app->response()->header("Content-Type", "application/json");
+	echo json_encode($return_m);
+
+};
+</pre>
+
+**Build MiddlemanApp :** $`bundle exec middleman build --verbose`
+
+**Build ApiDoc :** $`apidoc -i ./ -o apidoc/`
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png
+
+[4]: <%= current_page.data.baseURL %>images/categories/Project%20-%20RMR/creating-restful-for-consume-rtu-information-001.png
+
+
+
+

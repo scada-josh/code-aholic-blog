@@ -1,0 +1,73 @@
+# เอกสารการออกแบบและพัฒนา RESTful Web Service
+![separate line][1]	
+
+## RESTful Web Service Dictionary
+![separate line][1]	
+
+**RESTful Web Service Dictionary หรือ พจนานุกรม RESTful Web Service** คือ ชุดคำอธิบาย RESTful Web Service ต่างๆที่ได้ถูกจัดเก็บไว้ในระบบ RMR เพื่อใช้ในการอ้างอิงและระบุข้อมูล โดยนอกจากจะอธิบายถึง RESTful Web Service ที่ถูกสร้างขึ้น 
+
+<br/>
+
+
+
+<h3><p class="text-center"> <strong><i><ins>RESTful Web Service Dictionary</ins></i></strong> </p></h3>
+
+
+#### baseURL : `http://localhost/rmr/build/src/api`
+
+
+
+
+<table class="table table-striped table-bordered" > 
+    <thead> 
+        <tr> 
+            <th class="text-center" style="width: 50px">Method</th> 
+            <th>URL</th> 
+            <th>Description</th>
+        </tr> 
+    </thead> 
+    <tbody> 
+        <tr> 
+            <td class="text-center"><span class="label label-success"> &nbsp; POST &nbsp; </span></td> 
+            <td><a href="#listRTUFromBranch">/listRTUFromBranch</a></td> 
+            <td>ข้อมูลรายละเอียดพื้นฐานเกี่ยวกับ RTU</td> 
+        </tr> 
+        <tr> 
+            <td class="text-center"><span class="label label-primary " > &nbsp;&nbsp; GET &nbsp;&nbsp;</span></td> 
+            <td>/token</td> 
+            <td>ข้อมูลรายละเอียดพื้นฐานเกี่ยวกับ RTU</td> 
+        </tr> 
+        <tr> 
+            <td class="text-center"><span class="label label-primary">DELETE</span></td> 
+            <td>/token</td> 
+            <td>ข้อมูลรายละเอียดพื้นฐานเกี่ยวกับ RTU</td> 
+        </tr> 
+        <tr> 
+            <td class="text-center"><span class="label label-primary">&nbsp;&nbsp; PUT &nbsp;&nbsp;</span></td> 
+            <td>/token</td> 
+            <td>ข้อมูลรายละเอียดพื้นฐานเกี่ยวกับ RTU</td> 
+        </tr> 
+        
+    </tbody> 
+</table>
+
+<br/>
+
+## <span class="label label-primary" id="listRTUFromBranch">GET</span> listRTUFromBranch
+![separate line][1]	
+
+
+[![ภาพ Flowchart ของ Service "listRTUFromBranch"][4]](){: .fancybox-button 
+							data-fancybox-group="button" 
+							href="<%= current_page.data.baseURL %>/images/categories/Project - RMR/restful-web-service-design-and-documentation-001.png"}
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png
+
+[4]: <%= current_page.data.baseURL %>images/categories/Project%20-%20RMR/restful-web-service-design-and-documentation-001.png
+
+
+

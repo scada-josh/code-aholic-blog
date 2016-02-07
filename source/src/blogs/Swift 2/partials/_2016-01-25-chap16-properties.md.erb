@@ -47,8 +47,19 @@ var population = 5422
 #### **Adding a region constant (Town.swift)**
 <pre class="prettyprint linenums">
 struct Town {
-    <mark>    let region = "South"</mark>    var population = 5422    var numberOfStoplights = 4
-        func printTownDescription() {        print("Population: \(population) number of stoplights: \(numberOfStoplights)");    }        mutating func changePopulation(amount: Int) {        population += amount    }}
+    
+<mark>    let region = "South"</mark>
+    var population = 5422
+    var numberOfStoplights = 4
+    
+    func printTownDescription() {
+        print("Population: \(population) number of stoplights: \(numberOfStoplights)");
+    }
+    
+    mutating func changePopulation(amount: Int) {
+        population += amount
+    }
+}
 </pre>
 
 
@@ -69,10 +80,25 @@ struct Town {
 
 #### **Setting up the Size enum(Town.swift)**
 <pre class="prettyprint linenums">
-struct Town {    let region = "South"    var population = 5422    var numberOfStoplights = 4
-    <mark>    enum Size {        case Small        case Medium        case Large
+struct Town {
+    let region = "South"
+    var population = 5422
+    var numberOfStoplights = 4
+    
+<mark>    enum Size {
+        case Small
+        case Medium
+        case Large
     }</mark>
-        func printTownDescription() {        print("Population: \(population) number of stoplights: \(numberOfStoplights)");    }        mutating func changePopulation(amount: Int) {        population += amount    }}
+    
+    func printTownDescription() {
+        print("Population: \(population) number of stoplights: \(numberOfStoplights)");
+    }
+    
+    mutating func changePopulation(amount: Int) {
+        population += amount
+    }
+}
 </pre>
 
 
@@ -100,7 +126,16 @@ struct Town {
     }
     
 <mark>    lazy var townSize: Size = {
-                switch self.population {        case 0...10000:            return Size.Small        case 10001...100000:            return Size.Medium        default:            return Size.Large        }    }()</mark>
+        
+        switch self.population {
+        case 0...10000:
+            return Size.Small
+        case 10001...100000:
+            return Size.Medium
+        default:
+            return Size.Large
+        }
+    }()</mark>
     
     func printTownDescription() {
         print("Population: \(population) number of stoplights: \(numberOfStoplights)");
@@ -141,7 +176,9 @@ The self reference in this line is important and we will return to it in a momen
 
 #### **Using the lazy town Size property(main.swift)**
 <pre class="prettyprint linenums">
-var myTown = Town()let ts = myTown.townSizeprint(ts)
+var myTown = Town()
+let ts = myTown.townSize
+print(ts)
 </pre>
 
 ---

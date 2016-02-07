@@ -28,6 +28,84 @@
 ## เพิ่ม User Interface
 ![separate line][1]	
 
+
+#### <ins>Validation required field (ห้ามเป็นค่าว่าง)</ins>
+<pre class="prettyprint linenums">
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;firstname2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;First Name&lt;/label&gt;
+    &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;firstname2&quot; id=&quot;firstname2&quot; class=&quot;form-control&quot; <mark>data-rule-required=&quot;true&quot;</mark>&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+#### <ins>Validation minlength (กำหนดจำนวนตัวอักษรที่ต้องใส่)</ins>
+<pre class="prettyprint linenums">
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;username2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Username&lt;/label&gt;
+    &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;username2&quot; id=&quot;username2&quot; class=&quot;form-control&quot; data-rule-required=&quot;true&quot; <mark>data-rule-minlength=&quot;3&quot;</mark>&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+#### <ins>Validation equalTo (ระบุต้องเท่ากับ div id ที่เราระบุ)</ins>
+<pre class="prettyprint linenums">
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;re-password2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Password Again&lt;/label&gt;
+    &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+        &lt;input type=&quot;password&quot; name=&quot;re-password2&quot; id=&quot;re-password2&quot; class=&quot;form-control&quot; data-rule-required=&quot;true&quot; data-rule-minlength=&quot;6&quot; <mark>data-rule-equalTo=&quot;#password2&quot;</mark>&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+#### <ins>Validation email (ต้องใส Email เท่านั้น)</ins>
+<pre class="prettyprint linenums">
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;email2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Email&lt;/label&gt;
+    &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;email2&quot; id=&quot;email2&quot; class=&quot;form-control&quot; data-rule-required=&quot;true&quot; <mark>data-rule-email=&quot;true&quot;</mark>&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+#### <ins>การใช้งาน TextArea field</ins>
+<pre class="prettyprint linenums">
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;textarea2&quot; class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;More info&lt;/label&gt;
+    &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+        <mark>&lt;textarea name=&quot;textarea2&quot; id=&quot;textarea2&quot; rows=&quot;5&quot; class=&quot;form-control&quot;&gt;&lt;/textarea&gt;</mark>
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+#### <ins>การใช้งาน Radio field</ins>
+<pre class="prettyprint linenums">
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;Gender&lt;/label&gt;
+    &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+        &lt;label class=&quot;radio-inline&quot;&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;gender&quot;&gt; Male
+        &lt;/label&gt;
+        &lt;label class=&quot;radio-inline&quot;&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;gender&quot;&gt; Female
+        &lt;/label&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+#### <ins>การใช้งาน Label field</ins>
+<pre class="prettyprint linenums">
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label class=&quot;col-sm-3 col-lg-2 control-label&quot;&gt;IP Address : &lt;/label&gt;
+    &lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+        &lt;span class=&quot;text&quot;&gt;10.102.13.24&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+<br/>
+
 <pre class="prettyprint linenums">
 &lt;div class=&quot;row canvas-rtuInformation&quot; id=&quot;canvas-rtuInformation-add&quot; style=&quot;display:none&quot;&gt;
     &lt;div class=&quot;col-md-12&quot;&gt;
@@ -40,8 +118,8 @@
                 &lt;/div&gt;
             &lt;/div&gt;
             &lt;div class=&quot;box-content&quot;&gt;
-                &lt;form action=&quot;#&quot; class=&quot;form-horizontal&quot; id=&quot;<mark>wizard-validation</mark>&quot;&gt;
-                   &lt;div class=&quot;form-wizard&quot; id=&quot;<mark>form-wizard-2</mark>&quot;&gt;
+                &lt;form action=&quot;#&quot; class=&quot;form-horizontal&quot; id=&quot;<mark>form-wizard-rtuList-validation</mark>&quot;&gt;
+                   &lt;div class=&quot;form-wizard&quot; id=&quot;<mark>form-wizard-rtuList</mark>&quot;&gt;
                       &lt;ul class=&quot;row steps steps-fill&quot;&gt;
                          &lt;li class=&quot;col-xs-12 col-sm-6 col-lg-3&quot;&gt;
                             &lt;a href=&quot;#tab2-1&quot; data-toggle=&quot;tab&quot; class=&quot;step active&quot;&gt;
@@ -198,7 +276,7 @@
 
 จะเห็นว่า เราสร้าง Form Wizard แบบมีการตรวจสอบความถูกต้อง(validate) ของข้อมูลด้วย
 
-เรากำหนด id ให้ 2 จุด คือ `wizard-validation`, `form-wizard-2`
+เรากำหนด id ให้ 2 จุด คือ `form-wizard-rtuList-validation`, `#form-wizard-rtuList`
 
 
 ![separate line][1]	
@@ -212,7 +290,7 @@
             var removeSuccessClass = function(e) {
                 $(e).closest('.form-group').removeClass('has-success');
             }
-            var jq_validator = $('#wizard-validation').validate({
+            var jq_validator = $('<mark>#form-wizard-rtuList-validation</mark>').validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
                 errorPlacement: function(error, element) {
@@ -244,7 +322,7 @@
         }
         
         //Look at onNext function to see how add validation to wizard
-        $('#form-wizard-2').bootstrapWizard({
+        $('<mark>#form-wizard-rtuList</mark>').bootstrapWizard({
             'nextSelector': '.button-next',
             'previousSelector': '.button-previous',
             onTabClick: function (tab, navigation, index) {
@@ -252,7 +330,7 @@
                 return false;
             },
             onNext: function (tab, navigation, index) {
-                var valid = $("#wizard-validation").valid();
+                var valid = $("<mark>#form-wizard-rtuList-validation</mark>").valid();
                 if(!valid) {
                     jq_validator.focusInvalid();
                     return false;
@@ -261,74 +339,74 @@
                 var total = navigation.find('li').length;
                 var current = index + 1;
                 // set wizard title
-                $('.step-title', $('#form-wizard-2')).text('Step ' + (index + 1) + ' of ' + total);
+                $('.step-title', $('<mark>#form-wizard-rtuList</mark>')).text('Step ' + (index + 1) + ' of ' + total);
                 // set done steps
-                jQuery('li', $('#form-wizard-2')).removeClass("done");
+                jQuery('li', $('<mark>#form-wizard-rtuList</mark>')).removeClass("done");
                 var li_list = navigation.find('li');
                 for (var i = 0; i < index; i++) {
                     jQuery(li_list[i]).addClass("done");
                 }
 
                 if (current == 1) {
-                    $('#form-wizard-2').find('.button-previous').hide();
+                    $('<mark>#form-wizard-rtuList</mark>').find('.button-previous').hide();
                 } else {
-                    $('#form-wizard-2').find('.button-previous').show();
+                    $('<mark>#form-wizard-rtuList</mark>').find('.button-previous').show();
                 }
 
                 if (current >= total) {
-                    $('#form-wizard-2').find('.button-next').hide();
-                    $('#form-wizard-2').find('.button-submit').show();
+                    $('<mark>#form-wizard-rtuList</mark>').find('.button-next').hide();
+                    $('<mark>#form-wizard-rtuList</mark>').find('.button-submit').show();
                 } else {
-                    $('#form-wizard-2').find('.button-next').show();
-                    $('#form-wizard-2').find('.button-submit').hide();
+                    $('<mark>#form-wizard-rtuList</mark>').find('.button-next').show();
+                    $('<mark>#form-wizard-rtuList</mark>').find('.button-submit').hide();
                 }
                 var $percent = (current / total) * 100;
-                $('#form-wizard-2').find('.progress-bar').css('width', $percent+'%');
+                $('<mark>#form-wizard-rtuList</mark>').find('.progress-bar').css('width', $percent+'%');
 
-                $('html, body').animate({scrollTop: $("#form-wizard-2").offset().top}, 900);
+                $('html, body').animate({scrollTop: $("<mark>#form-wizard-rtuList</mark>").offset().top}, 900);
             },
             onPrevious: function (tab, navigation, index) {
                 var total = navigation.find('li').length;
                 var current = index + 1;
                 // set wizard title
-                $('.step-title', $('#form-wizard-2')).text('Step ' + (index + 1) + ' of ' + total);
+                $('.step-title', $('<mark>#form-wizard-rtuList</mark>')).text('Step ' + (index + 1) + ' of ' + total);
                 // set done steps
-                jQuery('li', $('#form-wizard-2')).removeClass("done");
+                jQuery('li', $('<mark>#form-wizard-rtuList</mark>')).removeClass("done");
                 var li_list = navigation.find('li');
                 for (var i = 0; i < index; i++) {
                     jQuery(li_list[i]).addClass("done");
                 }
 
                 if (current == 1) {
-                    $('#form-wizard-2').find('.button-previous').hide();
+                    $('<mark>#form-wizard-rtuList</mark>').find('.button-previous').hide();
                 } else {
-                    $('#form-wizard-2').find('.button-previous').show();
+                    $('<mark>#form-wizard-rtuList</mark>').find('.button-previous').show();
                 }
 
                 if (current >= total) {
-                    $('#form-wizard-2').find('.button-next').hide();
-                    $('#form-wizard-2').find('.button-submit').show();
+                    $('<mark>#form-wizard-rtuList</mark>').find('.button-next').hide();
+                    $('<mark>#form-wizard-rtuList</mark>').find('.button-submit').show();
                 } else {
-                    $('#form-wizard-2').find('.button-next').show();
-                    $('#form-wizard-2').find('.button-submit').hide();
+                    $('<mark>#form-wizard-rtuList</mark>').find('.button-next').show();
+                    $('<mark>#form-wizard-rtuList</mark>').find('.button-submit').hide();
                 }
                 var $percent = (current / total) * 100;
-                $('#form-wizard-2').find('.progress-bar').css('width', $percent+'%');
+                $('<mark>#form-wizard-rtuList</mark>').find('.progress-bar').css('width', $percent+'%');
 
-                $('html, body').animate({scrollTop: $("#form-wizard-2").offset().top}, 900);
+                $('html, body').animate({scrollTop: $("<mark>#form-wizard-rtuList</mark>").offset().top}, 900);
             },
             onTabShow: function (tab, navigation, index) {
                 var total = navigation.find('li').length;
                 var current = index + 1;
                 var $percent = (current / total) * 100;
-                $('#form-wizard-2').find('.progress-bar').css({
+                $('<mark>#form-wizard-rtuList</mark>').find('.progress-bar').css({
                     width: $percent + '%'
                 });
             }
         });
 
-        $('#form-wizard-2').find('.button-previous').hide();
-        $('#form-wizard-2 .button-submit').click(function () {
+        $('<mark>#form-wizard-rtuList</mark>').find('.button-previous').hide();
+        $('<mark>#form-wizard-rtuList</mark> .button-submit').click(function () {
             alert('Finished!');
         }).hide();
     }

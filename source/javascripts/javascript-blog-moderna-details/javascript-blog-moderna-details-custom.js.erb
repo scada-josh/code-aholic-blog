@@ -11,4 +11,53 @@ $(document).ready(function(){
     $('div.tables-begin').nextUntil('div.tables-end', 'table')
     					 .addClass('table table-bordered')
     					 .css( "background-color", "red" );
+
+    $("a#single_image").fancybox({
+    	closeBtn  : false,
+    	width		: '100%',
+    	maxWidth	: 800
+    });
+
+	/*
+	 *  Button helper. Disable animations, hide close button, change title type and content
+	 */
+
+	$('.fancybox-buttons').fancybox({
+		openEffect  : 'none',
+		closeEffect : 'none',
+
+		prevEffect : 'none',
+		nextEffect : 'none',
+
+		closeBtn  : false,
+
+		width		: '100%',
+    	maxWidth	: 1000,
+
+		helpers : {
+			title : {
+				type : 'inside'
+			},
+			buttons	: {}
+		},
+
+		afterLoad : function() {
+			this.title = 'Image ' + (this.index + 1) + ' of ' + this.group.length + (this.title ? ' - ' + this.title : '');
+		}
+	});
+
+	$(".fancybox-button").fancybox({
+		prevEffect		: 'none',
+		nextEffect		: 'none',
+		closeBtn		: false,
+
+		width		: '100%',
+    	maxWidth	: 1000,
+    	
+		helpers		: {
+			title	: { type : 'inside' },
+			buttons	: {}
+		}
+	});
+
 });
