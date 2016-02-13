@@ -1,802 +1,109 @@
-# Create a beautiful iOS Swift App from Start to Finished
-![separate line][1]	
-
-
-
-[![ภาพแสดงโปรเจ็ค Overview][7]](){: .fancybox-button 
-							data-fancybox-group="overview-001" 
-							href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-001-thumbnail.png"}
-
-
-
-
-## Section: 3 <br/>- Step 1: Storing information using CoreData
-![separate line][1]	
-
-### <ins>Lecture 7</ins> : A closer look at the data model
-
-ความสัมพันธ์ คือ : 1 `author` **(To One)** สามารถสร้างได้หลาย `quote` **(To Many)**
-
-[![ภาพแสดงการสร้าง Coredata สำหรับใช้งานโปรเจ็คนี้][8]](){: .fancybox-button 
-							data-fancybox-group="data-model-002" 
-							href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-002.png"}
-
-- - -
-
-####ไฟล์ `QuotesToGo-Bridging-Header.h`
-
-<pre class="prettyprint linenums">
-//
-//  Use this file to import your target's public headers that you would like to expose to Swift.
-//
-
-#import "Quote.h"
-#import "Author.h"
-</pre>
-
-
-- - -
-
-####ไฟล์ `AppDelegate.swift`
-
-<pre class="prettyprint linenums">
-import UIKit
-import CoreData
-
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-
-        
-        return true
-    }
-
-    func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
-
-    func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
-    func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-
-    }
-
-    func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
-        self.saveContext()
-    }
-
-    // MARK: - Core Data stack
-    
-    lazy var applicationDocumentsDirectory: NSURL = {
-        // The directory the application uses to store the Core Data store file. This code uses a directory in the application's documents Application Support directory.
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1]
-        }()
-    
-    lazy var managedObjectModel: NSManagedObjectModel = {
-        // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = NSBundle.mainBundle().URLForResource("QuotesToGo", withExtension: "momd")!
-        return NSManagedObjectModel(contentsOfURL: modelURL)!
-        }()
-    
-    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
-        // Create the coordinator and store
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("QuotesCoreData.sqlite")
-        var failureReason = "There was an error creating or loading the application's saved data."
-        do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
-        } catch {
-            // Report any error we got.
-            var dict = [String: AnyObject]()
-            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
-            dict[NSLocalizedFailureReasonErrorKey] = failureReason
-            
-            dict[NSUnderlyingErrorKey] = error as NSError
-            let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
-            // Replace this with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
-            abort()
-        }
-        
-        return coordinator
-        }()
-    
-    lazy var managedObjectContext: NSManagedObjectContext = {
-        // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
-        let coordinator = self.persistentStoreCoordinator
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = coordinator
-        return managedObjectContext
-        }()
-    
-    // MARK: - Core Data Saving support
-    
-    func saveContext () {
-        if managedObjectContext.hasChanges {
-            do {
-                try managedObjectContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
-                abort()
-            }
-        }
-    }
-    
-}
-</pre>
-
-
-### <ins>Lecture 8</ins> : Be lazy: Creating a CoreData helper class
-
-สร้างไฟล์ `CoreDataHelper.swift`, **File > New > File... (⌘ + N)**
-
-[![ภาพแสดงการสร้าง ไฟล์ CoreDataHelper][9]](){: .fancybox-button 
-							data-fancybox-group="core-data-001" 
-							href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-003.png"}
-
-
-####ไฟล์ `CoreDataHelper.swift`
-
-<pre class="prettyprint linenums">
-import UIKit
-import CoreData
-
-class CoreDataHelper: NSObject {
-
-    class func <mark>managedObjectContext()</mark> -> NSManagedObjectContext {
-        return (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-    }
-    
-    class func <mark>insertManagedObject</mark> (className: NSString, managedObjectContext: NSManagedObjectContext)->AnyObject {
-        let managedObject = NSEntityDescription.insertNewObjectForEntityForName(className as String, inManagedObjectContext: managedObjectContext)
-        
-        return managedObject
-    }
-    
-    class func <mark>fetchEntities</mark> (className: NSString, managedObjectContext: NSManagedObjectContext, predicate: NSPredicate?, sortDescriptor: NSSortDescriptor? ) -> NSArray {
-        
-        let fetchRequest = NSFetchRequest()
-        let entityDescription = NSEntityDescription.entityForName(className as String, inManagedObjectContext: managedObjectContext)
-        
-        fetchRequest.entity = entityDescription
-        
-        if predicate != nil {
-            fetchRequest.predicate = predicate!
-        }
-        
-        if sortDescriptor != nil {
-            fetchRequest.sortDescriptors = [sortDescriptor!]
-        }
-        
-        var items = []
-        
-        do {
-            try items = managedObjectContext.executeFetchRequest(fetchRequest)
-        } catch {
-            print(error)
-        }
-        
-        return items
-    }
-    
-}
-
-</pre>
+<%= partial blog_dir + "Udemy Course Lecture/partials/_temp" %>
 
 ---
 
-<br/>
+[![ภาพแสดง ผลลัพธ์ที่ต้องการทำ][23]](){: .fancybox-button 
+                            data-fancybox-group="lecture22-003" 
+                            href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-017.png"}
+                            
+สิ่งที่จะทำต่อไปคือ 
 
-## Section: 4 <br/>- Step 2: Displaying and Saving random Quotes
-![separate line][1]	
+1. กำหนด delegate ให้กับ TextView และเพิ่ม Line spacing ให้เป็น 9 ด้วย
+2. ถ้ามีการเปลี่ยนแปลงค่าใน `quoteTextView.text` ให้บันทึกลงฐานข้อมูล CoreData ด้วย ในจังหวะ `viewWillDisappear(animated: Bool)`
 
-### <ins>Lecture 9</ins> : Using a plist as datasource
-
-[![ภาพแสดง ไฟล์ DailyQuotes.plist][10]](){: .fancybox-button 
-							data-fancybox-group="plist-001" 
-							href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-004.png"}
-
- 
- <br/>
- 
-#### ไฟล์ `WelcomeViewController.swift`
-
+#### ไฟล์ `QuoteViewController.swift`
 <pre class="prettyprint linenums">
-//
-//  WelcomeViewController.swift
-//  QuotesToGo
-//
-
 import UIKit
-import CoreData
 
-class WelcomeViewController: UIViewController {
+class QuoteViewController: UIViewController, <mark>UITextViewDelegate</mark>, <mark>NSLayoutManagerDelegate</mark> {
+    
+    @IBOutlet weak var borderView: UIView!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var authorNameLabel: UILabel!
+    @IBOutlet weak var quoteTextView: UITextView!
+    @IBOutlet weak var authorImageView: UIImageView!
+    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet weak var authorBackgroundImageView: UIImageView!
+    @IBOutlet weak var smallBookmarkTopConstraint: NSLayoutConstraint!
+    
+    <mark>var moc: NSManagedObjectContext!</mark>
+    var quote: Quote!
 
-    @IBOutlet weak var ribbon: UIImageView!
-    @IBOutlet weak var dailyQuoteTextView: UITextView!    
-    @IBOutlet weak var dailyQuoteAuthor: UILabel!
-    @IBOutlet weak var getStartedButton: UIButton!
-    @IBOutlet weak var saveQuoteButton: UIButton!
-    
-<mark>    var randomQuote: NSArray!</mark>
-    
-    // Constraint outlets for animation
-    @IBOutlet weak var quoteToGoLabelCenterYConstraint: NSLayoutConstraint!
-    @IBOutlet weak var quoteWidthConstraint: NSLayoutConstraint!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-<mark>        if let path = NSBundle.mainBundle().pathForResource("DailyQuotes", ofType: "plist") {
-            randomQuote = NSArray(contentsOfFile: path)
-        }</mark>
-
-    }
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        setQuoteInformation()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-}
-</pre>
-
-
-### <ins>Lecture 10</ins> : Display a random quote
-
-
-
-<pre class="prettyprint linenums">
-//
-//  WelcomeViewController.swift
-//  QuotesToGo
-//
-
-import UIKit
-import CoreData
-
-class WelcomeViewController: UIViewController {
-
-    @IBOutlet weak var ribbon: UIImageView!
-    @IBOutlet weak var dailyQuoteTextView: UITextView!    
-    @IBOutlet weak var dailyQuoteAuthor: UILabel!
-    @IBOutlet weak var getStartedButton: UIButton!
-    @IBOutlet weak var saveQuoteButton: UIButton!
-    
-    var randomQuote: NSArray!
-<mark>    var selectedRandomQuote:Dictionary<String, String>!</mark>
-    
-    // Constraint outlets for animation
-    @IBOutlet weak var quoteToGoLabelCenterYConstraint: NSLayoutConstraint!
-    @IBOutlet weak var quoteWidthConstraint: NSLayoutConstraint!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+<mark>    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        if let path = NSBundle.mainBundle().pathForResource("DailyQuotes", ofType: "plist") {
-            randomQuote = NSArray(contentsOfFile: path)
-            print(randomQuote)
+        if quoteTextView.text != quote.content {
+            quote.content = quoteTextView.text
+            
+            try! moc.save()
         }
-
-    }
-    
-<mark>    func chooseRandomQuote() {
-        let randomQuoteIndex = Int(arc4random_uniform(UInt32(randomQuote.count)))
-        
-        selectedRandomQuote = randomQuote.objectAtIndex(randomQuoteIndex) as! Dictionary<String,String>
-        dailyQuoteAuthor.text = selectedRandomQuote["author"]
-        dailyQuoteTextView.text = selectedRandomQuote["quote"]
-        
     }</mark>
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-<mark>        chooseRandomQuote()</mark>
-        
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
-}
-</pre>
-
----
-
-<br/>
-
-### <ins>Lecture 11</ins> : One textview fits all: a custom UITextView class
-
-สร้างไฟล์ `QuoteTextView.swift`, **File > New > File... (⌘ + N)**
-
-[![ภาพแสดงการสร้างไฟล์ QuoteTextView.swift ขึ้นมาใหม่][14]](){: .fancybox-button 
-							data-fancybox-group="lecture11-004" 
-							href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-008.png"}
-
-<br/>							
-							
-[![ภาพแสดง ก่อนและหลังพัฒนา (สิ่งที่อยากจะทำใน Lectur 11)][11]](){: .fancybox-button 
-							data-fancybox-group="lecture11-001" 
-							href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-005.png"}
-
-<br/>
-
-[![ภาพแสดง แอตทริบิว AutoLayout ของ UITextView][12]](){: .fancybox-button 
-							data-fancybox-group="lecture11-002" 
-							href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-006.png"}
-
-<br/>
-
-กำหนด Constraint : `height` ให้กับ dailyQuoteTextView ที่มีชนิดเป็น UITextView							
-										
-#### ไฟล์ `QuoteTextView.swift`
-
-<pre class="prettyprint linenums">
-import UIKit
-
-class QuoteTextView: UITextView {
-
-    var heightConstraint:NSLayoutConstraint?
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.needsUpdateConstraints()
-    }
-    
-    override func updateConstraints() {
-        
-        let size = self.sizeThatFits(CGSizeMake(self.bounds.width, CGFloat(FLT_MAX)))
-        
-        if(self.heightConstraint == nil) {
-            
-            heightConstraint = NSLayoutConstraint(item: self,
-                                                  attribute: NSLayoutAttribute.Height,
-                                                  relatedBy: NSLayoutRelation.Equal,
-                                                  toItem: nil,
-                                                  attribute: NSLayoutAttribute.NotAnAttribute,
-                                                  multiplier: CGFloat(1),
-                                                  constant: size.height)
-            
-            self.addConstraint(heightConstraint!)
-        }
-        
-        heightConstraint!.constant = size.height
-        
-        super.updateConstraints()
-    }
-    
-}
-</pre>
-
-<br/>
-
-#### ไฟล์ `WelcomeViewController.swift`
-
-<pre class="prettyprint linenums">
-import UIKit
-import CoreData
-
-class WelcomeViewController: UIViewController {
-
-    @IBOutlet weak var ribbon: UIImageView!
-    @IBOutlet weak var dailyQuoteTextView: <mark>QuoteTextView!</mark>
-    @IBOutlet weak var dailyQuoteAuthor: UILabel!
-    @IBOutlet weak var getStartedButton: UIButton!
-    @IBOutlet weak var saveQuoteButton: UIButton!
-    
-    var randomQuote: NSArray!
-    var selectedRandomQuote:Dictionary<String, String>!
-    
-    // Constraint outlets for animation
-    @IBOutlet weak var quoteToGoLabelCenterYConstraint: NSLayoutConstraint!
-    @IBOutlet weak var quoteWidthConstraint: NSLayoutConstraint!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        if let path = NSBundle.mainBundle().pathForResource("DailyQuotes", ofType: "plist") {
-            randomQuote = NSArray(contentsOfFile: path)
-            print(randomQuote)
-        }
-
-    }
-    
-    func chooseRandomQuote() {
-        let randomQuoteIndex = Int(arc4random_uniform(UInt32(randomQuote.count)))
-        
-        selectedRandomQuote = randomQuote.objectAtIndex(randomQuoteIndex) as! Dictionary<String,String>
-        dailyQuoteAuthor.text = selectedRandomQuote["author"]
-        dailyQuoteTextView.text = selectedRandomQuote["quote"]
-        
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        chooseRandomQuote()
-        
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-}
-</pre>
-
-<br/>
-
-[![ภาพกำหนด คลาส QuoteTextView ให้กับ UITextView][13]](){: .fancybox-button 
-							data-fancybox-group="lecture11-003" 
-							href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-007.png"}
-
-<br/>
-
----
-
-### <ins>Lecture 12</ins> : Getting author images from wikipedia
-
-1. ลากไฟล์ WikiFace.swift เข้ามาในโปรเจ็ค
-2. สร้างไฟล์ Helper ชื่อว่า `AuthorManager.swift`
-
-<br/>
-
-#### ไฟล์ `AuthorManager.swift`
-
-<pre class="prettyprint linenums">
-import UIKit
-
-class AuthorManager: NSObject {
-
-    class func addAuthor (name: String, completetion: (author: Author)->()) {
-        
-        let moc = CoreDataHelper.managedObjectContext()
-        
-        let predicate = NSPredicate(format: "name = %@", name)
-        
-        let authorFound = CoreDataHelper.fetchEntities( NSStringFromClass(Author),
-                                                        managedObjectContext: moc,
-                                                        predicate: predicate,
-                                                        sortDescriptor: nil)
-        
-        if(authorFound.count > 0) {
-            
-            let author = authorFound.firstObject as! Author
-            completetion(author: author)
-            
-        } else {
-            
-            let author = CoreDataHelper.insertManagedObject(NSStringFromClass(Author), managedObjectContext: moc) as! Author
-            author.name = name
-            
-            do {
-                try WikiFace.faceForPerson(name, size: CGSizeMake(118, 118) , completion: { (image:UIImage?, imageFound:Bool!) -> () in
-                    if imageFound == true {
-                        let faceImageView = UIImageView(image: image)
-                        faceImageView.contentMode = UIViewContentMode.ScaleAspectFill
-                        WikiFace.centerImageViewOnFace(faceImageView)
-                        
-                        UIGraphicsBeginImageContextWithOptions(faceImageView.bounds.size, true, 0)
-                        let context = UIGraphicsGetCurrentContext()
-                        faceImageView.layer.renderInContext(context!)
-                        let croppedImage = UIGraphicsGetImageFromCurrentImageContext()
-                        UIGraphicsEndImageContext()
-                        
-                        let imageData = UIImageJPEGRepresentation(croppedImage, 0.5)
-                        author.image = imageData
-                        
-                        try! moc.save()
-                        completetion(author: author)
-                    } else {
-                        
-                        author.image = nil
-                        
-                        try! moc.save()
-                        completetion(author: author)
-                    }
-                })
-            } catch WikiFace.WikiFaceError.CouldNotDownloadImage {
-                print("Could not access wikipedias for author image. setting default")
-                author.image = nil
-                try! moc.save()
-                completetion(author: author)
-            } catch {
-                print(error)
-            }
-            
-        }
-        
-    }
-}
-</pre>
-
----
-
-<br/>
-
-### <ins>Lecture 13</ins> : Saving our first quote
-
-1. สร้างเมธอดให้กับ `@IBAction func saveRandomQuote(sender: AnyObject)`
-2. สร้างออบเจ็ค `moc`
-
-<br/>
-
-#### ไฟล์ `WelcomeViewController.swift`
-
-<pre class="prettyprint linenums">
-import UIKit
-import CoreData
-
-class WelcomeViewController: UIViewController {
-
-    <mark>var moc:NSManagedObjectContext!</mark>
-    
-    @IBOutlet weak var ribbon: UIImageView!
-    @IBOutlet weak var dailyQuoteTextView: QuoteTextView!
-    @IBOutlet weak var dailyQuoteAuthor: UILabel!
-    @IBOutlet weak var getStartedButton: UIButton!
-    @IBOutlet weak var saveQuoteButton: UIButton!
-    
-    var randomQuote: NSArray!
-    var selectedRandomQuote:Dictionary<String, String>!
-    
-    // Constraint outlets for animation
-    @IBOutlet weak var quoteToGoLabelCenterYConstraint: NSLayoutConstraint!
-    @IBOutlet weak var quoteWidthConstraint: NSLayoutConstraint!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        if let path = NSBundle.mainBundle().pathForResource("DailyQuotes", ofType: "plist") {
-            randomQuote = NSArray(contentsOfFile: path)
-            print(randomQuote)
-        }
         
         <mark>moc = CoreDataHelper.managedObjectContext()</mark>
-
+        
+        <mark>quoteTextView.delegate = self</mark>
+        <mark>quoteTextView.layoutManager.delegate = self</mark>
+        
+        createBorder()
     }
     
-    func chooseRandomQuote() {
-        let randomQuoteIndex = Int(arc4random_uniform(UInt32(randomQuote.count)))
+    func createBorder() {
         
-        selectedRandomQuote = randomQuote.objectAtIndex(randomQuoteIndex) as! Dictionary<String,String>
-        dailyQuoteAuthor.text = selectedRandomQuote["author"]
-        dailyQuoteTextView.text = selectedRandomQuote["quote"]
+        let borderLayer = CAShapeLayer()
+        borderLayer.strokeColor = UIColor(white:0.95, alpha: 1).CGColor
+        borderLayer.lineWidth = 24
+        borderLayer.fillColor = UIColor.clearColor().CGColor
+        borderLayer.path = UIBezierPath(rect: self.view.bounds).CGPath
         
+        self.borderView.layer.addSublayer(borderLayer)
     }
     
-<marK>    @IBAction func saveRandomQuote(sender: AnyObject) {
+    func setQuoteInformation() {
+        let author = quote.author
         
-        let button = sender as! UIButton
-        button.setTitle("SAVING...", forState: .Normal)
-        button.enabled = false
-        getStartedButton.enabled = false
-        
-        UIView.animateWithDuration(0.2) { () -> Void in
-            button.backgroundColor = UIColor(red: 0.6, green: 0.84, blue: 0.29, alpha: 1)
-            button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        if let imageData = author?.image {
+            authorImageView.image = UIImage(data: imageData)
+        } else {
+            authorBackgroundImageView.alpha = 0
+            authorImageView.image = UIImage(named: "avatarBig")
         }
         
-        let quote = CoreDataHelper.insertManagedObject(NSStringFromClass(Quote), managedObjectContext: moc) as! Quote
-        quote.content = selectedRandomQuote["quote"]
-        quote.createdAt = NSDate()
+        ImageMasker.maskImage(authorImageView, size: CGSizeMake(118, 118))
         
-        AuthorManager.addAuthor(selectedRandomQuote["author"]!) { (author: Author!) -> () in
-            quote.author = author
-            try! self.moc.save()
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                button.setTitle("QUOTE SAVED", forState: .Normal)
-                // Move to Overview
-            })
-        }
+        authorNameLabel.text = author!.name!.uppercaseString
+        quoteTextView.text = quote.content
         
-    }</mark>
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+        let dateFormat = NSDateFormatter()
+            dateFormat.dateFormat = "MM/dd/yyyy HH:mm"
         
-        chooseRandomQuote()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-}
-</pre>
-
----
-
-<br/>
-
-## Section: 5 <br/>- Step 3: Custom ViewController transitions
-![separate line][1]	
-
-### <ins>Lecture 14</ins> : Preparations for a custom ViewController Transition
-
-
----
-
-## Section: 6 <br/>- Step 4: TableView customisation - displaying quotes
-![separate line][1]	
-
-### <ins>Lecture 16</ins> : Custom UITableView cells
-
-
-[![ภาพแสดงโปรเจ็ค Overview][15]](){: .fancybox-button 
-							data-fancybox-group="step-4-001" 
-							href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-009.png"}
-							
-
-<br/>
-
-#### ไฟล์ `QuoteTableViewCell.swift`
-
-
-<pre class="prettyprint linenums">
-import UIKit
-
-class QuoteTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var quoteLabelWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var quoteLabel: UILabel!
-    @IBOutlet weak var dataLabel: UILabel!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var authorImageView: UIImageView!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-       
-    }
-    
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
-}
-</pre>
-
----
-
-### <ins>Lecture 17</ins> : Loading and Presenting a data in a TableView				
-
-[![ภาพแสดงโปรเจ็ค Overview][16]](){: .fancybox-button 
-							data-fancybox-group="leture17-001" 
-							href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-010.png"}
-
-#### ไฟล์ `AllQuotesViewController.swift`
-<pre class="prettyprint linenums">
-import UIKit
-
-class AllQuotesViewController: UIViewController, <mark>UITableViewDataSource</mark>, <mark>UITableViewDelegate</mark> {
-
-    @IBOutlet weak var ribbonTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var ribbon: UIImageView!
-    @IBOutlet weak var borderView: UIView!
-    
-<mark>    @IBOutlet weak var quotesTableView: UITableView!</mark>
-    
-    @IBOutlet weak var searchButton: UIButton!
-    
-<mark>    var moc: NSManagedObjectContext!
-    var quoteList = [Quote]()</mark>
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-<mark>        moc = CoreDataHelper.managedObjectContext()</mark>
-        
-<mark>        quotesTableView.delegate = self
-        quotesTableView.dataSource = self
-        quotesTableView.separatorStyle = .None
-        quotesTableView.showsVerticalScrollIndicator = false</mark>
-        
-<mark>        loadData()</mark>
-    }
-    
-    
-<mark>    func loadData() {
-        
-        let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: false)
-        
-        quoteList = [Quote]()
-        
-        quoteList = CoreDataHelper.fetchEntities(NSStringFromClass(Quote),
-                                                managedObjectContext: moc,
-                                                predicate: nil,
-                                                sortDescriptor: sortDescriptor) as! [Quote]
-        
-        quotesTableView.reloadData()
-    }</mark>
-    
-    // MARK: - Table View
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return <mark>quoteList.count</mark>
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! QuoteTableViewCell
-        
-<mark>        cell.selectionStyle = .None
-        cell.backgroundColor = UIColor.clearColor()
-        cell.backgroundView?.backgroundColor = UIColor.clearColor()
-        
-        if let quote = quoteList[indexPath.row] as Quote? {
-            
-            if let authorObj = quote.author {
-                cell.quoteLabel.text = quote.content
-                cell.authorLabel.text = authorObj.name
-                
-                let dateFormat = NSDateFormatter()
-                    dateFormat.dateFormat = "MM/dd/yyyy"
-                
-                let dateString = dateFormat.stringFromDate(quote.createdAt!)
-                cell.dataLabel.text = dateString
-                
-                if let imageData = authorObj.image {
-                    let image = UIImage(data: imageData)
-                    
-                    cell.authorImageView.image = image
-                } else {
-                    cell.authorImageView.image = UIImage(named: "avatar")
-                }
-            }
-        }</mark>
-        
-        return cell
+        let dateString = dateFormat.stringFromDate(quote.createdAt!)
+            dateLabel.text = dateString
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
+       
     }
+    
+    @IBAction func dismiss(sender: AnyObject) {
+        let button = sender as! UIButton
+        button.enabled = false
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+<mark>    func layoutManager( layoutManager: NSLayoutManager,
+                        lineSpacingAfterGlyphAtIndex glyphIndex: Int,
+                        withProposedLineFragmentRect rect: CGRect) -> CGFloat {
+        return 9
+    }</mark>
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -806,82 +113,6 @@ class AllQuotesViewController: UIViewController, <mark>UITableViewDataSource</ma
 </pre>
 
 ---
-
-### <ins>Lecture 18</ins> : Masking Images: round author images
-
-
-
-[![ภาพรวมโปรเจ็ค สำหรับ Lecture18][17]](){: .fancybox-button 
-							data-fancybox-group="lecture18-001" 
-							href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-011.png"}
-
-สร้างไฟล์ `ImageMasker.swift`, **File > New > File... (⌘ + N)**
-
-####ไฟล์ `ImageMasker.swift`
-<pre class="prettyprint linenums">
-import UIKit
-
-class ImageMasker: NSObject {
-    
-    class func maskImage (imageView: UIImageView!, size: CGSize!) {
-        let mask = CALayer()
-        
-        var maskImage = UIImage(named: "mask")
-        
-        if(size.width > 54) {
-            maskImage = UIImage(named: "bigMask")
-        }
-        
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(size.width, size.height), false, 0)
-        maskImage?.drawInRect(CGRectMake(0, 0, size.width, size.height))
-        
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        mask.contents = newImage.CGImage
-        mask.frame = CGRectMake(0, 0, size.width, size.height)
-        
-        imageView.contentMode = .ScaleAspectFill
-        imageView.layer.mask = mask
-        
-        
-    }
-}
-</pre>				
-							
-####ไฟล์ `QuoteTableViewCell.swift`
-<pre class="prettyprint linenums">
-import UIKit
-
-class QuoteTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var quoteLabelWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var quoteLabel: UILabel!
-    @IBOutlet weak var dataLabel: UILabel!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var authorImageView: UIImageView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-<marK>        ImageMasker.maskImage(authorImageView, size: CGSizeMake(54, 54))
-        
-        if UIScreen.mainScreen().bounds.size.width <= 320 {
-            quoteLabelWidthConstraint.constant = 270
-        }</mark>
-       
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-}
-</pre>
-
----
-							
 
 [1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
 [2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
@@ -902,4 +133,10 @@ class QuoteTableViewCell: UITableViewCell {
 [15]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-009.png
 [16]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-010.png
 [17]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-011.png
+[18]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-012.png
+[19]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-013.png
+[20]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-014.png
+[21]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-015.png
+[22]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-016.png
+[23]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-017.png
 
