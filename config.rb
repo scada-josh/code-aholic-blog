@@ -133,6 +133,9 @@ set :categoryURL_projectsIndex, "/src/blogs/projects/2016/01/28/projects-index/"
 set :categoryURL_restfulWebServiceIndex, "/src/blogs/restful-web-service/2016/01/29/restful-web-service-index/"
 set :categoryURL_projectRmrIndex, "/src/blogs/project-rmr/2016/02/02/project-rmr-index/"
 set :categoryURL_projectMbkIndex, "/src/blogs/project-mbk/2016/02/02/project-mbk-index/"
+set :categoryURL_softwareDevelopmentIndex, "/src/blogs/software-development/2016/02/07/software-development-index/"
+set :categoryURL_projectProposalIndex, "/src/blogs/project-proposal/2016/02/08/project-proposal-index/"
+set :categoryURL_udemyCourseLectureIndex, "/src/blogs/udemy-course-lecture/2016/02/11/udemy-course-lecture-index/"
 
 
 
