@@ -136,7 +136,7 @@ set :categoryURL_projectMbkIndex, "/src/blogs/project-mbk/2016/02/02/project-mbk
 set :categoryURL_softwareDevelopmentIndex, "/src/blogs/software-development/2016/02/07/software-development-index/"
 set :categoryURL_projectProposalIndex, "/src/blogs/project-proposal/2016/02/08/project-proposal-index/"
 set :categoryURL_udemyCourseLectureIndex, "/src/blogs/udemy-course-lecture/2016/02/11/udemy-course-lecture-index/"
-
+set :categoryURL_englishIndex, "/src/blogs/english/2016/02/13/english-index/"
 
 
 # Build-specific configuration

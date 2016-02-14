@@ -1,0 +1,85 @@
+# การใช้งาน Chosen-bootstrap
+![separate line][1]	
+
+ลิ้งค์ [chosen](http://harvesthq.github.io/chosen/){: target="_blank"}
+
+
+[![ภาพแสดง หน้าเว็บ Chosen-bootstrap][7]](){: .fancybox-button 
+							data-fancybox-group="chosen-bootstrap-001" 
+							href="<%= current_page.data.baseURL %>images/categories/Web Development/using-chosen-bootstrap-001.png"}
+
+
+## การติดตั้ง Chosen-bootstrap
+![separate line][1]	
+
+#### ติดตั้งผ่าน Bower.io
+
+<pre class="prettyprint linenums">
+$ <mark>bower install chosen-bootstrap --save</mark>
+</pre>
+
+---
+<br/>
+
+## นำเข้ามาใช้งานในโปรเจ็ค
+
+#### JavaScript
+<pre class="prettyprint linenums">
+//= require jquery-modern/dist/jquery
+//= require bootstrap/dist/js/bootstrap.min
+//= require chosen/chosen.jquery.min
+</pre>
+
+#### Stylesheet
+<pre class="prettyprint linenums">
+//= require bootstrap/dist/css/bootstrap.min
+//= require chosen/chosen.min
+//= require chosen-bootstrap/chosen.bootstrap
+</pre>
+
+#### ใช้งาน Chosen-bootstrap
+<pre class="prettyprint linenums">
+&lt;div class=&quot;col-sm-5 col-lg-3 controls&quot;&gt;
+            &lt;!-- &lt;input type=&quot;text&quot; name=&quot;firstname2&quot; id=&quot;firstname2&quot; class=&quot;form-control&quot; &gt; --&gt;
+            &lt;select data-placeholder=&quot;Choose a Branch...&quot; class=&quot;chosen-select&quot;&gt;
+            &lt;option value=&quot;&quot;&gt;&lt;/option&gt;
+            &lt;option value=&quot;B01&quot;&gt;สำนักงานประปาสาขาบางกอกน้อย&lt;/option&gt;
+            &lt;option value=&quot;United Kingdom&quot;&gt;United Kingdom&lt;/option&gt;
+            &lt;option value=&quot;Afghanistan&quot;&gt;Afghanistan&lt;/option&gt;
+            &lt;option value=&quot;Aland Islands&quot;&gt;Aland Islands&lt;/option&gt;
+            &lt;option value=&quot;Albania&quot;&gt;Albania&lt;/option&gt;
+            &lt;option value=&quot;Algeria&quot;&gt;Algeria&lt;/option&gt;
+            &lt;option value=&quot;American Samoa&quot;&gt;American Samoa&lt;/option&gt;
+            &lt;option value=&quot;Andorra&quot;&gt;Andorra&lt;/option&gt;
+            &lt;option value=&quot;Angola&quot;&gt;Angola&lt;/option&gt;
+            &lt;option value=&quot;Anguilla&quot;&gt;Anguilla&lt;/option&gt;
+            &lt;option value=&quot;Antarctica&quot;&gt;Antarctica&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+</pre>
+
+<pre class="prettyprint linenums">
+$(function(){
+
+	var config = {
+	  '.chosen-select'           : {},
+	  '.chosen-select-deselect'  : {allow_single_deselect:true},
+	  '.chosen-select-no-single' : {disable_search_threshold:10},
+	  '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+	  '.chosen-select-width'     : {width:"95%"}
+	}
+
+	for (var selector in config) {
+	  $(selector).chosen(config[selector]);
+	}
+});
+</pre>
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+[7]: <%= current_page.data.baseURL %>images/categories/Web%20Development/using-chosen-bootstrap-001.png
