@@ -1,0 +1,14 @@
+// Feed data into an empty lunr index and return the populated result
+populateIndex: function (data) {
+
+	  var index = lunr(function(){
+	    this.field('title', { boost: 10 });
+	    this.field('content');
+	    this.ref('id');
+	  });
+	  data.forEach(function(item) {
+	    index.add(item);
+	  });
+	  return index;
+
+},

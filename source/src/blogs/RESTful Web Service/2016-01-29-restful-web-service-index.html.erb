@@ -1,5 +1,6 @@
 ---
-title: "index"
+title: "RESTful Web Service"
+isIndexPage: true
  
 date: 2016-01-29
 tags: 
@@ -35,7 +36,7 @@ categoryName: "RESTful Web Service"
           <ul>
  
             <% blog.articles.each do |article| %>
-            <% if article.data.category == current_page.data.categoryName && article.title != 'index' %>
+            <% if article.data.category == current_page.data.categoryName && article.data.isIndexPage != true %>
             <li>
               <h6>
                 <a href="<%= current_page.data.baseURI %><%= article.url %>"><%= truncate(article.title, :length => 50) %></a>

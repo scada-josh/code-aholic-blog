@@ -118,7 +118,7 @@ set :files_dir, 'files'
 
 
 set :blog_dir, 'src/blogs/'
-set :categoryURL_middlemanIndex, "/src/blogs/middleman/2016/01/01/middleman-index/"
+set :categoryURL_middlemanDevelopmentIndex, "/src/blogs/middleman-development/2016/01/01/middleman-index/"
 set :categoryURL_html5Index, "/src/blogs/html5/2012/01/01/html5-index/"
 set :categoryURL_swift2Index, "/src/blogs/swift-2/2016/01/01/swift-programming-index/"
 set :categoryURL_coronaSDKIndex, "/src/blogs/coronasdk/2016/01/12/coronasdk-index/"
@@ -139,8 +139,47 @@ set :categoryURL_udemyCourseLectureIndex, "/src/blogs/udemy-course-lecture/2016/
 set :categoryURL_englishIndex, "/src/blogs/english/2016/02/13/english-index/"
 
 
+
+
 # Build-specific configuration
 configure :build do
+
+  activate :search do |search|
+
+    # search.pipeline = {
+    #   tildes: <<-JS
+    #     function(token, tokenIndex, tokens) {
+    #       return token
+    #         .replace('á', 'a')
+    #         .replace('é', 'e')
+    #         .replace('í', 'i')
+    #         .replace('ó', 'o')
+    #         .replace('ú', 'u');
+    #     }
+    #   JS
+    # }
+
+
+    # search.resources = ['src/blogs/iOS Development/','src/blogs/', 'index.php', 'src/desktop/HOME/index.php']
+    # search.resources = ['src/blogs', 'index.html', 'build/src/desktop']
+    # search.resources = ['src/blogs/', 'src/desktop/']
+    search.resources = ['src/', 'src-tmp/blogs', '*.markdown']
+   
+    search.index_path = 'search/lunr-index.json' # defaults to `search.json`
+   
+    search.fields = {
+      title:   {boost: 100, store: true, required: true},
+      content: {boost: 50},
+      url:     {index: false, store: true},
+      author:  {boost: 30}
+    }
+  end
+
+  # activate :asset_hash do |asset_hash|
+  #   asset_hash.exts << '.json'
+  # end
+
+
 
   # activate :i18n
   # activate :i18n, :path => "/langs/:locale/"

@@ -20,6 +20,8 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+
+
 </head>
 <body>
 
@@ -41,6 +43,10 @@
 
 <!-- javascript -->
 <%= javascript_include_tag "javascript-blog-moderna-details" %>
+
+<!-- handlebars templates -->
+<%= partial js_dir + "/javascript-blog-moderna-details/_results" %>
+<%= partial js_dir + "/javascript-blog-moderna-details/_resultSearchBox" %>
 
 </body>
 </html>

@@ -1,8 +1,27 @@
         <aside class="right-sidebar">
         <div class="widget">
           <form class="form-search">
-            <input class="form-control" type="text" placeholder="Search..">
+            <!-- <input class="form-control" type="text" placeholder="Search.." id="search-box"> -->
+
+            <select data-placeholder="Search..." class="chosen-select" id="search-box">
+              <option value=""></option>
+<!--               <option value="B01">สำนักงานประปาสาขาบางกอกน้อย</option>
+              <option value="United Kingdom">United Kingdom</option>
+              <option value="Afghanistan">Afghanistan</option>
+              <option value="Aland Islands">Aland Islands</option>
+              <option value="Albania">Albania</option>
+              <option value="Algeria">Algeria</option>
+              <option value="American Samoa">American Samoa</option>
+              <option value="Andorra">Andorra</option>
+              <option value="Angola">Angola</option>
+              <option value="Anguilla">Anguilla</option>
+              <option value="Antarctica">Antarctica</option> -->
+            </select>
+
           </form>
+          <div class="search-results">
+              
+          </div>
         </div>
 
         <%= partial blog_dir + "partials/_right-sidebar-categories" %>

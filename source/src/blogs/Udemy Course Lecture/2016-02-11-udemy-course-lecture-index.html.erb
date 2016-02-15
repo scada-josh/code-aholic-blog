@@ -1,6 +1,7 @@
 ---
-title: "index"
- 
+title: "Udemy Course Lecture"
+isIndexPage: true
+
 date: 2016-02-11
 tags: 
 thumb: "2.jpg"
@@ -35,7 +36,7 @@ categoryName: "Udemy Course Lecture"
           <ul>
  
             <% blog.articles.each do |article| %>
-            <% if article.data.category == current_page.data.categoryName && article.title != 'index' %>
+            <% if article.data.category == current_page.data.categoryName && article.data.isIndexPage != true %>
             <li>
               <h6>
                 <a href="<%= current_page.data.baseURI %><%= article.url %>"><%= truncate(article.title, :length => 50) %></a>

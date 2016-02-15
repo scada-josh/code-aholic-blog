@@ -1,5 +1,6 @@
 ---
-title: "index"
+title: "Swift 2"
+isIndexPage: true
 
 date: 2016-01-01 
 tags: 
@@ -37,7 +38,7 @@ categoryName: "Swift 2"
 
 
             <% blog.articles.each do |article| %>
-            <% if article.data.category == current_page.data.categoryName && article.title != 'index' %>
+            <% if article.data.category == current_page.data.categoryName && article.data.isIndexPage != true %>
             <li>
               <h6>
                 <a href="<%= current_page.data.baseURI %><%= article.url %>"><%= truncate(article.title, :length => 50) %></a>

@@ -49,6 +49,10 @@
     "google-code-prettify": "~1.0.4",
     "quicksand": "~1.2.2",
     "jcarousel": "~0.3.4",
-    "bootstrap-table": "^1.10.0"
+    "bootstrap-table": "^1.10.0",
+    "jquery-ui": "^1.11.4",
+    "chosen-bootstrap": "^1.1.0",
+    "lunr.js": "^0.6.0",
+    "handlebars": "^4.0.5"
   }
 }
