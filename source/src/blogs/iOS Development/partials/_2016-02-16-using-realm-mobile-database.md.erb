@@ -1,0 +1,135 @@
+# ทำความรู้จักกับ Realm - mobile database
+![separate line][1]	
+
+ที่มา 
+
+1. [ลิ้งค์บทความ](https://irawd.wordpress.com/2016/02/15/realmios-มารู้จักกับ-ขวัญ-ของ-realm/?fb_action_ids=10208794930090543&fb_action_types=news.publishes){: target="_blank"}
+2. ลิ้งค์ศึกษาเพิ่มเติม : [https://realm.io](https://realm.io){: target="_blank"}
+
+---
+
+> `Realm` ก็คือ mobile database <br/>
+> ดีกว่า `SQLite` และเทพกว่า `Core Data`
+
+[![ภาพแสดง หน้าจอเว็บ realm.io][7]](){: .fancybox-button 
+							data-fancybox-group="faq-002" 
+							href="<%= current_page.data.baseURL %>images/categories/iOS Development/using-realm-mobile-database-001.png"}	
+							
+
+							
+
+<br/>
+
+
+#### <ins>ข้อดี</ins> : ของ Realm
+
+1. **Easy to Use** <br/> มันใช้งานง่ายมาก ด้วยความที่ Realm data models ทำตัวเป็น Object ธรรมดา แบบ Object ของ ภาษา( ไม่ว่าจะ Objective-c ,Swift) ซึ่งมันทำให้เราสามารถใช้งาน data models ที่เราสร้างขึ้นมาเหมือนกับ data models เดิมๆของเรา ไม่ว่าจะ subclass หรือ properties
+2. **Fast** <br/> ไม่ต้องพูดอะไรมาก [ดูผลการทดสอบได้เลย](){: .fancybox-buttons 
+			   data-fancybox-group="realm-001" 
+			   href="<%= current_page.data.baseURL %>images/categories/iOS Development/using-realm-mobile-database-002.png"}
+3. **Cross-Platform** <br/> Realm supports  iOS & OS X (Objective-C & Swift) & Android. ซึ่งเราสามารถ เอาไฟล์ Realm ไปใช้กับ ทั้งสอง platforms ได้เลย เหมาะมากสำหรับ ใครที่ต้องการทำ แอพทั้ง iOS และ Android
+4. **Advanced** <br/> Realm supports advanced features เช่น Encryption, graph queries
+และที่สำคัญมัน migrations ง่ายกว่า Core Data เยอะ!
+5. **Trusted** <br/> เชื่อถือได้ เพราะมี App ใหญ่ๆมากมายใช้งาน Realm อยู่ ไม่ต้องกลัวใช้ๆแล้วเลิกพัฒนา
+6. **Community-driven** <br/> มี Community ที่ใหญ่มาก (แต่ในไทยยังไม่ค่อยใหญ่) และมี Plugins ให้ใช้เยอะพอสมควร (ไว้จะมาแนะนำบางอันที่เคยลองใช้)
+7. **Supported** <br/> มีคนคอยตอบคำถามตลอดเวลา (จริงๆ) เคยลองไปถามแล้วมาตอบไวมาก
+
+![ภาพผลการทดสอบ Realm-02 - ซ่อน](){: .fancybox-buttons
+							 .hidden 
+			   				 data-fancybox-group="realm-001" 
+			   				 href="<%= current_page.data.baseURL %>images/categories/iOS Development/using-realm-mobile-database-003.png"}
+![ภาพผลการทดสอบ Realm-03 - ซ่อน](){: .fancybox-buttons
+							 .hidden 
+			   				 data-fancybox-group="realm-001" 
+			   				 href="<%= current_page.data.baseURL %>images/categories/iOS Development/using-realm-mobile-database-004.png"}
+---
+
+<div id="post-slider" class="flexslider">
+	<ul class="slides">
+		<li>
+			<img src="<%= current_page.data.baseURL %>images/categories/iOS%20Development/using-realm-mobile-database-002.png" alt="" />						
+		</li>
+		<li>
+			<img src="<%= current_page.data.baseURL %>images/categories/iOS%20Development/using-realm-mobile-database-003.png" alt="" />
+		</li>
+		<li>
+			<img src="<%= current_page.data.baseURL %>images/categories/iOS%20Development/using-realm-mobile-database-004.png" alt="" />
+		</li>
+	</ul>
+</div>
+
+<p class="text-center">
+	<ins>ภาพแสดง : </ins> ผลการทดสอบความเร็วของ <strong>Realm</strong> 
+	<a href="<%= current_page.data.baseURL %>images/categories/iOS Development/using-realm-mobile-database-002.png" class="fancybox-buttons" data-fancybox-group="realm-002">(ดูภาพขนาดใหญ่)</a>
+</p>
+
+![ภาพ ผลการทดสอบ Realm-02 - ซ่อน](){: .fancybox-buttons
+							 .hidden 
+			   				 data-fancybox-group="realm-002" 
+			   				 href="<%= current_page.data.baseURL %>images/categories/iOS Development/using-realm-mobile-database-003.png"}
+![ภาพผลการทดสอบ Realm-03 - ซ่อน](){: .fancybox-buttons
+							 .hidden 
+			   				 data-fancybox-group="realm-002" 
+			   				 href="<%= current_page.data.baseURL %>images/categories/iOS Development/using-realm-mobile-database-004.png"}		   
+			   
+<br/>
+
+#### <ins>ตัวอย่าง</ins> :  Syntax ของ Realm
+
+<br/>
+
+**Realm Object เหมือนกับ Object ธรรมดาๆ มี Properties แต่ว่าต้องเป็น dynamic**
+
+<pre class="prettyprint linenums">
+class Dog: Object {
+    dynamic var name = ""
+    dynamic var age = 0
+}
+
+let myDog = Dog()
+
+myDog.name = "Rex"
+print("name of Dog: \(myDog.name)")
+</pre>
+
+<br/>
+
+**จะเก็บลง Database ก็ง่ายๆได้คำสั่ง Add**
+
+<pre class="prettyprint linenums">
+let realm = try! Realm()
+
+try! realm.write {
+    realm.add(myDog)
+}
+</pre>
+
+<br/>
+
+**Query ด้วยคำสั่ง filter**
+
+<pre class="prettyprint linenums">
+let realm = try! Realm()
+let r = realm.objects(Dog).filter("age > 8")
+
+// Queries are chainable
+let r2 = r.filter("name contains 'rex'")
+</pre>
+
+
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+[7]: <%= current_page.data.baseURL %>images/categories/iOS%20Development/using-realm-mobile-database-001.png
+[8]: <%= current_page.data.baseURL %>images/categories/iOS%20Development/using-realm-mobile-database-002.png
+[9]: <%= current_page.data.baseURL %>images/categories/iOS%20Development/using-realm-mobile-database-003.png
+[10]: <%= current_page.data.baseURL %>images/categories/iOS%20Development/using-realm-mobile-database-004.png
+
+
