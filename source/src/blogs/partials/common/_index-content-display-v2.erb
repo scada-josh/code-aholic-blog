@@ -1,0 +1,49 @@
+<section id="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+ 
+          <h2><%= current_page.data.categoryName %></h2>
+ 
+          <hr/>
+ 
+          <table class="table table-advance" id="BlogDetailsDataTable" style="width: 100% !important;" >
+ 
+            <thead>
+              <tr>
+                <th >ID</th>
+                <th >Title</th>
+                <th class="text-center " >Date</th>
+              </tr>
+            </thead>
+ 
+            <tbody>
+ 
+                <% blog.articles.each do |article| %>
+                <% if article.data.category == current_page.data.categoryName && article.data.isIndexPage != true %>
+                <tr>
+                  <td>
+                    <%= article.data.orderText %>
+                  </td>
+                  <td>
+                      <a href="<%= current_page.data.baseURI %><%= article.url %>"><%= truncate(article.title, :length => 50) %></a>
+                      <p><small><%= article.data.introText %></small></p>
+                 </td>
+                 <td class="text-center " >
+                   <%= article.data.date %>
+                 </td>
+               </tr>
+                <% end %>
+                <% end %>
+ 
+            </tbody>
+          </table>
+ 
+      </div>
+      <div class="col-lg-4">
+        <%= partial blog_dir + "partials/_right-sidebar" %>
+      </div>
+ 
+    </div>
+  </div>
+</section>

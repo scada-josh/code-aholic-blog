@@ -1,0 +1,57 @@
+        <div class="widget visible-lg">
+          <h5 class="widgetheading">Latest posts</h5>
+          <ul class="recent">
+
+<!--             <li>
+            <img src="../../images/moderna/dummies/blog/65x65/thumb1.jpg" class="pull-left" alt="" />
+            <h6><a href="#">Lorem ipsum dolor sit</a></h6>
+            <p>
+               Mazim alienum appellantur eu cu ullum officiis pro pri
+            </p>
+            </li>
+
+            <li>
+            <a href="#"><img src="../../images/moderna/dummies/blog/65x65/thumb2.jpg" class="pull-left" alt="" /></a>
+            <h6><a href="#">Maiorum ponderum eum</a></h6>
+            <p>
+               Mazim alienum appellantur eu cu ullum officiis pro pri
+            </p>
+            </li>
+
+            <li>
+            <a href="#"><img src="../../images/moderna/dummies/blog/65x65/thumb3.jpg" class="pull-left" alt="" /></a>
+            <h6><a href="#">Et mei iusto dolorum</a></h6>
+            <p>
+               Mazim alienum appellantur eu cu ullum officiis pro pri
+            </p>
+            </li> -->
+
+    
+
+
+
+
+
+            <% blog.articles[0...5].each do |article| %>
+            <% if article.title != 'index' %>
+
+              <li>
+                <a href="#"><img src="<%= current_page.data.baseURL %>/../images/moderna/dummies/blog/65x65/thumb3.jpg" class="pull-left" alt="" /></a>
+
+                <strong>
+                  
+                  <a href="<%= current_page.data.baseURI %><%= article.url %>"><%= truncate(article.title, :length => 25) %></a>
+                </strong>
+                <p>
+                 <%= article.title %>
+               </p>
+              </li>
+
+            <% end %>
+            <% end %>
+
+          </ul>
+        </div>
+
+
+

@@ -5,6 +5,7 @@
     // var venueAddress = "Grand Place, 1000, Brussels"; // Venue
 
     var myURL = "http://localhost/code-aholic-blog/build/";
+    var blogDetailsDataTable;
     
     /////////////////////////////////////////////////// Adress
  
@@ -14,6 +15,7 @@
         Launch: function () {
             fn.SearchBox();
             fn.FancyBox();
+            fn.BlogDetailsDataTable();
             fn.Apps();
         },
 
@@ -27,6 +29,8 @@
         <%= partial "javascript-blog-moderna-details/partials/_fn_SearchSetup" %>
         // FancyBox
         <%= partial "javascript-blog-moderna-details/partials/_fn_FancyBox" %>
+        // Blog Details DataTable
+        <%= partial "javascript-blog-moderna-details/partials/_fn_BlogDetailsDataTable" %>
         // Apps
         <%= partial "javascript-blog-moderna-details/partials/_fn_Apps" %>
     };

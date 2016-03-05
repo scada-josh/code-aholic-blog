@@ -20,6 +20,7 @@ activate :blog do |blog|
   # blog.month_link = "{year}/{month}.html"
   # blog.day_link = "{year}/{month}/{day}.html"
   # blog.default_extension = ".markdown"
+  blog.default_extension = ".md"
 
   blog.tag_template = "/src/blogs/tag.html"
   blog.calendar_template = "/src/blogs/calendar.html"
@@ -102,7 +103,7 @@ set :markdown, :strikethrough => true
 set :markdown_engine, :kramdown
 
 
-
+set :build_dir, 'build'
 
 set :css_dir, 'stylesheets'
 
@@ -121,7 +122,7 @@ set :blog_dir, 'src/blogs/'
 set :categoryURL_middlemanDevelopmentIndex, "/src/blogs/middleman-development/2016/01/01/middleman-index/"
 set :categoryURL_html5Index, "/src/blogs/html5/2012/01/01/html5-index/"
 set :categoryURL_swift2Index, "/src/blogs/swift-2/2016/01/01/swift-programming-index/"
-set :categoryURL_coronaSDKIndex, "/src/blogs/coronasdk/2016/01/12/coronasdk-index/"
+set :categoryURL_coronaSDKIndex, "/src/blogs/corona-sdk/2016/01/12/coronasdk-index/"
 set :categoryURL_iosDevelopmentIndex, "/src/blogs/ios-development/2016/01/17/ios-development-index/"
 set :categoryURL_udemyCourseCreationIndex, "/src/blogs/udemy-course-creation/2016/01/17/udemy-course-creation-index/"
 set :categoryURL_macOSxIndex, "/src/blogs/mac-os-x/2016/01/17/mac-os-x-index/"
@@ -137,7 +138,14 @@ set :categoryURL_softwareDevelopmentIndex, "/src/blogs/software-development/2016
 set :categoryURL_projectProposalIndex, "/src/blogs/project-proposal/2016/02/08/project-proposal-index/"
 set :categoryURL_udemyCourseLectureIndex, "/src/blogs/udemy-course-lecture/2016/02/11/udemy-course-lecture-index/"
 set :categoryURL_englishIndex, "/src/blogs/english/2016/02/13/english-index/"
-
+set :categoryURL_jekyllIndex, "/src/blogs/jekyll-development/2016/02/20/jekyll-index/"
+set :categoryURL_luaIndex, "/src/blogs/lua/2016/02/23/lua-index/"
+set :categoryURL_internetOfThingsIndex, "/src/blogs/internet-of-things/2016/02/28/iot-index/"
+set :categoryURL_portfolioIndex, "/src/blogs/portfolio/2016/03/03/portfolio-index/"
+set :categoryURL_coronaPluginIndex, "/src/blogs/corona-plugin/2016/03/04/corona-plugin-index/"
+set :categoryURL_pythonIndex, "/src/blogs/python/2016/03/04/python-index/"
+set :categoryURL_phpIndex, "/src/blogs/php/2016/03/04/php-index/"
+set :categoryURL_rubyIndex, "/src/blogs/ruby/2016/03/04/ruby-index/"
 
 
 
@@ -163,7 +171,7 @@ configure :build do
     # search.resources = ['src/blogs/iOS Development/','src/blogs/', 'index.php', 'src/desktop/HOME/index.php']
     # search.resources = ['src/blogs', 'index.html', 'build/src/desktop']
     # search.resources = ['src/blogs/', 'src/desktop/']
-    search.resources = ['src/', 'src-tmp/blogs', '*.markdown']
+    search.resources = ['src/', 'src/blogs/', '*.markdown']
    
     search.index_path = 'search/lunr-index.json' # defaults to `search.json`
    

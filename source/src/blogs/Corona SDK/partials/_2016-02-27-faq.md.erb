@@ -1,0 +1,97 @@
+# FAQ - Corona SDK
+![separate line][1]	
+
+
+# ทำไมการแสดงผล Scene ไม่ขยายเต็มหน้าจอ ???
+---
+
+[![ภาพแสดง ปัญหาหน้าจอการแสดงผลไม่เต็ม Screen ของอุปกรณ์มือถือ][7]](){: .fancybox-button 
+               data-fancybox-group="faq-001"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/faq-001.png"}
+
+#### ไฟล์ config.lua 
+<pre class="prettyprint linenums">
+application =
+{
+
+	content =
+	{
+		width = 320,
+		height = 480, 
+		scale = "letterBox",
+		fps = 60,
+		
+		--[[
+		imageSuffix =
+		{
+			    ["@2x"] = 2,
+		},
+		--]]
+	},
+
+	--[[
+	-- Push notifications
+	notification =
+	{
+		iphone =
+		{
+			types =
+			{
+				"badge", "sound", "alert", "newsstand"
+			}
+		}
+	},
+	--]]    
+}
+</pre>
+
+<br/>
+
+#### ไฟล์ config.lua (แก้ปัญหาการแสดงผล scene ไม่เต็มหน้าจอ)
+<pre class="prettyprint linenums">
+local aspectRatio = display.pixelHeight / display.pixelWidth
+application =
+{
+	
+	content =
+	{
+		--width = 320,
+		--height = 480,
+		width = aspectRatio > 1.5 and 320 or math.ceil( 480 / aspectRatio ),
+        height = aspectRatio < 1.5 and 480 or math.ceil( 320 * aspectRatio ),
+		scale = "adaptive",
+		fps = 60,
+
+		imageSuffix = {
+            ["@2x"] = 1.5,
+            ["@3x"] = 3,
+            ["@4x"] = 4,
+        },
+		
+	},
+	
+	
+	
+	-- Push notifications
+	notification =
+	{
+		iphone =
+		{
+			types =
+			{
+				"badge", "sound", "alert"
+			}
+		}
+	},
+	   
+}
+</pre>
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+[7]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/faq-001.png

@@ -1,0 +1,92 @@
+# การเตรียมโปรเจ็คสำหรับพัฒนา Corona SDK
+![separate line][1]	
+
+## สร้างโปรเจ็คจาก Middleman
+
+---
+
+[![ภาพแสดง Logo ของ MiddlemanApp][7]](){: .fancybox-button 
+               data-fancybox-group="setup-project-001"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/setup-project-001.png"}
+               
+<pre class="prettyprint linenums">
+$ <strong>middleman init <mark>projectName</mark></strong>
+</pre>
+
+projectName ในที่นี้คือ `MBK`
+
+<pre class="prettyprint linenums">
+$ <strong>cd <mark>projectPath</mark></strong>
+</pre>
+
+Build `Middleman Project`
+
+<pre class="prettyprint linenums">
+$ <strong>bundle exec middleman build --verbose</strong>
+</pre>
+
+ระบบจะทำการ **build static website** ขึ้นมาและเก็บไว้ภายใต้โฟลเดอร์ `build` 
+
+<br/>
+
+## สร้างโฟลเดอร์เพื่อเก็บโปรเจ็ค Corona SDK
+
+---
+
+- สร้างโฟล์เดอร์ <i>**src > app**</i> ภายใต้ทั้งโฟลเดอร์ `build` และ `source`
+
+[![ภาพแสดง โฟลเดอร์ที่สร้างขึ้นเพื่อเก็บ App][8]](){: .fancybox-button 
+               data-fancybox-group="setup-project-002"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/setup-project-002.png"}
+
+<br/>
+
+## สร้างโปรเจ็ค Corona SDK
+
+---
+
+- สร้างโปรเจ็ค Corona SDK ไว้ภายใต้โฟลเดอร์ <i>**build > src > app**</i>
+- ให้ Copy โปรเจ็คที่สร้างขึ้นไปไว้ภายใต้โฟลเดอร์ <i>**source > src > app**</i> เพื่อให้ Middleman จัดการ
+
+[![ภาพแสดง การสร้างโปรเจ็ค CoronaSDK][9]](){: .fancybox-button 
+               data-fancybox-group="setup-project-003"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/setup-project-003.png"}
+               
+[![ภาพแสดง โปรเจ็ค CoronaSDK][10]](){: .fancybox-button 
+               data-fancybox-group="setup-project-004"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/setup-project-004.png"}
+
+<br/>
+
+## Config. Middleman เพื่อใช้งาน Corona SDK
+
+---
+
+#### ไฟล์ config.rb
+
+กำหนดให้ไฟล์ภายใต้โฟลเดอร์ **src > app > MBK** ไม่มีการกำหนด `layout`
+
+<pre class="prettyprint linenums">
+page "/src/app/MBK/*", :layout => false
+</pre>
+
+หลังจากนี้ เราก็สามารถใช้ Middleman เพื่อการจัดการโปรเจ็ค Corona SDK ได้แล้ว เย้ๆๆๆ :)
+
+---
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+[7]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/setup-project-001.png
+[8]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/setup-project-002.png
+[9]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/setup-project-003.png
+[10]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/setup-project-004.png
+
+
+
+

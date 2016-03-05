@@ -1,0 +1,110 @@
+<table class="table table-striped table-bordered"> 
+    <thead> 
+        <tr> 
+            <th>Field Name</th> 
+            <th>Description</th>
+            <th>Field Type</th>
+            <th>Null</th>
+            <th>PK/FK</th>
+            <th>Default Value</th>
+        </tr> 
+    </thead> 
+    <tbody> 
+        <tr> 
+            <td>id</td> 
+            <td>เลขลำดับ</td> 
+            <td>INT(6)</td>
+            <td></td>
+            <td>PK</td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>rtu_pin_code_dm_code</td> 
+            <td>รหัส pin_code กับ dm_code</td> 
+            <td>VARCHAR(32)</td>
+            <td>No</td>
+            <td>UNIQUE</td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>rtu_pin_code</td> 
+            <td>รหัส pin code ของ RTU</td> 
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>dm_code</td> 
+            <td>รหัส DM</td> 
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>lat</td> 
+            <td>latitude</td> 
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>lng</td> 
+            <td>longitude</td> 
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>location</td> 
+            <td>สถานที่</td> 
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>enable</td> 
+            <td>สถานะของการ Mapping (active/inactive)</td> 
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>created_datetime</td> 
+            <td>วันที่เพิ่มข้อมูล RTU</td> 
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>modified_datetime</td> 
+            <td>วันที่แก้ไขข้อมูล RTU</td> 
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>end_datetime</td> 
+            <td>วันสิ้นสุดการจัดเก็บ RTU</td> 
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>remark</td> 
+            <td>หมายเหตุ</td> 
+            <td>VARCHAR(255)</td>
+            <td>Yes</td>
+            <td></td>
+            <td></td>
+        </tr> 
+    </tbody> 
+</table>

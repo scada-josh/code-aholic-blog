@@ -1,0 +1,142 @@
+# การใช้งาน Class - OOP ในภาษา Lua [![external link 30x30][6]](https://coronalabs.com/blog/2011/09/29/tutorial-modular-classes-in-corona/){: target="_blank"}
+![separate line][1]	
+
+<br/>
+
+## รูปแบบการสร้าง Class ในภาษา Lua
+![separate line][1]	
+
+### ตัวอย่างการสร้าง Dog Class - classic example
+---
+
+#### ไฟล์ dog.lua
+<pre class="prettyprint linenums">
+-------------------------------------------------
+--
+-- dog.lua
+--
+-- Example "dog" class for Corona SDK tutorial.
+--
+-------------------------------------------------
+
+local dog = {}
+local dog_mt = { __index = dog }	-- metatable
+
+-------------------------------------------------
+-- PUBLIC FUNCTIONS
+-------------------------------------------------
+
+function dog.new( name, ageInYears )	-- constructor
+		
+	local newDog = {
+		name = name or "Unnamed",
+		age = ageInYears or 2
+	}
+	
+	return setmetatable( newDog, dog_mt )
+end
+
+-------------------------------------------------
+
+return dog
+</pre>
+
+<br/>
+
+### เพิ่มฟังก์ชันให้กับ Object
+---
+
+#### ไฟล์ dog.lua (ต่อ)
+<pre class="prettyprint linenums">
+-------------------------------------------------
+--
+-- dog.lua
+--
+-- Example "dog" class for Corona SDK tutorial.
+--
+-------------------------------------------------
+
+local dog = {}
+local dog_mt = { __index = dog }	-- metatable
+
+-------------------------------------------------
+-- PRIVATE FUNCTIONS
+-------------------------------------------------
+
+<mark>local function getDogYears( realYears )	-- local; only visible in this module
+	return realYears * 7
+end</mark>
+
+-------------------------------------------------
+-- PUBLIC FUNCTIONS
+-------------------------------------------------
+
+function dog.new( name, ageInYears )	-- constructor
+		
+	local newDog = {
+		name = name or "Unnamed",
+		age = ageInYears or 2
+	}
+	
+	return setmetatable( newDog, dog_mt )
+end
+
+-------------------------------------------------
+
+<mark>function dog:rollOver()
+	print( self.name .. " rolled over." )
+end</mark>
+
+-------------------------------------------------
+
+<mark>function dog:sit()
+	print( self.name .. " sits down in place." )
+end</mark>
+
+-------------------------------------------------
+
+<mark>function dog:bark()
+	print( self.name .. " says \"woof!\"" )
+end</mark>
+
+-------------------------------------------------
+
+<mark>function dog:printAge()
+	print( self.name .. " is " .. getDogYears( self.age ) .. " in dog years." )
+end</mark>
+
+-------------------------------------------------
+
+return dog
+</pre>
+
+<br/>
+
+## รูปแบบการเรียกใช้งาน Object
+![separate line][1]	
+
+### ทดลองเรียกใช้งาน Dog class
+---
+
+#### ไฟล์ main.lua (ต่อ)
+<pre class="prettyprint linenums">
+local dog = require( "dog" )
+
+local dog1 = dog.new( "Yai-Ya", 4 )
+local dog2 = dog.new( "Toki", 1 )
+
+dog1:printAge()
+dog2:printAge()
+
+dog1:rollOver()
+dog2:sit()
+
+</pre>
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png

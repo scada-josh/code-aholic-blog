@@ -1,0 +1,58 @@
+![bookmark][4]{: #goto-rtu_pin_code_tb }
+
+## ฐานข้อมูล <i>rtu_pin_code_tb</i>
+![separate line][1]	
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ฐานข้อมูล `rtu_pin_code_tb` เก็บข้อมูลพื้นฐาน RTU รวมถึงพิกัดที่ตั้งของ RTU ด้วย 
+
+โดยจะเป็นการจับคู่ระหว่าง `rtu_pin_code` กับ `dm_code` ซึ่ง
+
+1. มีวันเริ่มต้นการจัดเก็บ (ฟิลด์ **created_datetime**) <br/>...เพื่อระบุวันเริ่มต้นของการ Mapping ระหว่าง `rtu_pin_code` กับ `dm_code` ซึ่งจะมีผลกับการวิเคราะห์โมดูล **RMR**
+2. มีวันสิ้นสุดการจัดเก็บ (ฟิลด์ **end_datetime**) <br/>...เพื่อระบุวันสิ้นสุดของการ Mapping ระหว่าง `rtu_pin_code` กับ `dm_code` ซึ่งจะมีผลกับการวิเคราะห์โมดูล **RMR**
+3. มี flag (ฟิลด์ **enable**) <br/>...เพื่อระบุสถานะของการ Mapping ระหว่าง `rtu_pin_code` กับ `dm_code` นั่นหมายความว่าเราจะไม่ลบข้อมูลออกจากระบบ เพื่อนำไปสำหรับวิเคราะห์ข้อมูลย้อนหลังของโมดูล **RMR** นั่นเอง
+4. แต่...ท้งนี้ หากเป็นการกรอกข้อมูล หรือการ Mapping ระหว่าง `rtu_pin_code` กับ `dm_code` ผิดพลาด ผู้ใช้สามารถลบข้อมูลการ Mapping ออกจากระบบได้
+
+---
+
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#rtu_pin_code_tb-description">Description</a></li>
+  <li><a data-toggle="tab" href="#rtu_pin_code_tb-mySQL">MySQL</a></li>
+  <li><a data-toggle="tab" href="#rtu_pin_code_tb-postgreSQL">PostGIS</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="rtu_pin_code_tb-description" class="tab-pane fade in active">
+    <h3>Description</h3>
+    <p>คำอธิบาย ฐานข้อมูล <strong>rtu_pin_code_tb</strong></p>
+
+<%= partial blog_dir + "Project - RMR/partials/database-design/_rtu_pin_code_tb-description" %>
+
+  </div>
+  <div id="rtu_pin_code_tb-mySQL" class="tab-pane fade">
+    <h3>MySQL</h3>
+    <p>Script สำหรับฐานข้อมูล MySQL</p>
+
+<%= partial blog_dir + "Project - RMR/partials/database-design/_rtu_pin_code_tb-script-MySQL" %>
+
+  </div>
+  <div id="rtu_pin_code_tb-postgreSQL" class="tab-pane fade">
+    <h3>PostGIS</h3>
+    <p>Script สำหรับฐานข้อมูล PostGIS</p>
+
+<%= partial blog_dir + "Project - RMR/partials/database-design/_rtu_pin_code_tb-script-PostgreSQL" %>
+
+  </div>
+</div>
+
+<br/>
+
+
+[![ภาพแสดง ตัวอย่างข้อมูลในฐานข้อมูล rtu_pin_code_tb][9]](){: .fancybox-button 
+              data-fancybox-group="database-design-003" 
+              href="<%= current_page.data.baseURL %>images/categories/Project - RMR/database-design-003.png"}  
+
+
+<p class="text-center"> <strong> <ins>ภาพแสดง</ins> <i>ตัวอย่างข้อมูลในฐานข้อมูล <mark>rtu_pin_code_tb</mark></i></strong> </p>
+
+<br/>

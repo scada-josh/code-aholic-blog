@@ -1,0 +1,260 @@
+# การสร้าง Dashboard - IoT Widget
+![separate line][1]	
+
+#### โค้ดสำคัญ สำหรับ MQTT
+<pre class="prettyprint linenums">
+-------------------------------------------------
+--
+-- dashboard.lua
+--
+-- 
+--
+-------------------------------------------------
+local wg = require( "class.iotwidget" )
+local widget = require( "widget" )
+local myApp = require( "class.myapp" )
+local json = require( "json" )
+local MQTT = require("mqtt_library")
+
+local dashboard = {}
+local dashboard_mt = { __index = dashboard }	-- metatable
+
+local widgetGroup = {}
+
+local mqtt_client = nil
+local args = nil
+-------------------------------------------------
+-- PRIVATE FUNCTIONS
+-------------------------------------------------
+local function widgetCallBack( params )
+
+	--print_r( params )
+	local jsonStr = json.encode( params )
+	mqtt_client:publish( args.topic_p, jsonStr )
+
+end
+
+local function createRow( _title , _y , _data , _vscroll )
+	local myGroup = display.newGroup( )
+	local lineY =_y
+
+	local space = 10
+	local label1 = display.newText( myGroup , _title, 10, lineY ,  myApp.mainFontBold , 25 )
+	label1.anchorX = 0
+	lineY = lineY + 20
+
+	local scrollView = widget.newScrollView
+	{
+	    top = lineY,
+	    left = 0,
+	    width = display.contentWidth ,
+	    height = _data[1].h,
+	    scrollWidth = display.contentWidth,
+	    scrollHeight = _data[1].h,
+	    listener = scrollListener,
+	    hideBackground = true,
+	    verticalScrollDisabled = true
+	}
+
+
+	local rowGroup = display.newGroup( )
+
+	for k,v in pairs( _data ) do
+		local widgetObj = wg.new()
+		local widget = widgetObj:create( space + ( space + v.w ) * ( k - 1 ) , 0 , v , _vscroll , scrollView , widgetCallBack )
+		widgetGroup[ v.id ] = widgetObj
+		
+		rowGroup:insert( widget )
+
+	end
+	scrollView:insert( rowGroup ) 
+
+	myGroup:insert( scrollView )
+	scrollView:setScrollWidth( rowGroup.width + ( space * 2 ) )
+
+	return myGroup
+end
+-------------------------------------------------
+-- PUBLIC FUNCTIONS
+-------------------------------------------------
+
+function dashboard.new( )	-- constructor
+		
+	local newDashboard = {
+		
+	}
+	
+	return setmetatable( newDashboard, dashboard_mt )
+end
+
+-------------------------------------------------
+
+function dashboard:create( _x , _y )
+	local myGroup = display.newGroup( )
+	local centerX = display.contentCenterX
+	local centerY = display.contentCenterY
+	local bg = display.newRect( myGroup , centerX , _y - 2 , display.contentWidth , display.contentHeight - _y )
+	bg:setFillColor( 36/255 , 36/255 , 36/255 )
+	bg.anchorY = 0
+
+	
+	
+
+	local lineY = 20 
+
+	local scrollView = widget.newScrollView
+	{
+	    top = _y - 2,
+	    left = 0,
+	    width = display.contentWidth ,
+	    height = display.contentHeight - _y ,
+	    scrollWidth = display.contentWidth ,
+	    scrollHeight = display.contentHeight,
+	    listener = scrollListener,
+	    backgroundColor = { 36/255 , 36/255 , 36/255 },
+	    horizontalScrollDisabled = true
+	}
+
+	local widgetData = { { id = 1 , status = false , wtype = "light" , name = dict("kitchen") , w = 140 , h = 140 },
+						 { id = 2 ,  status = false , wtype = "light" , name = dict("bedroom") , w = 140 , h = 140 },
+						 { id = 3 ,  status = true , wtype = "light" , name = dict("livingroom") , w = 140 , h = 140 },
+						 { id = 4 ,  status = false , wtype = "light" , name = dict("garage") , w = 140 , h = 140 },
+						 { id = 5 ,  status = true , wtype = "light" , name = dict("ladder") , w = 140 , h = 140 },
+						 }
+	local widgetData1 = { { id = 6 ,  status = true , wtype = "temperature" , name = dict("kitchen") , w = 140 , h = 110 },
+						 { id = 7 ,  status = true , wtype = "temperature" , name = dict("bedroom") , w = 140 , h = 110 },
+						 { id = 8 ,  status = true , wtype = "temperature" , name = dict("livingroom") , w = 140 , h = 110 },
+						 
+						 }
+	local widgetData2 = { { id = 9 ,  status = true , wtype = "water" , name = dict("kitchen") , w = 140 , h = 110 },
+						 { id = 10 ,  status = true , wtype = "water" , name = dict("bedroom") , w = 140 , h = 110 },
+						 { id = 11 ,  status = true , wtype = "water" , name = dict("livingroom") , w = 140 , h = 110 },
+						 
+						 }
+
+	local widgetData3 = { { id = 12 ,  status = true , wtype = "door" , name = dict("maingate") , w = 140 , h = 110 },
+						 { id = 13 ,  status = false , wtype = "door" , name = dict("bedroom") , w = 140 , h = 110 },
+						 { id = 14 ,  status = true , wtype = "door" , name = dict("backdoor") , w = 140 , h = 110 },
+						 
+						 }
+
+	local row1 = createRow( dict("light") ,  lineY , widgetData , scrollView )
+	scrollView:insert( row1 )
+
+	lineY = lineY + row1.height + 20
+	local row2 = createRow( dict("temperature") ,lineY , widgetData1 , scrollView )
+	scrollView:insert( row2 )
+
+	lineY = lineY + row2.height + 20
+	local row3 = createRow( dict("water_humidity") ,lineY , widgetData2 , scrollView )
+	scrollView:insert( row3 )
+
+	lineY = lineY + row3.height + 20
+	local row4 = createRow( dict("door_window") ,lineY , widgetData3 , scrollView )
+	scrollView:insert( row4 )
+
+	myGroup:insert( scrollView )
+
+	--scrollView.anchorX = 0
+
+	local function mqttCallback( topic , payload )
+		--print("MQTT Call Back!!!!!!!")
+	  -- print("omg")
+	  -- print("mqtt_test:callback(): " .. topic .. ": " .. payload)
+	  local response = json.decode(payload)
+	  
+
+	  if response.name == "create" then
+	  	print("Create MQTT")
+	    ----createBall(json.id)
+	  elseif response.name == "move" then
+
+	  elseif response.name == "setState" then
+	  	--print_r( response )
+		print("Set "..response.id.." To "..tostring(response.state))
+		widgetGroup[ response.id ]:setObjectState( response.state )
+
+	    --moveBall(json.id, json.x, json.y)
+	  elseif response.name == "destroy" then
+	    destroyBall(response.id)
+	  end
+
+	  if (payload == "quit") then running = false end
+	end
+
+	--function is_openwrt()
+	--  return(os.getenv("USER") == "root")  -- Assume logged in as "root" on OpenWRT
+	--end
+
+	--if (not is_openwrt()) then require("luarocks.require") end
+	--local lapp = require("pl.lapp")
+
+
+	args = {
+	  debug=false,
+	  id="mqtt_test" .. tostring(math.round(math.random() * 9999)),
+	  port=1883,
+	  topic_s="test/2",
+	  topic_p="test/2",
+	  host="iot.eclipse.org"
+	}
+
+	
+
+	if (args.debug) then MQTT.Utility.set_debug(true) end
+
+	mqtt_client = MQTT.client.create(args.host, args.port, mqttCallback )
+
+	mqtt_client:connect(args.id)
+
+	local jsonStr = json.encode({name = "create", id=args.id})
+	mqtt_client:publish(args.topic_p, jsonStr)
+	mqtt_client:subscribe({ args.topic_s })
+
+
+	local error_message = nil
+	local running = true
+
+
+	function tick()
+	  if mqtt_client.connected then
+	    local error_message = mqtt_client:handler()
+	    --print("Loop Tick")
+	    if (error_message == nil) then
+	    	--local jsonStr = json.encode( {name = "hello", message="XIoT"} )
+	        --mqtt_client:publish( args.topic_p, jsonStr )
+	        -- socket.sleep(1.0)  -- seconds
+	    end
+
+	    if (error_message ~= nil) then
+	      print("error_message:", error_message)
+	      mqtt_client:unsubscribe({ args.topic_s })
+	      mqtt_client:destroy()
+	    end
+	  end
+	end
+	timer.performWithDelay( 1000, tick, 0)
+
+	return myGroup
+end
+
+-------------------------------------------------
+
+return dashboard
+</pre>
+
+
+[![ภาพแสดง ภาพรวมการทำงานของระบบ Dashboard - IoT Widget][7]](){: .fancybox-button 
+               data-fancybox-group="dashboard-iot-widget-001"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/dashboard-iot-widget-001.png"}
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+[7]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/dashboard-iot-widget-001.png

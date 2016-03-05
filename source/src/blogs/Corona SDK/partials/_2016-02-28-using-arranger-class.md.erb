@@ -1,0 +1,230 @@
+# การใช้งาน Arranger Class
+![separate line][1]	
+
+## ภาพรวมโปรเจ็ค
+---
+
+[![ภาพแสดง ภาพรวมการทำงานของระบบ][7]](){: .fancybox-button 
+               data-fancybox-group="using-arranger-class-001"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/using-arranger-class-001-01.png"}
+
+
+#### ข้อสังเกต : ทุก Scene จะต้อง require ไฟล์ myapp.lua เพื่อใช้ตัวแปร Global ร่วมกัน
+<pre class="prettyprint linenums">
+local myApp = require( "mbk-classes.myapp" )
+</pre>
+
+<br/>
+
+## Create User Profile & Side Menu
+---
+
+[![ภาพแสดง ผลลัพธ์ของการสร้าง user profile and side menu][8]](){: .fancybox-button 
+               data-fancybox-group="using-arranger-class-002"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/using-arranger-class-002.png"}
+
+
+## การเพิ่ม Screen (ในทีนี้คือ `screen3.lua`)
+---
+
+<br/>
+
+#### สร้างไฟล์ screen3.lua
+<pre class="prettyprint linenums">
+-------------------------------------------------
+--
+-- screen3.lua
+--
+-- Example "screen3" class for Corona SDK tutorial.
+--
+-------------------------------------------------
+
+local screen3 = {}
+local screen3_mt = { __index = screen3 }	-- metatable
+
+-------------------------------------------------
+-- PRIVATE FUNCTIONS
+-------------------------------------------------
+
+
+-------------------------------------------------
+-- PUBLIC FUNCTIONS
+-------------------------------------------------
+
+function screen3.new(  )	-- constructor
+		
+	local newScreen3 = {
+		
+	}
+	
+	return setmetatable( newScreen3, screen3_mt )
+end
+
+-------------------------------------------------
+
+function screen3:create( _x , _y )
+	local myGroup = display.newGroup( )
+	local centerX = display.contentCenterX
+	local centerY = display.contentCenterY
+	local bg = display.newRect( myGroup , centerX , _y - 2 , display.contentWidth , display.contentHeight - _y )
+	bg:setFillColor( 0 , 1 , 0 )
+	bg.anchorY = 0
+
+
+	return myGroup
+end
+
+-------------------------------------------------
+-------------------------------------------------
+
+return screen3
+</pre>
+
+<br/>
+
+#### ทำการ require หรือบอกให้ Arranger โหลด `screen3` ขึ้นมา (โดยเพิ่มในไฟล์ `arranger.lua.erb`)
+<pre class="prettyprint linenums">
+local sc3 = require("mbk-scenes.screen3")
+</pre>
+
+<br/>
+
+#### สร้างเมนูให้กับ `screen3` ซึ่งอยู่ในไฟล์ `_fn_createMenu.erb`
+<pre class="prettyprint linenums">
+local function createMenu(  )
+
+    local myGroup = display.newGroup( )
+    local centerX = display.contentCenterX
+    local centerY = display.contentCenterY
+
+        -- menuData = {   
+        --                { name = &quot;dashboard&quot; , title = dict(&quot;dashboard&quot;) , icon = &quot;assets/icon-home.png&quot;  },
+        --                { name = &quot;screen2&quot; , title = dict(&quot;screen2&quot;) , icon = &quot;assets/icon-home.png&quot;  }
+        --             }
+
+        menuData = {   
+                       { name = &quot;dashboard&quot; , title = &quot;dashboard&quot; , icon = &quot;assets/icon-home.png&quot;  },
+                       { name = &quot;screen2&quot; , title = &quot;screen2&quot; , icon = &quot;assets/icon-home.png&quot;  },
+                       <mark>{ name = &quot;screen3&quot; , title = &quot;screen3&quot; , icon = &quot;assets/icon-home.png&quot;  }</mark>
+                    }
+
+
+
+    -- fn_createMenu -- fn_onRowTouch function
+    &lt;%= partial partials_coronaSDK_dir + &quot;/mbk-scenes/partials/&quot; + current_page.data.sceneName + &quot;/function/_fn_createMenu_fn_onRowTouch&quot; %&gt;
+
+    -- fn_createMenu -- fn_onRowRender function
+    &lt;%= partial partials_coronaSDK_dir + &quot;/mbk-scenes/partials/&quot; + current_page.data.sceneName + &quot;/function/_fn_createMenu_fn_onRowRender&quot; %&gt;
+
+
+    
+    tableView = widget.newTableView
+    {
+        left = -14,
+        top = profileH - 2,
+        height = display.contentHeight - (profileH) - 15,
+        width = display.contentWidth + 15,
+        onRowRender = onRowRender,
+        onRowTouch = onRowTouch,
+        listener = scrollListener,
+        hideBackground = true
+    }
+
+    for k,v in pairs( menuData ) do
+
+        local rowH = 44
+        if v.name == &quot;cat&quot; then
+            rowH = 25
+        end
+        tableView:insertRow(
+            {
+                isCategory = false,
+                rowHeight = rowH ,
+                rowColor = { default={ 22/255, 22/255, 22/255 , 0 }, over={ 1, 1, 1 , 0.1 } },
+                lineColor = { 1 ,1 , 1, 0 },
+                params = v
+            }
+        )
+    end
+
+    myGroup:insert( tableView )
+
+    --local version = display.newText( myGroup, myApp.version..&quot; Build &quot;..myApp.build , centerX, display.contentHeight - 15 , myApp.mainFontBold , 15 )
+    --version:setFillColor( 0.6 ,0.6 ,0.6 )
+    return myGroup
+end
+</pre>
+
+<br/>
+
+#### ทำการเพิ่มโค้ดในไฟล์ `_fn__gotoPage.erb`
+<pre class="prettyprint linenums">
+local function _gotoPage( _page )
+
+	transition.to( mainScreen , { time=300 , x = 0 , onComplete = menuListener } )
+    myApp.showMenu = false
+    
+
+    if pageGroup[ _page ] == nil then
+        
+    	for k,v in pairs( pageGroup ) do
+			v.x = v.x + display.contentWidth * 2
+		end
+
+    	if _page == "dashboard" then
+    		dashObj = dash.new(  )
+    		pageGroup[ _page ] = dashObj:create( 0 , headerH )
+
+        elseif _page == "screen2" then
+            local screen2Obj = sc2.new(  )
+            pageGroup[ _page ] = screen2Obj:create( 0 , headerH )
+
+<mark>        elseif _page == "screen3" then
+            local screen3Obj = sc3.new(  )
+            pageGroup[ _page ] = screen3Obj:create( 0 , headerH )</mark>
+     
+    	end
+
+
+    	print( "create ".._page)
+    	mainScreen:insert( pageGroup[ _page ] )
+    	
+    elseif currentPage ~= _page then
+
+    	changePage( _page )
+        if _page == "dashboard" then
+            
+        end
+
+    end
+
+    aui.setTitle( pageData[ _page ].title )
+    print("change title to "..pageData[ _page ].title)
+    currentPage = _page
+end
+</pre>
+
+<br/>
+
+[![ภาพแสดง ภาพรวมการทำงานของระบบ][9]](){: .fancybox-button 
+               data-fancybox-group="using-arranger-class-003"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/using-arranger-class-003.png"}
+
+
+
+
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+[7]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/using-arranger-class-001.png
+[8]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/using-arranger-class-002.png
+[9]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/using-arranger-class-003.png
+
+

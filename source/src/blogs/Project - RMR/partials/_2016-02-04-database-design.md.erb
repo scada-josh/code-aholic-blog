@@ -1,0 +1,56 @@
+# การออกแบบฐานข้อมูล RMR
+![separate line][1]	
+
+> Note : 
+> 
+> 1. ลิ้งค์ สำหรับออกแบบฐานข้อมูล [Draw.io](https://www.draw.io/#Drmr){: target="_blank"}
+> 2. ตารางฐานข้อมูลที่เกี่ยวข้อง มีดังนี้
+> 		* ตาราง rtu_pin_code_tb
+> 		* ตาราง rtu_pin_code_tb
+
+---
+
+## Data Dictionary
+![separate line][1]	
+
+**Data Dictionary หรือ พจนานุกรมข้อมูล** คือ ชุดคำอธิบาย data หรือ object ต่างๆที่ได้ถูกจัดเก็บไว้ในระบบฐานข้อมูล เพื่อใช้ในการอ้างอิงและระบุข้อมูล โดยนอกจากจะอธิบายถึงข้อมูลที่ถูกจัดเก็บแล้ว ยังสามารถอธิบายความเชื่อมโยงระหว่าง object แต่ละ object ได้ด้วย
+
+<br/>
+
+
+
+[![ภาพแสดง ภาพรวมการออกแบบฐานข้อมูล][7]](){: .fancybox-button 
+							data-fancybox-group="database-design-001" 
+							href="<%= current_page.data.baseURL %>images/categories/Project - RMR/database-design-001-01.png"}	
+
+<h4><p class="text-center"> <strong><i><ins>DATA DICTIONARY</ins></i></strong> </p></h4>
+
+
+<%= partial blog_dir + "Project - RMR/partials/database-design/_data-dictionary" %>
+
+<br/>
+
+<%= partial blog_dir + "Project - RMR/partials/database-design/_permission_tb-main" %>
+<%= partial blog_dir + "Project - RMR/partials/database-design/_rtu_pin_code_tb-main" %>
+<%= partial blog_dir + "Project - RMR/partials/database-design/_rtu_main_tb-main" %>
+
+
+
+
+
+
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+[7]: <%= current_page.data.baseURL %>images/categories/Project%20-%20RMR/database-design-001.png
+[8]: <%= current_page.data.baseURL %>images/categories/Project%20-%20RMR/database-design-002.png
+[9]: <%= current_page.data.baseURL %>images/categories/Project%20-%20RMR/database-design-003.png
+[10]: <%= current_page.data.baseURL %>images/categories/Project%20-%20RMR/database-design-004.png
+

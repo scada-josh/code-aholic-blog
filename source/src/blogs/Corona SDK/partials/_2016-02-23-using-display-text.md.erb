@@ -1,0 +1,132 @@
+# การใช้งาน Text (display.*) [![external link 30x30][6]](https://docs.coronalabs.com/api/library/display/newText.html){: target="_blank"}
+![separate line][1]	
+
+
+
+## การสร้าง Display Text เบื้องต้น
+---
+
+#### Syntax
+<pre class="prettyprint linenums">
+display.newText( [parentGroup,] text, x, y, font [, fontSize] )
+display.newText( [parentGroup,] text, x, y [, width, height], font [, fontSize] )
+</pre>
+
+---
+
+<br/>
+
+
+
+## Single-Line Text
+---
+
+[![ภาพแสดง ผลลัพธ์ของการสร้าง Single-Line Text][7]](){: .fancybox-button 
+               data-fancybox-group="display-text-001"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/display-text-001.png"}
+
+#### Single-Line Text (Example-01)
+<pre class="prettyprint linenums">
+local myText = display.newText( "Hello World!", 100, 200, native.systemFont, 30 )
+myText:setFillColor( 1, 0, 0 )
+</pre>
+
+<br/>
+
+#### Single-Line Text (Example-02)
+<pre class="prettyprint linenums">
+local myText = display.newText( "Hello World!", <mark>display.contentCenterX</mark>, <mark>display.contentCenterY</mark>, native.systemFont, 30 )
+myText:setFillColor( 1, 0, 0 )
+</pre>
+
+<br/>
+
+#### Single-Line Text (Example-03)
+<pre class="prettyprint linenums">
+local myText = display.newText( "Hello World!", display.contentCenterX, display.contentCenterY, native.systemFont, 30 )
+myText:setFillColor( 1, 0, 0 )
+<mark>myText.anchorX = 1</mark>
+</pre>
+
+<br/>
+
+
+## Multi-Line Text
+---
+
+[![ภาพแสดง ผลลัพธ์ของการสร้าง Multi-Line Text][8]](){: .fancybox-button 
+               data-fancybox-group="display-text-002"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/display-text-002.png"}
+
+#### Multi-Line Text  (Example-04)
+<pre class="prettyprint linenums">
+-- Create first multi-line text object
+local options1 = 
+{
+    text = "The quick brown fox jumped over the lazy dog.",
+    y = 100,
+    x = 130,
+    <mark>align = "left"</mark>,-- default : left
+    width = 200,     --required for multi-line and alignment
+    font = native.systemFont,
+    fontSize = 18
+}
+local myText1 = display.newText( options1 )
+myText1:setFillColor( 1, 0, 0 )
+</pre>
+
+
+<br/>
+
+#### Multi-Line Text  (Example-05)
+<pre class="prettyprint linenums">
+-- Create first multi-line text object
+local options1 = 
+{
+    text = "The quick brown fox jumped over the lazy dog.",
+    y = 100,
+    x = 130,
+    <mark>align = "center"</mark>,
+    width = 200,     --required for multi-line and alignment
+    font = native.systemFont,
+    fontSize = 18
+}
+local myText1 = display.newText( options1 )
+myText1:setFillColor( 1, 0, 0 )
+</pre>
+
+
+#### Multi-Line Text  (Example-06)
+<pre class="prettyprint linenums">
+-- Create first multi-line text object
+local options1 = 
+{
+    text = "The quick brown fox jumped over the lazy dog.",
+    y = 100,
+    x = 130,
+    <mark>align = "right"</mark>,
+    width = 200,     --required for multi-line and alignment
+    font = native.systemFont,
+    fontSize = 18
+}
+local myText1 = display.newText( options1 )
+myText1:setFillColor( 1, 0, 0 )
+</pre>
+
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+[7]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/display-text-001.png
+[8]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/display-text-002.png
+
+
+
+
+

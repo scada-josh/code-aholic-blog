@@ -4,6 +4,8 @@ entries = []
 
 pages.each_with_index do |page, index|
   object = {}
+  if page.data.isIndexPage != true
+    
     # ... some specifics ommitted
     entry = {
       :id    => index,
@@ -12,6 +14,7 @@ pages.each_with_index do |page, index|
       # :content => page.render({:layout => false }).gsub(
       #  %r{</?[^>]+?>}, '' )
     }
-  entries << entry
+    entries << entry
+  end
 end
 %><%= entries.to_json %>

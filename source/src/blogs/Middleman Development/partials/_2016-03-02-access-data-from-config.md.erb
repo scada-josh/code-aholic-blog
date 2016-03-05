@@ -1,0 +1,55 @@
+# การเข้าถึงข้อมูลในไฟล์ config.rb
+![separate line][1]	
+
+<br/>
+
+# ตัวอย่าง : 1
+---
+
+
+#### ไฟล์ config.rb
+---
+<pre class="prettyprint linenums">
+set :my_config, "value"
+</pre>
+
+
+#### การเข้าถึงข้อมูลในไฟล์ config.rb
+---
+<pre class="prettyprint linenums">
+&lt;%= config[:my_config] %&gt;
+</pre>
+
+<br/>
+
+# ตัวอย่าง : 2
+---
+
+ในบางกรณีเราเอาไปใช้สำหรับ แยกโค้ด ระหว่างเครื่อง Test, Development, Production Server
+
+#### ไฟล์ config.rb
+---
+<pre class="prettyprint linenums">
+set :phase_environment, 'Development' # Development, Test, Production 
+</pre>
+
+#### การเข้าถึงข้อมูลในไฟล์ config.rb
+---
+<pre class="prettyprint linenums">
+&lt;% if config[:phase_environment] == &quot;Development&quot; %&gt;
+
+    /* Connect Database Manager Partial : Development */
+
+&lt;% else %&gt;
+
+    /* Connect Database Manager Partial : Production */
+
+&lt;% end %&gt;
+</pre>
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png

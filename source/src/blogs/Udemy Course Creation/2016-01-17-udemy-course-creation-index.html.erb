@@ -28,33 +28,4 @@ introText: "Udemy Course Creation Index Page"
 categoryName: "Udemy Course Creation"
 ---
  
-<section id="content">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8">
- 
-          <ul>
- 
-            <% blog.articles.each do |article| %>
-            <% if article.data.category == current_page.data.categoryName && article.data.isIndexPage != true %>
-            <li>
-              <h6>
-                <a href="<%= current_page.data.baseURI %><%= article.url %>"><%= truncate(article.title, :length => 50) %></a>
-              </h6>
-              <p>
-               <%= article.data.introText %>
-             </p>
-           </li>
-            <% end %>
-            <% end %>
- 
-          </ul>
- 
-      </div>
-      <div class="col-lg-4">
-        <%= partial blog_dir + "partials/_right-sidebar" %>
-      </div>
- 
-    </div>
-  </div>
-</section>
+<%= partial blog_dir + "partials/common/_index-content-display-v2" %>

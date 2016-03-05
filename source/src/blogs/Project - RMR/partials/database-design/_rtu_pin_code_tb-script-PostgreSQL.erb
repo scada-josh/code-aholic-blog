@@ -1,0 +1,14 @@
+<pre class="prettyprint linenums">
+CREATE TABLE IF NOT EXISTS rtu_pin_code_tb (
+ id SERIAL PRIMARY KEY, 
+ rtu_pin_code_dm_code VARCHAR(32) NOT NULL,
+ rtu_pin_code VARCHAR(32) NOT NULL,
+ rtu_pin_code VARCHAR(32) NOT NULL,
+ location VARCHAR(255),
+ enable VARCHAR(1),
+ date_created TIMESTAMP default current_timestamp,
+ date_modified TIMESTAMP default current_timestamp,
+ remark VARCHAR(255) ,
+ UNIQUE (rtuPinCode_dmCode)
+) 
+</pre>

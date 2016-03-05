@@ -5,7 +5,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ในที่นี้ เราต้องการสร้าง category ใหม่ ชื่อว่า `iOS Development`
 
 
-![image](<%= current_page.data.baseURL %>images/categories/Middleman/creating-blog-category-index-001.png)
+![image](<%= current_page.data.baseURL %>images/categories/Middleman%20Development/creating-blog-category-index-001.png)
 
 
 ---
@@ -21,6 +21,7 @@
 <pre class="prettyprint linenums">
 ---
 title: "index"
+isIndexPage: true
 
 date: <mark>2016-01-17</mark>
 tags: 
@@ -52,29 +53,48 @@ categoryName: <mark>"iOS Development"</mark>
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;row&quot;&gt;
       &lt;div class=&quot;col-lg-8&quot;&gt;
+ 
+          &lt;h2&gt;&lt;%= current_page.data.categoryName %&gt;&lt;/h2&gt;
 
-          &lt;ul&gt;
-
-            &lt;% blog.articles.each do |article| %&gt;
-            &lt;% if article.data.category == current_page.data.categoryName &amp;&amp; article.title != 'index' %&gt;
-            &lt;li&gt;
-              &lt;h6&gt;
-                &lt;a href=&quot;&lt;%= current_page.data.baseURI %&gt;&lt;%= article.url %&gt;&quot;&gt;&lt;%= truncate(article.title, :length =&gt; 50) %&gt;&lt;/a&gt;
-              &lt;/h6&gt;
-              &lt;p&gt;
-               &lt;%= article.data.introText %&gt;
-             &lt;/p&gt;
-           &lt;/li&gt;
-            &lt;% end %&gt;
-            &lt;% end %&gt;
-
-          &lt;/ul&gt;
-
+          &lt;hr/&gt;
+ 
+          &lt;table class=&quot;table table-advance&quot; id=&quot;BlogDetailsDataTable&quot; style=&quot;width: 100% !important;&quot; &gt;
+ 
+            &lt;thead&gt;
+              &lt;tr&gt;
+                &lt;th &gt;ID&lt;/th&gt;
+                &lt;th &gt;Title&lt;/th&gt;
+                &lt;th class=&quot;text-center &quot; &gt;Date&lt;/th&gt;
+              &lt;/tr&gt;
+            &lt;/thead&gt;
+ 
+            &lt;tbody&gt;
+ 
+                &lt;% blog.articles.each do |article| %&gt;
+                &lt;% if article.data.category == current_page.data.categoryName &amp;&amp; article.data.isIndexPage != true %&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;
+                    &lt;%= article.data.orderText %&gt;
+                  &lt;/td&gt;
+                  &lt;td&gt;
+                      &lt;a href=&quot;&lt;%= current_page.data.baseURI %&gt;&lt;%= article.url %&gt;&quot;&gt;&lt;%= truncate(article.title, :length =&gt; 50) %&gt;&lt;/a&gt;
+                      &lt;p&gt;&lt;%= article.data.introText %&gt;&lt;/p&gt;
+                 &lt;/td&gt;
+                 &lt;td class=&quot;text-center &quot; &gt;
+                   &lt;%= article.data.date %&gt;
+                 &lt;/td&gt;
+               &lt;/tr&gt;
+                &lt;% end %&gt;
+                &lt;% end %&gt;
+ 
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+ 
       &lt;/div&gt;
       &lt;div class=&quot;col-lg-4&quot;&gt;
         &lt;%= partial blog_dir + &quot;partials/_right-sidebar&quot; %&gt;
       &lt;/div&gt;
-
+ 
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/section&gt;
@@ -130,7 +150,7 @@ set :categoryURL_iosDevelopmentIndex, "/src/blogs/ios-development/2016/01/17/ios
 เปิด Browser แล้วใส่ URL : `http://localhost/code-aholic-blog/build/src/blogs/` เพื่อดูผลลัพธ์
 
 
-![image](<%= current_page.data.baseURL %>images/categories/Middleman/creating-blog-category-index-002.png)
+![image](<%= current_page.data.baseURL %>images/categories/Middleman%20Development/creating-blog-category-index-002.png)
 
 จะปรากฏลิ้งค์ไปยัง category `iOS Development` ที่เราเพิ่งสร้างขึ้นมา (ตามรูป)
 

@@ -1,0 +1,15 @@
+<pre class="prettyprint linenums">
+CREATE TABLE IF NOT EXISTS `rtu_main_tb` (
+ `id` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+ `branch_code` VARCHAR(32) NOT NULL,
+ `zone_code` VARCHAR(32) NOT NULL,
+ `dma_code` VARCHAR(32) NOT NULL,
+ `dm_code` VARCHAR(32) NOT NULL,
+ `ip_address` VARCHAR(32) NOT NULL,
+ `comm_type` VARCHAR(32) NOT NULL,
+ `logger_code` VARCHAR(32) NOT NULL,
+ `rtu_status` VARCHAR(32) NOT NULL,
+ `remark` VARCHAR(255) NOT NULL,
+  UNIQUE (dm_code)
+) 
+</pre>
