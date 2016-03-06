@@ -3,7 +3,7 @@
   <ul class="recent">
 
     <% blog.articles[0...5].each do |article| %>
-    <% if article.title != 'index' %>
+    <% if article.data.isIndexPage != true %>
 
 
    <li>
