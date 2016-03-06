@@ -150,6 +150,9 @@ set :categoryURL_graphicDesignIndex, "/src/blogs/graphic-design/2016/03/05/graph
 set :categoryURL_gisIndex, "/src/blogs/gis/2016/03/04/gis-index/"
 set :categoryURL_freelanceIndex, "/src/blogs/freelance/2016/03/04/freelance-index/"
 set :categoryURL_mwaIndex, "/src/blogs/mwa/2016/03/04/mwa-index/"
+set :categoryURL_coronaWorkshopIndex, "/src/blogs/corona-workshop/2016/03/06/corona-workshop-index/"
+
+
 
 
 # Build-specific configuration
