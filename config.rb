@@ -151,6 +151,10 @@ set :categoryURL_gisIndex, "/src/blogs/gis/2016/03/04/gis-index/"
 set :categoryURL_freelanceIndex, "/src/blogs/freelance/2016/03/04/freelance-index/"
 set :categoryURL_mwaIndex, "/src/blogs/mwa/2016/03/04/mwa-index/"
 set :categoryURL_coronaWorkshopIndex, "/src/blogs/corona-workshop/2016/03/06/corona-workshop-index/"
+set :categoryURL_iosPluginIndex, "/src/blogs/ios-plugin/2016/03/06/ios-plugin-index/"
+set :categoryURL_iosWorkshopIndex, "/src/blogs/ios-workshop/2016/03/06/ios-workshop-index/"
+set :categoryURL_projectIelIndex, "/src/blogs/project-iel/2016/03/11/project-iel-index/"
+
 
 
 
