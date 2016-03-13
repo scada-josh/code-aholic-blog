@@ -154,7 +154,7 @@ set :categoryURL_coronaWorkshopIndex, "/src/blogs/corona-workshop/2016/03/06/cor
 set :categoryURL_iosPluginIndex, "/src/blogs/ios-plugin/2016/03/06/ios-plugin-index/"
 set :categoryURL_iosWorkshopIndex, "/src/blogs/ios-workshop/2016/03/06/ios-workshop-index/"
 set :categoryURL_projectIelIndex, "/src/blogs/project-iel/2016/03/11/project-iel-index/"
-
+set :categoryURL_trainingCourseIndex, "/src/blogs/training-course/2016/03/13/training-course-index/"
 
 
 

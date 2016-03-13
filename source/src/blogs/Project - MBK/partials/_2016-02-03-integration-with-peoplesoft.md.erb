@@ -1,1 +1,89 @@
-# _2016-02-03-integration-with-peoplesoft.md
+# แนวทางการเชื่อมโยงกับระบบ Peoplesoft [![ภาพ external-link-30x30][common-06]](){: href="http://php.net/manual/en/function.oci-connect.php" target="_blank"}
+![separate line][common-01] 
+
+[![ภาพแสดง สถาปัตยกรรมของระบบ QRCode for MBK][1]](){: .fancybox-button 
+                            data-fancybox-group="system-architecture-001" 
+                            href="<%= current_page.data.baseURL %>images/categories/Project - MBK/system-architecture-001.png"} 
+
+<br/>
+
+### ขั้นตอนการทดสอบเพื่อเชื่อมโยงข้อมูลกับระบบ Peoplesoft
+<table class="table table-bordered" > 
+    <thead> 
+        <tr> 
+            <th class="text-center" style="width: 50px">#</th> 
+            <th class="text-center">Topic</th> 
+            <th class="text-center">Result</th>
+        </tr> 
+    </thead> 
+    <tbody> 
+        <tr>
+          <td colspan="3" class="active"><b>ตรวจสอบสถานะการเชื่อมต่อกับระบบเครือข่ายภายใน MBK</b></td>
+        </tr>
+        <tr> 
+            <td class="text-center"><span class="label label-primary">1</span></td> 
+            <td><a href="#goto-integration-peoplesoft-01">ทดสอบ Ping</a></td> 
+            <td class="text-center">-</td> 
+        </tr> 
+        <tr>
+          <td colspan="3" class="active"><b>ทดสอบการเชื่อมต่อกับฐานข้อมูล PeopleSoft ผ่านโปรแกรม TOAD</b></td>
+        </tr>
+        <tr> 
+            <td class="text-center"><span class="label label-primary">2</span></td> 
+            <td><a href="#goto-integration-peoplesoft-02">ทดสอบ Query ข้อมูลรายการคอร์สอบรม</a></td> 
+            <td class="text-center">-</td> 
+        </tr>
+        <tr> 
+            <td class="text-center"><span class="label label-primary">3</span></td> 
+            <td><a href="#goto-integration-peoplesoft-03">ทดสอบ Update ข้อมูลในฟิลด์ Attendance & Grade</a></td> 
+            <td class="text-center">-</td> 
+        </tr>
+        <tr>
+          <td colspan="3" class="active"><b>ทดสอบการเชื่อมต่อกับฐานข้อมูล PeopleSoft ผ่าน PHP Script</b></td>
+        </tr>
+        <tr> 
+            <td class="text-center"><span class="label label-primary">4</span></td> 
+            <td><a href="#goto-integration-peoplesoft-04">ทดสอบติดต่อฐานข้อมูล PeopleSoft ผ่าน PHP Script</a></td> 
+            <td class="text-center">-</td> 
+        </tr>
+        <tr>
+          <td colspan="3" class="active"><b>ทดสอบการเชื่อมต่อกับฐานข้อมูล PeopleSoft ผ่าน RESTful Web Service</b></td>
+        </tr>
+        <tr> 
+            <td class="text-center"><span class="label label-primary">5</span></td> 
+            <td><a href="#goto-integration-peoplesoft-05">ทดสอบเรียกใช้งาน RESTful Web Service เพื่อแสดงรายการคอร์สอบรม</a></td> 
+            <td class="text-center">-</td> 
+        </tr>
+        <tr> 
+            <td class="text-center"><span class="label label-primary">6</span></td> 
+            <td><a href="#goto-integration-peoplesoft-06">ทดสอบเรียกใช้งาน RESTful Web Service เพื่อ Update ข้อมูลในฟิลด์ Attendance & Grade</a></td> 
+            <td class="text-center">-</td> 
+        </tr>
+
+        
+    </tbody> 
+</table>
+
+
+
+<%= partial blog_dir + "Project - MBK/partials/2016-02-03-integration-with-peoplesoft/_goto-integration-peoplesoft-01" %>
+<%= partial blog_dir + "Project - MBK/partials/2016-02-03-integration-with-peoplesoft/_goto-integration-peoplesoft-02" %>
+<%= partial blog_dir + "Project - MBK/partials/2016-02-03-integration-with-peoplesoft/_goto-integration-peoplesoft-03" %>
+<%= partial blog_dir + "Project - MBK/partials/2016-02-03-integration-with-peoplesoft/_goto-integration-peoplesoft-04" %>
+<%= partial blog_dir + "Project - MBK/partials/2016-02-03-integration-with-peoplesoft/_goto-integration-peoplesoft-05" %>
+<%= partial blog_dir + "Project - MBK/partials/2016-02-03-integration-with-peoplesoft/_goto-integration-peoplesoft-06" %>
+
+
+
+---
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-topic.png
+[common-08]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png
+
+[1]: <%= current_page.data.baseURL %>images/categories/Project%20-%20MBK/system-architecture-001.png
