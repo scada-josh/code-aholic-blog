@@ -1,0 +1,142 @@
+# การแปลง Projection ด้วย Proj4php
+![separate line][common-01] 
+
+[![ภาพแสดง Thailand spatial reference][1]](){: .fancybox-button 
+							data-fancybox-group="using-php-transform-projection-001" 
+							href="<%= current_page.data.baseURL %>images/categories/gis/using-php-transform-projection-001.png"}	
+
+---
+
+
+
+### 1. เพิ่มไลบรารี Proj4php เข้ามาในระบบ
+
+<pre class="prettyprint linenums">
+{
+    "require": {
+    	"slim/slim": "2.*",
+        "vrana/notorm": "dev-master",
+        "mobiledetect/mobiledetectlib": "dev-master",
+        "arcanedev/qr-code": "dev-master",
+        "tecnickcom/tcpdf": "dev-master",
+        "palanik/corsslim": "*",
+        "aferrandini/phpqrcode": "1.0.1",
+        "tuupola/slim-jwt-auth": "*",
+        "tuupola/slim-basic-auth": "*",
+        <mark>"proj4php/proj4php": "*"</mark>
+    },
+    "config" : {
+        "vendor-dir" : "./source/packages"
+    }
+}
+</pre>
+
+* ติดตั้ง php dependency ชือว่า "proj4php/proj4php" ผ่านทาง composer 
+* ใช้คำสั่ง $ `php composer.phar update`
+
+<br/>
+
+[![ภาพแสดง ผลลัพธ์จากการติดตั้ง proj4php][2]](){: .fancybox-button 
+							data-fancybox-group="using-php-transform-projection-002" 
+							href="<%= current_page.data.baseURL %>images/categories/gis/using-php-transform-projection-002.png"}	
+---
+
+### 2. สร้าง Object `$proj4`
+
+<pre class="prettyprint linenums">
+&lt;?php
+	require_once '../../packages/autoload.php';
+
+    /* proj4php */
+    // Use a PSR-4 autoloader for the `proj4php` root namespace.
+    use proj4php\Proj4php;
+    use proj4php\Proj;
+    use proj4php\Point;
+
+    // Initialise Proj4
+    $proj4 = new Proj4php();
+    // add it to proj4
+    $proj4->addDef("EPSG:32647",'+proj=utm +zone=47 +ellps=WGS84 +datum=WGS84 +units=m +no_defs');
+    $proj4->addDef("EPSG:24047", '+proj=utm +zone=47 +a=6377276.345 +b=6356075.41314024 +units=m +no_defs');
+php&gt;
+</pre>
+
+---
+
+### 3. ลองใช้งาน
+
+<pre class="prettyprint linenums">
+&lt;?php
+
+require_once '../../packages/autoload.php';
+
+/* Slim framework 2.x */
+$app = new \Slim\Slim();
+
+
+/* proj4php */
+// Use a PSR-4 autoloader for the `proj4php` root namespace.
+use proj4php\Proj4php;
+use proj4php\Proj;
+use proj4php\Point;
+
+// Initialise Proj4
+$proj4 = new Proj4php();
+// add it to proj4
+$proj4->addDef("EPSG:32647",'+proj=utm +zone=47 +ellps=WGS84 +datum=WGS84 +units=m +no_defs');
+$proj4->addDef("EPSG:24047", '+proj=utm +zone=47 +a=6377276.345 +b=6356075.41314024 +units=m +no_defs');
+
+
+$app->post('/testManager/transformToLatLng/',function() use ($app, $proj4) { transformToLatLng($app, $proj4); });
+
+$app->run();
+
+function transformToLatLng($app, $proj4) {
+
+    // then Create your projections
+    $proj32647 = new Proj('EPSG:32647',$proj4);
+    $proj24047 = new Proj('EPSG:24047', $proj4);
+    $projWGS84 = new Proj('EPSG:4326', $proj4);
+
+
+    // Create a point.
+    $pointSrc = new Point(674006.5625, 1527902.5, $proj32647);
+    $tmpPointSrc = $pointSrc->toShortString();
+    // echo "Source: " . $pointSrc->toShortString() . " in L93 &lt;br&gt;";
+
+    // Transform the point between datums.
+    $pointDest = $proj4->transform($projWGS84, $pointSrc);
+    $tmpPointDesc = $pointDest->toShortString();
+    // echo "Conversion: " . $pointDest->toShortString() . " in WGS84&lt;br&gt;&lt;br&gt;";
+
+    $return_m = array("msg" => "ทดสอบแปลงค่าพิกัดจาก UTM (32647 หรือ 24047) เป็น LatLng", "pointSrc" => $tmpPointSrc, "pointDest" => $tmpPointDesc);
+    
+    $app->response()->header("Content-Type", "application/json");
+    echo json_encode($return_m);
+};
+
+php&gt;
+</pre>
+
+
+
+
+
+ที่มา :   
+
+1. [https://github.com/proj4php/proj4php](https://github.com/proj4php/proj4php)  
+2. [http://spatialreference.org/ref/epsg/24047/](http://spatialreference.org/ref/epsg/24047/)
+
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-topic.png
+[common-08]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png
+
+[1]: <%= current_page.data.baseURL %>images/categories/GIS/using-php-transform-projection-001.png
+[2]: <%= current_page.data.baseURL %>images/categories/GIS/using-php-transform-projection-002.png
+

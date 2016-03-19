@@ -1,0 +1,141 @@
+# การสร้าง RESTful Web Service ด้วย Python
+![separate line][common-01] 
+
+[![ภาพแสดง หน้าเว็บของ Flask microframework][1]](){: .fancybox-button 
+							data-fancybox-group="python-restful-api-with-flask-001" 
+							href="<%= current_page.data.baseURL %>images/categories/python/python-restful-api-with-flask-001.png"}
+
+<br/>
+
+<div  style="width:100%; text-align:center" markdown="1">
+
+
+[![ภาพแสดง หน้าเว็บของ Flask microframework][4]](){: .fancybox-button 
+                            data-fancybox-group="python-restful-api-with-flask-004" 
+                            href="<%= current_page.data.baseURL %>images/categories/python/Todoist_Crash.gif"}
+
+</div>
+
+
+### 1. เตรียมโฟลเดอร์เพื่อเก็บโปรเจ็ค  ![separate line sub topic][common-08] 
+---
+
+<pre class="prettyprint linenums">
+C:\Python-Workspace>mkdir todo-api
+</pre>
+
+<pre class="prettyprint linenums">
+C:\Python-Workspace>cd todo-api
+</pre>
+
+<br/>
+
+### 2. สร้าง virtual environment  ![separate line sub topic][common-08] 
+---
+<pre class="prettyprint linenums">
+C:\Python-Workspace\todo-api><mark>C:\Python27\Scripts\easy_install.exe virtualenv</mark>
+</pre>
+
+หรือ
+
+<pre class="prettyprint linenums">
+C:\Python-Workspace\todo-api><mark>C:\Python27\Scripts\pip.exe install virtualenv</mark>
+</pre>
+
+<br/>
+
+### 3. ติดตั้ง Flask (ต้องเชื่อมต่ออินเตอร์เน็ต)  ![separate line sub topic][common-08] 
+---
+
+<pre class="prettyprint linenums">
+C:\Python-Workspace\todo-api><mark>C:\Python-Workspace\todo-api\flask\Scripts\pip.exe install flask</mark>
+</pre>
+
+
+### 4. สร้างไฟล์ app.py และเขียนโค้ดลงไป ![separate line sub topic][common-08] 
+---
+
+<pre class="prettyprint linenums">
+#!C:/Python-Workspace/todo-api/flask/Scripts/python.exe
+from flask import Flask, jsonify, url_for, request, Response, json
+
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def index():
+    return "Hello World Expo! Hello 555"
+
+tasks = [
+    {
+        'id': 1,
+        'title': u'Buy groceries',
+        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
+        'done': False
+    },
+    {
+        'id': 2,
+        'title': u'Learn Python',
+        'description': u'Need to find a good Python tutorial on the web', 
+        'done': False
+    }
+]
+
+@app.route('/todo/api/v1.0/tasks', methods=['GET'])
+def get_tasks():
+    return jsonify({'tasks': tasks})
+
+
+
+if __name__ == '__main__':
+    app.debug = True
+    app.run(host='0.0.0.0', port=80)
+</pre>
+
+<br/>
+
+### 4. เปิด Command line แล้วใช้คำสั่งต่อไปนี้  ![separate line sub topic][common-08] 
+---
+
+<pre class="prettyprint linenums">
+C:\Python-Workspace\todo-api><mark>C:\Python-Workspace\todo-api\flask\Scripts\python.exe app.py</mark>
+</pre>
+
+หรือ
+
+<pre class="prettyprint linenums">
+C:\Python-Workspace\todo-api><mark>python app.py</mark>
+</pre>
+
+<br/>
+
+[![ภาพแสดง หน้าจอรัน Command line][2]](){: .fancybox-button 
+							data-fancybox-group="python-restful-api-with-flask-002" 
+							href="<%= current_page.data.baseURL %>images/categories/python/python-restful-api-with-flask-002.png"}
+
+<br/>
+
+### 5. เปิด Browser  ![separate line sub topic][common-08] 
+---
+
+<br/>
+
+[![ภาพแสดง หน้าจอ Web Browser][3]](){: .fancybox-button 
+							data-fancybox-group="python-restful-api-with-flask-003" 
+							href="<%= current_page.data.baseURL %>images/categories/python/python-restful-api-with-flask-003.png"}
+
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-topic.png
+[common-08]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png
+
+[1]: <%= current_page.data.baseURL %>images/categories/Python/python-restful-api-with-flask-001.png
+[2]: <%= current_page.data.baseURL %>images/categories/Python/python-restful-api-with-flask-002.png
+[3]: <%= current_page.data.baseURL %>images/categories/Python/python-restful-api-with-flask-003.png
+[4]: <%= current_page.data.baseURL %>images/categories/Python/Todoist_Crash.gif

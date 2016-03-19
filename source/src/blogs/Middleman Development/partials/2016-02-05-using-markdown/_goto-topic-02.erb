@@ -1,0 +1,97 @@
+![bookmark][common-04]{: #goto-topic-02 }
+
+## การใช้งาน fancybox เพื่อแสดงรูปภาพของ Blog  ![separate line sub topic][common-08] 
+
+
+
+#### import javascript 
+<pre class="prettyprint linenums">
+//= require fancybox/lib/jquery.mousewheel-3.0.6.pack.js
+//= require fancybox/source/jquery.fancybox.js
+//= require fancybox/source/helpers/jquery.fancybox-buttons.js
+//= require fancybox/source/helpers/jquery.fancybox-thumbs.js
+//= require fancybox/source/helpers/jquery.fancybox-media.js
+</pre>
+
+#### import stylesheet 
+<pre class="prettyprint linenums">
+//= require fancybox/source/jquery.fancybox.css
+//= require fancybox/source/helpers/jquery.fancybox-buttons.css
+//= require fancybox/source/helpers/jquery.fancybox-thumbs.css
+</pre>
+
+
+#### แบบสร้างลิ้งค์ จากข้อความ แบบที่ 1
+<pre class="prettyprint linenums">
+[โชว์ภาพ ขนาดใหญ่](http://localhost/code-aholic-blog/build/images/categories/Project%20-%20RMR/restful-web-service-design-and-documentation-001.png)
+{: .fancybox-buttons 
+   data-fancybox-group=&quot;button&quot;
+}
+</pre>
+
+#### แบบสร้างลิ้งค์ จากข้อความ แบบที่ 2
+<pre class="prettyprint linenums">
+[โชว์ภาพ ขนาดใหญ่ เวอร์ชั่น 2](){: .fancybox-buttons 
+			   data-fancybox-group=&quot;button&quot; 
+			   href=&quot;http://localhost/code-aholic-blog/build/images/categories/Project%20-%20RMR/restful-web-service-design-and-documentation-001.png&quot;}
+</pre>
+
+#### อ้างแบบ relaive path (มีช่องว่างได้)
+<pre class="prettyprint linenums">
+[![separate line][5]](){: .fancybox-button 
+			   data-fancybox-group=&quot;button&quot;
+			   href=&quot;&lt;%= current_page.data.baseURL %&gt;/images/categories/Project - RMR/restful-web-service-design-and-documentation-001.png&quot;}
+</pre>
+
+#### อ้างแบบ full path (ถ้ามีช่องว่างให้ใส่ `%20` แทน)
+<pre class="prettyprint linenums">
+[![separate line][6]](){: .fancybox-button 
+			   data-fancybox-group=&quot;button&quot; 
+			   href=&quot;http://localhost/code-aholic-blog/build/images/categories/Project%20-%20RMR/restful-web-service-design-and-documentation-001.png&quot;}
+</pre>
+
+<pre class="prettyprint linenums">
+[5]: &lt;%= current_page.data.baseURL %&gt;images/categories/Project%20-%20RMR/restful-web-service-design-and-documentation-001.png
+[6]: http://localhost/code-aholic-blog/build/images/categories/Project%20-%20RMR/restful-web-service-design-and-documentation-001.png
+</pre>
+
+<br/>
+
+#### Configuration fancybox 
+
+<pre class="prettyprint linenums">
+$(document).ready(function(){
+
+	/*
+	 *  Button helper. Disable animations, hide close button, change title type and content
+	 */
+
+	$('.fancybox-buttons').fancybox({
+		prevEffect : 'none',
+		nextEffect : 'none',
+		closeBtn   : false,
+		width      : '100%',
+		maxWidth   : 1000,
+		helpers    : {
+				title   : { type : 'inside' },
+				buttons : {}
+			     }
+		 afterLoad : function() {
+				this.title = 'Image ' + (this.index + 1) + ' of ' + this.group.length + (this.title ? ' - ' + this.title : '');
+			     }
+	});
+
+	$(".fancybox-button").fancybox({
+		prevEffect : 'none',
+		nextEffect : 'none',
+		closeBtn   : false,
+		width      : '100%',
+		maxWidth   : 1000,
+		helpers    : {
+				title   : { type : 'inside' },
+				buttons : {}
+			     }
+	});
+
+});
+</pre>

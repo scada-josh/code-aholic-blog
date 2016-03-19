@@ -1,0 +1,35 @@
+![bookmark][common-04]{: #goto-topic-03 }
+
+## การใช้งานไฟล์ GIF เพื่อแสดงผลบน Blog  ![separate line sub topic][common-08] 
+
+#### 1. บันทึกหน้าจอด้วย Quicktime
+
+#### 2. ใช้โปรแกรม [Gifrocket](http://www.gifrocket.com) แปลง `วิดีโอ` ให้เป็น `ไฟล์ GIF`
+
+[![ภาพแสดง หน้าเว็บ Gifrocket][5]](){: .fancybox-button 
+							data-fancybox-group="goto-topic-03" 
+							href="<%= current_page.data.baseURL %>images/categories/Middleman Development/using-markdown-for-blog-001.png"}	
+
+
+<br/>
+
+#### 3. ชุดคำสั่งสำหรับแสดงรูปภาพไฟล์ GIF ให้แสดงผลกลางหน้าจอ
+
+<pre class="prettyprint linenums">
+&lt;div  style=&quot;width:100%; text-align:center&quot; markdown=&quot;1&quot;&gt;
+ 
+[![ภาพแสดง ไฟล์ GIF][4]](){: .fancybox-button 
+                            data-fancybox-group=&quot;gif-file-001&quot; 
+                            href=&quot;&lt;%= current_page.data.baseURL %&gt;images/categories/python/Todoist_Crash.gif&quot;}
+ 
+&lt;/div&gt;
+</pre>
+
+
+<div  style="width:100%; text-align:center" markdown="1">
+ 
+[![ภาพแสดง ไฟล์ GIF][6]](){: .fancybox-button 
+                            data-fancybox-group="gif-file-001" 
+                            href="<%= current_page.data.baseURL %>images/categories/Middleman Development/Gifrocket.gif"}
+ 
+</div>

@@ -1,0 +1,93 @@
+# การสร้าง Window Service เพื่อรัน Python Web Server
+![separate line][common-01] 
+
+ที่มา [ลิ้งค์](http://www.javaxt.com/Tutorials/Windows/How_to_Create_a_Windows_Service){: target="_blank"}
+
+## 1. Download และ ติดตั้ง `rktools`  ![separate line sub topic][common-08] 
+---
+
+Download และ ติดตั้ง `Windows Server Resource Kit (rktools.exe)`
+
+
+Download [rktools](https://d1x0mwiac2rqwt.cloudfront.net/_LpOiYWlfCDPg8gGFZjgd_LDTh_rvCp1HGYFK2bvmW151_9MNDW_qXhPDJFGB6NN/by/5482312/as/MEMCACHED_IO.zip){: target="_blank"}, หลังจากนั้นให้แตก zip file จะมีชื่อว่า `rktools.exe`
+
+<br/>
+
+## 2. สร้าง Window Service  ![separate line sub topic][common-08] 
+---
+
+At a MS-DOS command prompt (running CMD.EXE), type the following command:
+
+เปิด MS-DOS command prompt `C:\Windows\SysWOW64\cmd.exe` 
+
+เพื่อใช้รันคำสั่งในการสร้าง Window Service, 
+
+ในที่นี้ เราต้องการสร้าง Window Service ชื่อว่า `Python-API`
+
+<pre class="prettyprint linenums">
+instsrv <mark>Python-API</mark> "C:\Program Files (x86)\Windows Resource Kits\Tools\SRVANY.EXE"
+</pre>
+
+<br/>
+
+## 3. Create & Edit Window Registry  ![separate line sub topic][common-08] 
+---
+
+Next, you will need to create a registry key for your new service. Run Registry Editor (Regedt32.exe) and locate the following subkey:
+
+
+ใช้คำสั่ง `regedit` เพื่อเปิดดู registry ในเครื่อง
+
+***"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Python-API"***
+
+หมายเหตุ : เราสามารถใส่คำอธิบาย Window Service นี้ได้ ด้วยการสร้าง key ขึ้นมาใหม่ ที่เป็นแบบ String Value ที่มีชื่อว่า `Description` หลังจากนั้นก็ใส่คำอธิบายสำหรับ Window Service นี้ได้เลย
+
+[![ภาพแสดง หน้าจอ Window Registry][2]](){: .fancybox-button 
+                            data-fancybox-group="create-window-service-run-python-web-server-002" 
+                            href="<%= current_page.data.baseURL %>images/categories/python/create-window-service-run-python-web-server-002.png"}
+
+<br/>
+
+---
+
+***Create a new key called `Parameters`***  
+
+In the `Parameters` key/folder, create a new key called `Application` และ `AppParameters`.
+
+Edit the value for the Application key by entering the fully qualified path to the executable, along with any command line arguements. Example:
+
+* Application : `C:\Python27\python.exe`
+* AppParameters : `C:\Python-Workspace\todo-api\app.py`
+
+
+[![ภาพแสดง หน้าจอ Window Registry][3]](){: .fancybox-button 
+                            data-fancybox-group="create-window-service-run-python-web-server-003" 
+                            href="<%= current_page.data.baseURL %>images/categories/python/create-window-service-run-python-web-server-003.png"}
+
+
+
+<br/>
+
+## 4. ตรวจสอบผลลัพธ์ ใน Window Service ![separate line sub topic][common-08] 
+---
+
+At this point you should be able to go to the services tab in Computer Management and configure your service.
+
+[![ภาพแสดง หน้าจอ Window Service][1]](){: .fancybox-button 
+                            data-fancybox-group="create-window-service-run-python-web-server-001" 
+                            href="<%= current_page.data.baseURL %>images/categories/python/create-window-service-run-python-web-server-001.png"}
+
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-topic.png
+[common-08]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png
+
+[1]: <%= current_page.data.baseURL %>images/categories/Python/create-window-service-run-python-web-server-001.png
+[2]: <%= current_page.data.baseURL %>images/categories/Python/create-window-service-run-python-web-server-002.png
+[3]: <%= current_page.data.baseURL %>images/categories/Python/create-window-service-run-python-web-server-003.png
+
