@@ -1,0 +1,56 @@
+
+## 3. Events ![separate line][common-08]
+
+[![ภาพแสดง สัญลักษณ์ การแบ่งประเภทของ Event][3]](){: .fancybox-button 
+                            data-fancybox-group="bpmn-003" 
+                            href="<%= current_page.data.baseURL %>images/categories/projects/bpmn-003.png"}
+
+
+---
+
+[![ภาพแสดง Core Event][11]](){: .fancybox-button 
+                            data-fancybox-group="bpmn-011" 
+                            href="<%= current_page.data.baseURL %>images/categories/projects/bpmn-011.png"}
+
+
+
+สำหรับ Core Events แบ่งออกเป็น
+
+1. ***Message events:*** <br/> Messages are sent asynchronously 1 to 1 between pools:
+	* Catching semantics – wait for a specified message from a different pool and then emit a token.
+	* Throwing semantics – on receipt of a token, send a specified message to a different pool.
+
+2. ***Signal events:***   <br/> Signals are broadcast asynchronously 1 to many within or between pools:
+	* Catching semantics – wait for a specified signal then emit a token.
+	* Throwing semantics – on receipt of a token, broadcast a specified signal.
+
+3. ***Timer events:***   
+	* When a time condition becomes True, emit a token.
+
+4. ***Conditional events:***      
+	* When a Boolean condition transitions from False to True (edge-triggered), emit a token.      
+
+5. ***Terminate events:***    
+
+
+<br/>
+
+#### <ins>ตัวอย่าง</ins> การใช้งาน `Core Events`
+---
+
+[![ภาพแสดง ตัวอย่าง การใช้งาน Core Events][12]](){: .fancybox-button 
+                            data-fancybox-group="bpmn-012" 
+                            href="<%= current_page.data.baseURL %>images/categories/projects/bpmn-012.png"}
+
+
+
+
+
+
+
+
+
+
+
+
+

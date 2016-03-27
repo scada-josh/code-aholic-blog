@@ -1,0 +1,42 @@
+
+#### `2.2.2) Event Subprocess`
+---
+
+สำหรับ `Event subprocess` ไม่ได้เป้นส่วนหนึ่งของ normal flow ของกระบวนการปกติ. มันจะทำงานก็ต่อเมื่อมีเหตุการณ์มากระตุ้น เช่น 
+	
+* Message
+* Error
+* Escalation
+* Conditional
+* Signal
+* Timer
+* Multiple
+
+
+[![ภาพแสดง ตัวอย่าง Event Subprocess][7]](){: .fancybox-button 
+                            data-fancybox-group="bpmn-007" 
+                            href="<%= current_page.data.baseURL %>images/categories/projects/bpmn-007.png"}
+
+
+จากตัวอย่างรูปข้างบน, ถ้ากระบวนการ (Process) ปกติใช้เวลานานเกิน 2 ชัวโมง จะทำให้ Event Subprocess ที่มีชื่อว่า `Late order` ถูกกระตุ้น(trigger) ให้ทำงาน.
+
+<br/>
+
+#### <ins>ตัวอย่าง</ins> การใช้งาน `Event Subprocess`
+---
+
+[![ภาพแสดง ตัวอย่าง Event Subprocess][8]](){: .fancybox-button 
+                            data-fancybox-group="bpmn-008" 
+                            href="<%= current_page.data.baseURL %>images/categories/projects/bpmn-008.png"}
+
+---
+
+[![ภาพแสดง ตัวอย่าง Event Subprocess][9]](){: .fancybox-button 
+                            data-fancybox-group="bpmn-009" 
+                            href="<%= current_page.data.baseURL %>images/categories/projects/bpmn-009.png"}                            
+
+---
+
+[![ภาพแสดง ตัวอย่าง Event Subprocess][10]](){: .fancybox-button 
+                            data-fancybox-group="bpmn-010" 
+                            href="<%= current_page.data.baseURL %>images/categories/projects/bpmn-010.png"}     
