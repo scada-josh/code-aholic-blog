@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `rtu_pin_code_tb` (
  `lng` float(11,7),
  `location` VARCHAR(255),
  `enable` VARCHAR(1),
+ `sync_flag` VARCHAR(1),
  `created_datetime` DATETIME DEFAULT CURRENT_TIMESTAMP, 
  `modified_datetime` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  `end_datetime` DATETIME, 

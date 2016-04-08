@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS rtu_pin_code_tb (
  rtu_pin_code VARCHAR(32) NOT NULL,
  location VARCHAR(255),
  enable VARCHAR(1),
+ sync_flag VARCHAR(1),
  date_created TIMESTAMP default current_timestamp,
  date_modified TIMESTAMP default current_timestamp,
  remark VARCHAR(255) ,

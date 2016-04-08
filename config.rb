@@ -146,7 +146,6 @@ set :categoryURL_coronaPluginIndex, "/src/blogs/corona-plugin/2016/03/04/corona-
 set :categoryURL_pythonIndex, "/src/blogs/python/2016/03/04/python-index/"
 set :categoryURL_phpIndex, "/src/blogs/php/2016/03/04/php-index/"
 set :categoryURL_rubyIndex, "/src/blogs/ruby/2016/03/04/ruby-index/"
-set :categoryURL_graphicDesignIndex, "/src/blogs/graphic-design/2016/03/05/graphic-design-index/"
 set :categoryURL_gisIndex, "/src/blogs/gis/2016/03/04/gis-index/"
 set :categoryURL_freelanceIndex, "/src/blogs/freelance/2016/03/04/freelance-index/"
 set :categoryURL_mwaIndex, "/src/blogs/mwa/2016/03/04/mwa-index/"
@@ -155,7 +154,9 @@ set :categoryURL_iosPluginIndex, "/src/blogs/ios-plugin/2016/03/06/ios-plugin-in
 set :categoryURL_iosWorkshopIndex, "/src/blogs/ios-workshop/2016/03/06/ios-workshop-index/"
 set :categoryURL_projectIelIndex, "/src/blogs/project-iel/2016/03/11/project-iel-index/"
 set :categoryURL_trainingCourseIndex, "/src/blogs/training-course/2016/03/13/training-course-index/"
-
+set :categoryURL_prototypingAndDesignIndex, "/src/blogs/prototyping-and-design/2016/04/08/prototyping-and-design-index/"
+set :categoryURL_coffeescriptIndex, "/src/blogs/coffeescript/2016/04/08/coffeescript-index/"
+set :categoryURL_nodejsIndex, "/src/blogs/nodejs/2016/04/08/nodejs-index/"
 
 
 
