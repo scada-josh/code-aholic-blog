@@ -157,7 +157,10 @@ set :categoryURL_trainingCourseIndex, "/src/blogs/training-course/2016/03/13/tra
 set :categoryURL_prototypingAndDesignIndex, "/src/blogs/prototyping-and-design/2016/04/08/prototyping-and-design-index/"
 set :categoryURL_coffeescriptIndex, "/src/blogs/coffeescript/2016/04/08/coffeescript-index/"
 set :categoryURL_nodejsIndex, "/src/blogs/nodejs/2016/04/08/nodejs-index/"
-
+set :categoryURL_realtimeApplicationsIndex, "/src/blogs/realtime-applications/2016/04/11/realtime-applications-index/"
+set :categoryURL_openLayers3Index, "/src/blogs/openlayers-3/2016/04/18/openlayers-3-index/"
+set :categoryURL_leafletIndex, "/src/blogs/leaflet/2016/04/20/leaflet-index/"
+set :categoryURL_phpNusoapIndex, "/src/blogs/php-nusoap/2016/05/01/php-nusoap-index/"
 
 
 # Build-specific configuration

@@ -1,21 +1,43 @@
 # การใช้งาน Openlayers
-![separate line][1]	
+![separate line][common-01]	
 
-#### **เพิ่ม lib openlayers เข้ามาในโปรเจ็ค**
+
+## OpenLayers 2.x
+
+#### **เพิ่ม javascript - lib openlayers เข้ามาในโปรเจ็ค**
 <pre class="prettyprint linenums">
-//= require openlayers/lib/OpenLayers
+//= require ol2-bower/OpenLayers
+</pre>
+
+#### **เพิ่ม stylesheet - lib openlayers เข้ามาในโปรเจ็ค**
+<pre class="prettyprint linenums">
+//= require ol2-bower/theme/default/style
+//= require ol2-bower/theme/default/google.tidy
+</pre>
+
+---
+
+## OpenLayers 3.x
+
+
+http://openlayers.org/download/
+
+#### **เพิ่ม javascript - lib openlayers เข้ามาในโปรเจ็ค**
+<pre class="prettyprint linenums">
+//= require helper/openlayers/v3.15.1/build/ol.js
+</pre>
+
+#### **เพิ่ม stylesheet - lib openlayers เข้ามาในโปรเจ็ค**
+<pre class="prettyprint linenums">
+//= require helper/openlayers/v3.15.1/css/ol.css
 </pre>
 
 
-<pre class="prettyprint linenums">
-//= require openlayers/theme/default/style
-</pre>
 
-
-
-[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
-[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
-[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
-[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
-[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
-[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png

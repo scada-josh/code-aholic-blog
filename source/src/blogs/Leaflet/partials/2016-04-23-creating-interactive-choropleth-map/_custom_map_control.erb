@@ -1,0 +1,21 @@
+#### Custom Map Control
+
+<pre class="prettyprint linenums">
+var infobox = L.control({
+    position: 'bottomright'
+});
+infobox.onAdd = function (e) {
+    this._div = L.DomUtil.create('div', 'info');
+    this.refresh();
+    return this._div;
+};
+infobox.refresh = function (properties) {
+    this._div.innerHTML = '&lt;h4&gt;Europe Population Density 2009&lt;/h4&gt;';
+    if (typeof (properties) != 'undefined') {
+        this._div.innerHTML += '&lt;b&gt;' + properties.name + '&lt;/b&gt;&lt;br/&gt;' + 'Population: ' + properties.population + '&lt;br/&gt;' + 'Density: ' + properties.density + '&lt;br/&gt;' + '&lt;b&gt;Click to zoom.&lt;/b&gt;';
+    } else {
+        this._div.innerHTML += '&lt;b&gt;Hover a country.&lt;/b&gt;';
+    }
+};
+infobox.addTo(map);
+</pre>
