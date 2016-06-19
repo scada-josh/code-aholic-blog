@@ -1,0 +1,24 @@
+    <!-- start header -->
+    <header>
+        <div class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html"><span>CODE </span>- AHOLIC</a>
+                </div>
+                <div class="navbar-collapse collapse ">
+                    <ul class="nav navbar-nav">
+                        <li class='<%= current_page.data.home_isActive %>'><a href='<%= current_page.data.home_href %>'>Home</a></li>
+                        <li class='<%= current_page.data.portfolio_isActive %>'><a href='<%= current_page.data.portfolio_href %>'>Portfolio</a></li>
+                        <li class='<%= current_page.data.blog_isActive %>'><a href='<%= current_page.data.blog_href %>'>Blog</a></li>
+                        <li class='<%= current_page.data.contact_isActive %>'><a href='<%= current_page.data.contact_href %>'>Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- end header -->

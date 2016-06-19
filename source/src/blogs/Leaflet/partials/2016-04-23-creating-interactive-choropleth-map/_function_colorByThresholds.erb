@@ -1,0 +1,12 @@
+
+#### A function to tap into our previous arrays easily:
+
+<pre class="prettyprint linenums">
+var colorByThresholds = function (thresholds, value) {
+  for (var i = 0; i < thresholds.length - 1; i++) {
+    if (value < thresholds[i + 1][0])
+      return thresholds[i][1];
+  }
+  return thresholds[thresholds.length - 1][1];
+};
+</pre>

@@ -1,0 +1,39 @@
+---
+pageable: true
+per_page: 10
+layout: "layout-moderna-blog-main"
+baseURL: "../../"
+baseURI: "../.."
+
+home_isActive: ""
+home_href: "../desktop/HOME/"
+
+portfolio_isActive: ""
+portfolio_href: "../desktop/PORTFOLIO/"
+
+blog_isActive: "active"
+blog_href: "./"
+
+contact_isActive: ""
+contact_href: "../desktop/CONTACT/"
+
+categoryURL_middlemanIndex: "/src/blogs/middleman/2016/01/01/middleman-index/"
+categoryURL_html5Index: "/src/blogs/html5/2012/01/01/html5-index/"
+categoryURL_swiftProgrammingIndex: "/src/blogs/swift-programming/2016/01/01/swift-programming-index/"
+---
+
+<section id="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+
+        <%= partial "partials/_post-image" %>
+
+      </div>
+      <div class="col-lg-4">
+        <%= partial "partials/_right-sidebar" %>
+      </div>
+
+    </div>
+  </div>
+</section>

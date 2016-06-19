@@ -1,0 +1,30 @@
+SearchBox: function () {
+
+	$.getJSON("../../../../../../../search/contents.json", function(data) {
+	  // console.log(data);
+	  var index = fn.populateIndex(data);
+	  var contents = fn.contentList(data);
+	  
+	  fn.searchSetup(index, contents);
+
+	  	var config = {
+			  '.chosen-select'           : {search_contains: true},
+			  '.chosen-select-deselect'  : {allow_single_deselect:true},
+			  '.chosen-select-no-single' : {disable_search_threshold:10},
+			  '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+			  '.chosen-select-width'     : {width:"95%"}
+			}
+		 
+		for (var selector in config) {
+		  $(selector).chosen(config[selector]);
+		}
+		
+	});
+
+
+	$(".chosen-select").change(function() {
+		// console.log(myURL + $(this).val());
+	    window.location.href = myURL + $(this).val();
+	});
+
+},

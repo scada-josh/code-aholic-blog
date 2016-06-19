@@ -1,0 +1,18 @@
+<pre class="prettyprint linenums">
+var adder;
+
+adder = function(var1, var2) {
+  var lowerCased;
+  if (var2 == null) {
+    var2 = 'Var 2';
+  }
+  lowerCased = var1.toLowerCase();
+  return var1 + var2;
+};
+
+adder('input 1', 'input 2');
+
+adder('input 1', 'input 2', {
+  objKey1: value1
+});
+</pre>

@@ -1,0 +1,33 @@
+searchSetup: function (index, contents) {
+
+		// console.log(index);
+		// console.log(contents);
+
+	  	var resultSearchBoxTemplate = Handlebars.compile($("#result-search-box").html());
+	    // $(".search-results").empty();
+
+	    var results = contents;
+
+	    $.each(results, function(i, val){
+	      // console.log(results[i].title);
+
+	      $("#search-box").append(resultSearchBoxTemplate({
+	        title: results[i].title,
+	        url: results[i].url
+	      }));
+
+	    });
+
+
+
+	    // var results = index.search("web");
+	    // $.each(results, function(index, result){
+	    //   console.log(contents[result.ref].title);
+
+	    //   // $(".search-results").append(resultsTemplate({
+	    //   //   title: contents[result.ref].title,
+	    //   //   url: contents[result.ref].url
+	    //   // }));
+	    // });
+
+},

@@ -1,0 +1,35 @@
+
+#### Our first GeoJSON layer:
+
+<pre class="prettyprint linenums">
+var densitylayer = L.geoJson(europe, {
+    style: function (feature) {
+        var density = feature.properties.density;
+        return {
+            fillColor: colorByThresholds(densitythresholds, density),
+            fillOpacity: 0.75,
+            weight: 1,
+            color: 'black'
+        };
+    },
+    onEachFeature: function (feature, layer) {
+        layer.on({
+            'mousemove': function (e) {
+                e.target.setStyle({
+                    weight: 4
+                });
+                infobox.refresh(feature.properties);
+            },
+            'mouseout': function (e) {
+                densitylayer.resetStyle(e.target);
+                infobox.refresh();
+            },
+            'click': function (e) {
+                map.fitBounds(e.target.getBounds());
+            }
+        });
+    }
+}).addTo(map);
+</pre>
+
+<br/>

@@ -1,0 +1,210 @@
+# Protocols & Delegation
+![separate line][common-01] 
+
+## Protocols 
+---
+
+- ขั้นตอนที่ 1 : กำหนดข้อตกลง ด้วยการประกาศ protocol
+- ขั้นตอนที่ 2 : ยอมรับข้อตกลง (Adopted protocol)
+- ขั้นตอนที่ 3 : ทำตามข้อตกลง (Conform protocol)
+
+
+<br/>
+
+### ขั้นตอนที่ 1 : กำหนดข้อตกลง ด้วยการประกาศ protocol  ![separate line sub topic][common-07] 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;สร้างไฟล์ playground ใหม่ ชื่อว่า `Protocols.playground`
+
+<pre class="prettyprint linenums">
+import UIKit
+
+<mark>protocol Clean {
+    var room : Int { get set }
+    var date : NSDate { get }
+    func report()->String
+}</mark>
+
+class Boss {
+    let companyName : String = "Swift-tutor.com"
+}
+
+class Mate {
+    let name : String = "สมหญิง"
+}
+</pre>
+
+
+
+
+<br/>
+
+### ขั้นตอนที่ 2 : ยอมรับข้อตกลง (Adopted protocol)  ![separate line sub topic][common-07] 
+
+<pre class="prettyprint linenums">
+import UIKit
+
+protocol Clean {
+    var room : Int { get set }
+    var date : NSDate { get }
+    func report()->String
+}
+
+
+class Boss {
+    let companyName : String = "Swift-tutor.com"
+}
+
+class Mate <mark>: Clean</mark> {
+    let name : String = "สมหญิง"
+    
+    var room : Int = 10
+    var date : NSDate = NSDate()
+    
+    func report()->String {
+        
+        return "ทำความสะอาดเรียบร้อยแล้ว"
+    }
+}
+</pre>
+
+<br/>
+
+### ขั้นตอนที่ 3 : ทำตามข้อตกลง (Conform protocol) ![separate line sub topic][common-07] 
+
+<pre class="prettyprint linenums">
+import UIKit
+
+protocol Clean {
+    var room : Int { get set }
+    var date : NSDate { get }
+    func report()->String
+}
+
+
+class Boss {
+    let companyName : String = "Swift-tutor.com"
+}
+
+class Mate : Clean {
+    let name : String = "สมหญิง"
+    
+<mark>    var room : Int = 10
+    var date : NSDate = NSDate()
+    
+    func report()->String {
+        
+        return "ทำความสะอาดเรียบร้อยแล้ว"
+    }</mark>
+}
+</pre>
+
+<br/>
+
+## Delegation 
+---
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;การมอบหมายงานให้คนอื่นทำงานแทน
+
+### สร้าง Delegate ขึ้นมา ![separate line sub topic][common-07] 
+
+<pre class="prettyprint linenums">
+import UIKit
+
+protocol Clean {
+    var room : Int { get set }
+    var date : NSDate { get }
+    func report()->String
+}
+
+
+class Boss {
+    let companyName : String = "Swift-tutor.com"
+    
+<mark>    var delegateClean : Clean?
+    func receiveReport() {
+        
+        let report = delegateClean?.report()
+            
+        if let myReport = report {
+            print(myReport)
+        } else {
+            print("ยังไม่ได้รับรายงาน")
+        }
+        
+    }</mark>
+}
+
+class Mate : Clean {
+    let name : String = "สมหญิง"
+    
+    var room : Int = 10
+    var date : NSDate = NSDate()
+    
+    func report()->String {
+        
+        return "ทำความสะอาดเรียบร้อยแล้ว"
+    }
+}
+</pre>
+
+<br/>
+
+## ทดลองเรียกใช้งาน 
+---
+
+<pre class="prettyprint linenums">
+import UIKit
+
+protocol Clean {
+    var room : Int { get set }
+    var date : NSDate { get }
+    func report()->String
+}
+
+
+class Boss {
+    let companyName : String = "Swift-tutor.com"
+    
+    var delegateClean : Clean?
+    func receiveReport() {
+        
+        let report = delegateClean?.report()
+            
+        if let myReport = report {
+            print(myReport)
+        } else {
+            print("ยังไม่ได้รับรายงาน")
+        }
+    }
+}
+
+class Mate : Clean {
+    let name : String = "สมหญิง"
+    
+    var room : Int = 10
+    var date : NSDate = NSDate()
+    
+    func report()->String {
+        
+        return "ทำความสะอาดเรียบร้อยแล้ว"
+    }
+}
+
+
+<mark>let myBoss = Boss()
+let myMate = Mate()
+
+myBoss.delegateClean = myMate
+myBoss.receiveReport()</mark>
+</pre>
+
+
+
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png

@@ -1,0 +1,42 @@
+# การใช้งานตัวแปร Array
+![separate line][1]	
+
+<br/>
+
+# การใช้งาน Array
+---
+
+#### การเพิ่มข้อมูลใน Array แบบที่ 1
+<pre class="prettyprint linenums">
+&lt;?php
+$cart = array();
+$cart[] = 13;
+$cart[] = 14;
+// etc
+?&gt;
+</pre>
+
+<br/>
+
+#### การเพิ่มข้อมูลใน Array แบบที่ 2
+<pre class="prettyprint linenums">
+&lt;?php
+$cart = array();
+array_push($cart, 13);
+array_push($cart, 14);
+
+// Or 
+$cart = array();
+array_push($cart, 13, 14);
+?&gt;
+</pre>
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+

@@ -1,0 +1,137 @@
+
+
+### 4. ติดตั้ง `composer`  ![separate-line-sub-topic][common-07] 
+
+#### 4.1) Installing Composer ผลลัพธ์จะได้ `composer.phar`
+---
+<pre class="prettyprint linenums">
+$ cd /path/to/my/project
+$ curl -s http://getcomposer.org/installer | php
+</pre>
+
+<br/>
+
+ตรวจสอบการติดตั้ง Composer 
+<pre class="prettyprint linenums">
+$ php composer.phar
+</pre>
+
+ทดลองใช้งานคำสั่งใน Composer 
+<pre class="prettyprint linenums">
+$ php composer.phar about
+</pre>
+
+...ผลลัพธ์จะแสดงข้อความอธิบายข้อมูลเกี่ยวกับ Composer 
+
+<br/>
+
+
+#### 4.2) Understanding `composer.json`
+---
+
+สร้างไฟล์ composer.json
+<pre class="prettyprint linenums">
+$ touch composer.json
+</pre>
+
+ให้ config. ไฟล์ composer.json ด้วย JSON Object  
+
+...กรณีนี้ เราต้องการติดตั้งและใช้งาน `Slim PHP` และ `NotORM framework`
+
+<br/>
+
+
+#### 4.3) Installation Requirements
+---
+
+กรณีติดตั้งใหม่
+<pre class="prettyprint linenums">
+$ php composer.phar install
+</pre>
+
+กรณีต้องการอัพเดตข้อมูล
+<pre class="prettyprint linenums">
+$ php composer.phar update
+</pre>
+
+
+จะเห็นว่ามีโฟลเดอร์เก็บ package ที่ชื่อว่า `vendors`  
+
+ถ้าเราต้องการเปลี่ยนชื่อ โฟลเดอร์ที่เก็บให้เพิ่ม config เข้าไปในไฟล์ `composer.json`
+
+<pre class="prettyprint linenums">
+{
+    "require": {
+        "slim/slim": "2.*",
+        "vrana/notorm": "dev-master"
+    },
+    "config" : {
+        "vendor-dir" : "./source/packages"
+    }
+}
+</pre>
+
+
+<br/>
+
+
+#### 4.4) Autoloading
+---
+
+สร้างไฟล์ index.php และให้เรียกใช้ Slim PHP และ NotORM framework 
+
+<pre class="prettyprint linenums">
+require_once './packages/autoload.php';
+</pre>
+
+<br/>
+
+
+#### 4.5) ทดลองใช้งาน `Slim framework`
+---
+
+สร้างไฟล์ `index.php` (/build/src/api/restful-api/ldms/index.php) 
+<pre class="prettyprint linenums">
+&lt;?php
+
+    date_default_timezone_set(&quot;Asia/Bangkok&quot;);
+
+    require_once '../../../../packages/autoload.php';
+
+    // Create and configure Slim app
+    /* Slim framework 2.x */
+    $app = new \Slim\Slim();
+
+    $app-&gt;get('/hello/:name', function ($name) use ($app) {
+
+        // $return_m = array("msg" => "สวัสดี");
+        $return_m = array("msg" => "สวัสดี, $name");
+
+        $app->response()->header("Content-Type", "application/json");
+        echo json_encode($return_m);
+    });
+
+    // Run app
+    $app->run();
+
+?&gt;
+</pre>
+
+<br/>
+
+สร้างไฟล์ `.htaccess` 
+<pre class="prettyprint linenums">
+RewriteEngine On 
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteRule ^(.*)$ %{ENV:BASE}index.php [QSA,L]
+RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</pre>
+
+<br/>
+
+เรียกใช้ Service และสังเกตผลลัพธ์
+<pre class="prettyprint linenums">
+http://localhost/iel/build/src/api/restful-api/ldms/hello/josh
+</pre>
+
+<br/>

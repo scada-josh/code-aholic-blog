@@ -1,0 +1,56 @@
+#### 1.1) สร้าง display object ของ newImage
+---
+<pre class="prettyprint linenums">
+<mark>local center = display.newImage("tutorials-assets/CH03/Ch3Center.png")
+local square = display.newImage("tutorials-assets/CH03/Ch3Square.png")
+
+center.x = display.contentWidth/2
+center.y= display.contentHeight/2
+
+square.x = math.random( display.contentWidth  )
+square.y = math.random( display.contentHeight )</mark>
+</pre>
+
+<br/>
+
+#### 1.2) เลื่อนรูปมาซ้อนกัน
+---
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#animation-loop">เลื่อนรูปมาซ้อนกัน ด้วยการวนลูป</a></li>
+  <li><a data-toggle="tab" href="#animation-command">เลื่อนรูปมาซ้อนกัน ด้วยคำสั่ง <mark>transition.to</mark></a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="animation-loop" class="tab-pane fade in active">
+    <h3>Loop while</h3>
+    <p>เลื่อนรูปมาซ้อนกัน ด้วย้การวนลูป</p>
+
+<%= partial blog_dir + "Corona SDK/partials/2016-03-06-chapter-03-animation-alpha-and-orientation/_animation-loop" %>
+
+  </div>
+  <div id="animation-command" class="tab-pane fade">
+    <h3>
+        คำสั่ง transition.to
+        <a href="https://docs.coronalabs.com/daily/api/library/transition/to.html" target="_blank">
+            <img src='<%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png'>
+        </a>
+    </h3>
+    <p>เลื่อนรูปมาซ้อนกัน ด้วยคำสั่ง <mark>transition.to</mark></p>
+
+<%= partial blog_dir + "Corona SDK/partials/2016-03-06-chapter-03-animation-alpha-and-orientation/_animation-command" %>
+
+  </div>
+</div>
+
+<br/>
+
+<div  style="width:100%; text-align:center" markdown="1">
+ 
+[![ภาพแสดง ไฟล์ GIF][1]](){: .fancybox-button 
+                            data-fancybox-group="gif-file-001" 
+                            href="<%= current_page.data.baseURL %>images/categories/Corona SDK/transition_to.gif"}
+ 
+</div>
+
+

@@ -1,0 +1,401 @@
+(function ($) {
+    "use strict";
+ 
+    ///////////////////////////////////////////////////// Your
+    // var venueAddress = "Grand Place, 1000, Brussels"; // Venue
+
+    var myURL = "http://localhost/code-aholic-blog/build/";
+    var blogDetailsDataTable;
+    
+    /////////////////////////////////////////////////// Adress
+ 
+    var fn = {
+ 
+        // Launch Functions
+        Launch: function () {
+            fn.SearchBox();
+            fn.FancyBox();
+            fn.BlogDetailsDataTable();
+            fn.Apps();
+        },
+
+        // SearchBox
+        <%= partial "javascript-blog-moderna-details/partials/_fn_SearchBox" %>
+        // SearchBox - populateIndex
+        <%= partial "javascript-blog-moderna-details/partials/_fn_PopulateIndex" %>
+        // SearchBox - contentList
+        <%= partial "javascript-blog-moderna-details/partials/_fn_ContentList" %>
+        // SearchBox - searchSetup
+        <%= partial "javascript-blog-moderna-details/partials/_fn_SearchSetup" %>
+        // FancyBox
+        <%= partial "javascript-blog-moderna-details/partials/_fn_FancyBox" %>
+        // Blog Details DataTable
+        <%= partial "javascript-blog-moderna-details/partials/_fn_BlogDetailsDataTable" %>
+        // Apps
+        <%= partial "javascript-blog-moderna-details/partials/_fn_Apps" %>
+    };
+ 
+    $(document).ready(function () {
+        fn.Launch();
+    });
+ 
+})(jQuery);
+
+
+
+
+
+
+
+
+// Setup autocomplete field
+$(function() {
+
+
+	var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+
+    $( "#tags2" ).autocomplete({
+      //source: availableTags
+      source: function(request, response) {
+      	  console.log("autocomplete");
+	      response(availableTags);
+	    }
+    });
+
+
+
+	var lunrIndex = null;
+	var lunrData  = null;
+	var myDocs = null;
+
+	var myURL = "http://localhost/code-aholic-blog/build";
+
+	// Download index data
+	// $.ajax({
+	//   url: '../../../../../../../search/lunr-index.json',
+	//   // url: "<%= search_index_path %>",
+	//   cache: true,
+	//   method: 'GET',
+	//   success: function(data) {
+	//     lunrData = JSON.parse(data);
+	//     //console.log(lunrData);
+	//     lunrIndex = lunr.Index.load(lunrData.index);
+	//     //console.log(lunrIndex);
+	//   }
+	// });
+
+
+	$.getJSON('../../../../../../../search/lunr-index.json', function (response) {
+		// Create index
+        lunrIndex = lunr.Index.load(response.index);
+
+        // Create myDocs
+        myDocs = response.docs;
+
+	});
+
+
+  $('#tags2').autocomplete({
+    source: function(request, response) {
+
+      var result = [];
+
+
+      if (lunrIndex == null) {
+      	//console.log('lunrIndex is null');
+        lunrIndex = lunr.Index.load(lunrData.index);
+        //console.log(lunrIndex);
+      }
+
+      // var result = (lunrIndex.search(request.term)).take(50).pluck('ref').map(function(ref) {
+      //   return lunrData.docs[ref];
+      // }).value();
+
+      // console.log(request.term);
+
+      var search_result = lunrIndex.search(request.term);
+      console.log(search_result)
+
+	  if (search_result.length === 0) {
+
+	    	result = [{'noresults': true}]
+
+	  } else {
+
+	  		 var tempData = [];
+
+	         for (var item in search_result) {
+	             var ref = search_result[item].ref;
+	             // console.log(ref);
+	             // var searchitem = '<li><a href="' + ref + '">' + store[ref].title + '</a></li>';
+	             // console.log(searchitem);
+
+	             // return myDocs[ref];
+
+	             tempData.push(myDocs[ref]);
+	         }
+
+
+	         result = tempData;
+	  }
+
+      // if (result.length == 0) {
+      //   result = [{'noresults': true}]
+      // }
+      console.log(result);
+      response(result);
+    },
+    select: function(event, selected) {
+      if (!selected.item.noresults) {
+        window.location.href = myURL + selected.item.url;
+        //console.log("code-aholic-blog/build" + selected.item.url);
+      }
+    },
+    open: function() {
+      $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+    },
+    close: function() {
+      $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+    }
+  }).autocomplete("instance")._renderItem = function(ul, item) {
+    // Copied from https://jqueryui.com/autocomplete/#custom-data
+    var content = item.noresults? '<span class="noresults">No results found</span>'
+    							: '<a href="' + myURL +item.url + '">' + item.title + '</a>';
+
+    // var content = item.noresults? '<span class="noresults">No results found</span>'
+    // 							: item.title;
+
+    $(this.menu.element).toggleClass('noresults', item.noresults);
+    return $("<li>").append(content).appendTo(ul);
+  };
+
+});
+
+
+
+
+// Feed data into an empty lunr index and return the populated result
+function populateIndex(data) {
+  var index = lunr(function(){
+    this.field('title', { boost: 10 });
+    this.field('content');
+    this.ref('id');
+  });
+  data.forEach(function(item) {
+    index.add(item);
+  });
+  return index;
+}
+
+// Create an array of contents to reference our search results against
+function contentList(data) {
+  var contents = [];
+  data.forEach(function(item) {
+    contents.push(item);
+  });
+  return contents;
+}
+
+
+
+function searchSetup(index, contents){
+  // Set up Handlebars template
+  // var resultsTemplate = Handlebars.compile($("#results-template").html());
+ 
+  // various event handlers...
+ 
+  // $("#tags").bind("keyup", $.debounce(function(){
+  
+
+  //   $(".search-results").empty();
+
+  //   if ($(this).val() < 2) return;
+
+  //   var query = $(this).val();
+  //   var results = index.search(query);
+  //   $.each(results, function(index, result){
+
+  //     console.log(contents[result.ref].title);
+
+  //     // $(".search-results").append(resultsTemplate({
+  //     //   title: contents[result.ref].title,
+  //     //   url: contents[result.ref].url
+  //     // }));
+
+  //   });
+
+  // }));
+
+
+  var resultsTemplate = Handlebars.compile($("#results-template").html());
+
+  $('#tags2').on('keyup', function () {
+
+    $(".search-results").empty();
+    
+    if ($(this).val() < 2) return;
+
+    var query = $(this).val();
+    var results = index.search(query);
+    $.each(results, function(index, result){
+      console.log(contents[result.ref].title);
+
+      $(".search-results").append(resultsTemplate({
+        title: contents[result.ref].title,
+        url: contents[result.ref].url
+      }));
+
+    });
+
+  });
+
+}
+
+$.getJSON("../../../../../../../search/contents.json", function(data) {
+  // console.log(data);
+  var index = populateIndex(data);
+  var contents = contentList(data);
+  searchSetup(index, contents);
+});
+
+
+// var lunrIndex = null;
+// var lunrData  = null;
+
+// // Download index data
+// $.ajax({
+//   url: '../../../../../../../search/lunr-index.json',
+//   cache: true,
+//   method: 'GET',
+//   success: function(data) {
+//     lunrData = JSON.parse(data);
+//   }
+// });
+
+
+// // Setup autocomplete field
+// $(function() {
+
+//   $('#tags').autocomplete({
+//     source: function(request, response) {
+//       if (lunrIndex == null) {
+//         lunrIndex = lunr.Index.load(lunrData.index);
+//       }
+
+//       console.log(lunrIndex.search(request.term));
+
+//       var result = _(lunrIndex.search(request.term)).take(50).pluck('ref').map(function(ref) {
+//         return lunrData.docs[ref];
+//       }).value();
+
+//       // var result = (lunrIndex.search(request.term)).take(50).pluck('ref').map(function(ref) {
+//       //   return lunrData.docs[ref];
+//       // }).value();
+
+//       if (result.length == 0) {
+//         result = [{'noresults': true}]
+//       }
+//       response(result);
+//     },
+//     select: function(event, selected) {
+//       if (!selected.item.noresults) {
+//         window.location.href = selected.item.url;
+//       }
+//     },
+//     open: function() {
+//       $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+//     },
+//     close: function() {
+//       $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+//     }
+//   }).autocomplete("instance")._renderItem = function(ul, item) {
+//     // Copied from https://jqueryui.com/autocomplete/#custom-data
+//     var content = item.noresults
+//       ? '<span class="noresults">No results found</span>'
+//       : '<a href="' + item.url + '">' + item.title + '</a>';
+
+//     $(this.menu.element).toggleClass('noresults', item.noresults);
+//     return $("<li>").append(content).appendTo(ul);
+//   };
+
+// });
+
+
+
+
+
+
+// $(document).ready(function () {
+//     'use strict';
+//     // Set up search
+//     var index, store;
+//     $.getJSON('../../../../../../../search/lunr-index.json', function (response) {
+//     	console.log(response);
+
+//         // Create index
+//         index = lunr.Index.load(response.index);
+
+//         console.log(index);
+
+//         // Create store
+//         store = response.docs;
+//         console.log(store);
+
+//         // Handle search
+//         
+
+
+
+
+//             // Get query
+//             var query = $(this).val();
+//             // Search for it
+//             var result = index.search(query);
+
+//             console.log(result);
+
+//             // // Output it
+//             // var resultdiv = $('ul.searchresults');
+//              if (result.length === 0) {
+//             //     // Hide results
+//             //     resultdiv.hide();
+//              } else {
+//                  // Show results
+//                  // resultdiv.empty();
+//                  for (var item in result) {
+//                      var ref = result[item].ref;
+//                      console.log(ref);
+//                      var searchitem = '<li><a href="' + ref + '">' + store[ref].title + '</a></li>';
+//                      console.log(searchitem);
+//                      // resultdiv.append(searchitem);
+//                  }
+//                  // resultdiv.show();
+//              }
+//         });
+//     });
+// });
+
+

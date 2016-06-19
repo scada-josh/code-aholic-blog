@@ -1,0 +1,98 @@
+# การใช้งาน Image Mask
+![separate line][1]	
+
+## สร้าง Container ขึ้นมาก่อน
+----
+
+#### ไฟล์ main.lua 
+<pre class="prettyprint linenums">
+local w, h = display.contentWidth, display.contentHeight
+
+local container = display.newContainer( w, h )
+container:translate( display.contentCenterX, display.contentCenterY )
+
+-- Insert Image เข้าไปใน Container
+local bkgd = display.newImage( container, "world.jpg" )
+
+-- Insert Text เข้าไปใน Container
+local myText = display.newText( container, "Hello, World!", 0, 0, native.systemFont, 40 )
+myText:setFillColor( 1, 1, 0 )
+</pre>
+
+[![ภาพแสดง Container ที่สร้างขึ้น][7]](){: .fancybox-button 
+               data-fancybox-group="image-mask-001"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/image-mask-001.png"}
+
+<br/>
+
+## ใส่ Mask ให้กับ Contatiner
+----
+
+#### ไฟล์ main.lua 
+<pre class="prettyprint linenums">
+local w, h = display.contentWidth, display.contentHeight
+
+local container = display.newContainer( w, h )
+container:translate( display.contentCenterX, display.contentCenterY )
+
+-- Insert Image เข้าไปใน Container
+local bkgd = display.newImage( container, "world.jpg" )
+
+-- Insert Text เข้าไปใน Container
+local myText = display.newText( container, "Hello, World!", 0, 0, native.systemFont, 40 )
+myText:setFillColor( 1, 1, 0 )
+
+-- Mask the container
+<mark>local mask = graphics.newMask( "circlemask.png" )</mark>
+<mark>container:setMask( mask )</mark>
+<mark>container.maskScaleX = 2</mark>	-- กำหนด scaleX ให้เป็น 2 เท่าของภาพที่ใช้ Mask
+<mark>container.maskScaleY = 2</mark>	-- กำหนด scaleY ให้เป็น 2 เท่าของภาพที่ใช้ Mask
+</pre>
+
+[![ภาพแสดง ผลลัพธ์การกำหนด Mask ให้กับ Container ที่สร้างขึ้น][8]](){: .fancybox-button 
+               data-fancybox-group="image-mask-002"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/image-mask-002.png"}
+
+
+## ปรับแต่งเพิ่มเติม เพื่อความเข้าใจ
+----
+
+- เพิ่มโค้ด
+	* สำหรับซ่อน StatusBar
+	* สำหรับแสดง Transition 
+
+#### ไฟล์ main.lua 
+<pre class="prettyprint linenums">
+<mark>display.setStatusBar( display.HiddenStatusBar )</mark>
+
+local w, h = display.contentWidth, display.contentHeight
+ 
+local container = display.newContainer( w, h )
+container:translate( display.contentCenterX, display.contentCenterY )
+ 
+-- Insert Image เข้าไปใน Container
+local bkgd = display.newImage( container, "world.jpg" )
+ 
+-- Insert Text เข้าไปใน Container
+local myText = display.newText( container, "Hello, World!", 0, 0, native.systemFont, 40 )
+myText:setFillColor( 1, 1, 0 )
+ 
+-- Mask the container
+local mask = graphics.newMask( "circlemask.png" )
+container:setMask( mask )
+container.maskScaleX = 2	-- กำหนด scaleX ให้เป็น 2 เท่าของภาพที่ใช้ Mask
+container.maskScaleY = 2	-- กำหนด scaleY ให้เป็น 2 เท่าของภาพที่ใช้ Mask
+
+<mark>transition.to( container, { height = 0.5*h, width = 0.5*h, time=3000, delay=1000} )</mark>
+</pre>
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+[7]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/image-mask-001.png
+[8]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/image-mask-002.png

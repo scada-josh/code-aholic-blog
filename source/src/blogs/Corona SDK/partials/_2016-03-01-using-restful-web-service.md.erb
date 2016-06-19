@@ -1,0 +1,78 @@
+# การเรียกใช้งาน RESTful Web Service (API)
+![separate line][1]	
+
+
+
+#### `GET`
+<pre class="prettyprint linenums">
+local function networkListener( event )
+
+    if ( event.isError ) then
+        print( "Network error: ", event.response )
+    else
+        print ( "RESPONSE: " .. event.response )
+    end
+end
+
+-- Access JSONPlaceholder :
+network.request( "http://jsonplaceholder.typicode.com/posts/1", "GET", networkListener )
+</pre>
+
+<br/>
+
+#### `POST` with Custom Headers (Content-Type: text/plain)
+<pre class="prettyprint linenums">
+
+</pre>
+
+
+#### `POST` with Custom Headers (Content-Type: application/x-www-form-urlencoded)
+<pre class="prettyprint linenums">
+-- The following code demonstrates sending data via HTTP POST,
+-- specifying custom request headers and request body.
+
+local function networkListener( event )
+
+    if ( event.isError ) then
+        print( "Network error: ", event.response )
+    else
+        print ( "RESPONSE: " .. event.response )
+    end
+end
+
+local headers = {}
+
+headers["Content-Type"] = "application/x-www-form-urlencoded"
+headers["Accept-Language"] = "en-US"
+
+local body = "color=red&size=small"
+
+local params = {}
+params.headers = headers
+params.body = body
+
+network.request( "http://127.0.0.1/formhandler.php", "POST", networkListener, params )
+</pre>
+
+#### `POST` with Custom Headers (Content-Type: application/json)
+<pre class="prettyprint linenums">
+
+</pre>
+
+#### `POST` with Custom Headers (Content-Type: multipart/form-data; boundary=...)
+<pre class="prettyprint linenums">
+
+</pre>
+
+#### `POST` with Custom Headers (Content-Type: application/octet-stream)
+<pre class="prettyprint linenums">
+
+</pre>
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png

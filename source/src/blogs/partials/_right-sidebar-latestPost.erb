@@ -1,0 +1,25 @@
+<div class="widget visible-lg">
+  <h5 class="widgetheading">Latest posts</h5>
+  <ul class="recent">
+
+    <% blog.articles[0...5].each do |article| %>
+    <% if article.data.isIndexPage != true %>
+
+
+   <li>
+    <a href="#"><img style="width: 50px" src="<%= current_page.data.baseURL %>images/moderna/dummies/blog/65x65/thumb3.jpg" class="pull-left" alt="" /></a>
+
+    <h6><a href="<%= current_page.data.baseURI %><%= article.url %>"><%= truncate(article.title, :length => 25) %></a></h6>
+    <p>
+     <%= truncate(article.data.introText, :length => 25) %>
+   </p>
+  </li>
+
+   <% end %>
+   <% end %>
+
+ </ul>
+</div>
+
+
+

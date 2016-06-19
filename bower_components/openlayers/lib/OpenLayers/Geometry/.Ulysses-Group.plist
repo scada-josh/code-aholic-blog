@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>Collection.js</string>
+		</array>
+		<array>
+			<string>Curve.js</string>
+		</array>
+		<array>
+			<string>LinearRing.js</string>
+		</array>
+		<array>
+			<string>LineString.js</string>
+		</array>
+		<array>
+			<string>MultiLineString.js</string>
+		</array>
+		<array>
+			<string>MultiPoint.js</string>
+		</array>
+		<array>
+			<string>MultiPolygon.js</string>
+		</array>
+		<array>
+			<string>Point.js</string>
+		</array>
+		<array>
+			<string>Polygon.js</string>
+		</array>
+	</array>
+</dict>
+</plist>

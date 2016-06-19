@@ -1,0 +1,483 @@
+# PHP Authorization with JWT
+
+![separate line][1]	
+
+
+> Note : 
+> 
+> 1. This middleware implements JSON Web Token (JWT) Authentication for Slim Framework. <br/>It parses and authenticates a token when passed via `header`, `cookie` or `querystring`.
+> 2. `JWT` was not designed to substitute `session` `cookies`.
+> 3. `JWTs are self-contained:` They will carry all the information necessary within itself. This means that a JWT will be able to transmit basic information about itself, a payload (usually user information), and a signature.
+> 4. `JWTs can be passed around easily:` Since JWTs are self-contained, they are perfectly used inside an HTTP header when authenticating an API. You can also pass it through the URL.
+
+---
+
+Using a JSON Web Token offers many advantages:
+
+* **Granular Security:** API Keys provide an all-or-nothing access. JSON Web Tokens can provide much finer grained control.
+* **Homogenous Auth Architecture:** Today we use cookies, API keys, home grown SSO solutions, OAuth etc. Standardizing on JSON Web Tokens gives you an homogenous token format across the board.
+* **Decentralized Issuance:** API keys depend on a central storage and a service to issue them. JSON Web Tokens can be "self-issued" or be completely externalized, opening interesting scenarios as we will see below.
+* **OAuth2 Compliance:** OAuth2 uses an opaque token that relies on a central storage. You can return a stateless JWT instead, with the allowed scopes and expiration.
+* **Debuggability:** API keys are opaque random strings. JSON Web Tokens can be inspected.
+* **Expiration Control:** API keys usually don't expire unless you revoke them. JSON Web Tokens can (and often do) have an expiration.
+* **Devices:** You can't put an API key that has full access on a device, because what is on a phone or tablet can easily be stolen. But you can put a JWT with the right set of permissions.
+
+
+<br/>
+
+## 1. Token Based Authentication
+
+![separate line][1]	
+
+
+Token based authentication is prominent everywhere on the web nowadays. With most every web company using an API, tokens are the best way to handle authentication for multiple users.
+
+There are some very important factors when choosing token based authentication for your application. The main reasons for tokens are:
+
+* Stateless and scalable servers
+* Mobile application ready
+* Pass authentication to other applications
+* Extra security
+
+
+### Server Based Authentication (The Traditional Method)
+
+![ภาพแสดง tokens-traditional][5]	
+<p class="text-center"> 
+	<a href="https://scotch.io/tutorials/the-ins-and-outs-of-token-based-authentication"  target="_blank">ที่มาของภาพ</a>  
+</p>
+
+#### The Problems with Server Based Authentication
+
+A few major problems arose with this method of authentication.
+
+**Sessions:** Every time a user is authenticated, the server will need to create a record somewhere on our server. This is usually done in memory and when there are many users authenticating, the overhead on your server increases.
+
+**Scalability:** Since sessions are stored in memory, this provides problems with scalability. As our cloud providers start replicating servers to handle application load, having vital information in session memory will limit our ability to scale.
+
+**CORS:** As we want to expand our application to let our data be used across multiple mobile devices, we have to worry about cross-origin resource sharing (CORS). When using AJAX calls to grab resources from another domain (mobile to our API server), we could run into problems with forbidden requests.
+
+**CSRF:** We will also have protection against <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery" target="_blank">cross-site request forgery</a> (CSRF). Users are susceptible to CSRF attacks since they can already be authenticated with say a banking site and this could be taken advantage of when visiting other sites.
+
+With these problems, scalability being the main one, it made sense to try a different approach.
+
+<br/>
+
+### Token Based Authentication (The New Method)
+
+![ภาพแสดง tokens-new][6]	
+<p class="text-center"> 
+	<a href="https://scotch.io/tutorials/the-ins-and-outs-of-token-based-authentication"  target="_blank">ที่มาของภาพ</a>  
+</p>
+
+#### How Token Based Works
+
+Token based authentication is `stateless`. We are not storing any information about our user on the server or in a session.
+
+This concept alone takes care of many of the problems with having to store information on the server.
+
+<blockquote>
+  <p>No session information means your application can scale and add more machines as necessary without worrying about where a user is logged in.</p>
+</blockquote>
+
+Although this implementation can vary, the gist of it is as follows:
+
+1. User Requests Access with Username / Password
+2. Application validates credentials
+3. Application provides a signed token to the client
+4. Client stores that token and sends it along with every request
+5. Server verifies token and responds with data
+
+
+**Every single request will require the token.** This token should be sent in the HTTP header so that we keep with the idea of stateless HTTP requests. We will also need to set our server to accept requests from all domains using `Access-Control-Allow-Origin: *`. What’s interesting about designating `*` in the ACAO header is that it does not allow requests to supply credentials like HTTP authentication, client-side SSL certificates, or cookies.
+
+
+#### The Benefits of Tokens
+* Stateless and Scalable
+* Security
+* Extensibility (Friend of A Friend and Permissions)
+* Multiple Platforms and Domains
+* Standards Based
+
+
+### Conclusion
+
+This was just a look at the how and why of token based authentication. As is always the case in the world of security, there is much, much, much, much (too many?) more to each topic and it varies per use case. We even dove into some topics on scalability which deserves its own conversation as well.
+
+This was a high level quick overview, so please feel free to point out anything that was missed or any questions you have on the matter.
+
+
+---
+
+
+## 2. What are JSON Web Tokens?
+
+![separate line][1]	
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JSON Web Tokens (JWT) แบ่งออกเป็น 3 ส่วน แต่ละส่วนคั่นด้วยเครื่องหมายจุด (`.`)
+
+* Header
+* Payload
+* Signature
+
+<pre class="prettyprint linenums">
+aaaaaaaaaa.bbbbbbbbbbb.cccccccccccc
+</pre>
+
+![ภาพแสดง Anatomy ของ JWT][4]	
+<p class="text-center"> 
+	<a href="https://scotch.io/tutorials/the-anatomy-of-a-json-web-token#what-are-json-web-tokens?"  target="_blank">ที่มาของภาพ</a>  
+</p>
+
+### <ins>2.1 Header</ins>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ในส่วนของ Header ประกอบด้วย 2 ส่วน คือ
+
+* declaring the type, which is JWT
+* the hashing algorithm to use (HMAC SHA256 in this case)
+
+<pre class="prettyprint linenums">
+{
+  "typ": "JWT",
+  "alg": "HS256"
+}
+</pre>
+
+นำมาเข้ารหัสด้วย `base64encode`, พวกเราจะได้ส่วนแรกของ JSON web token แล้ว
+
+<pre class="prettyprint linenums">
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+</pre>
+		
+<br/>
+
+### <ins>2.2 Payload</ins>
+
+ในส่วนของ Payload จะเก็บข้อมูลเกี่ยวกับ `JWT` หรือเราเรียกว่า <a href="http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#RegisteredClaimName" tartget="_blank">JWT Claims</a> ในส่วนนี้แระที่เราสามารถใส่ข้อมูลอื่นๆ เข้าไปได้
+
+There are multiple claims that we can provide. This includes registered claim names, public claim names, and private claim names.
+
+**Registered Claims**
+
+Claims that are not mandatory whose names are reserved for us. These include:
+
+* `iss`: The issuer of the token
+* `sub`: The subject of the token
+* `aud`: The audience of the token
+* `exp`: This will probably be the registered claim most often used. This will define the expiration in NumericDate value. The expiration MUST be after the current date/time.
+* `nbf`: Defines the time before which the JWT MUST NOT be accepted for processg
+* `iat`: The time the JWT was issued. Can be used to determine the age of the T
+* `jti`: Unique identifier for the JWT. Can be used to prevent the JWT from being replayed. This is helpful for a one time use token.
+
+**Public Claims**
+
+These are the claims that we create ourselves like user name, information, and other important information.
+
+**Private Claims**
+
+A producer and consumer may agree to use claim names that are private. These are subject to collision, so use them with caution.
+
+<br/>
+
+#### ตัวอย่าง Payload
+Our example payload has two registered claims (`iss`, and `exp`) and two public claims (`name`, `admin`).
+
+<pre class="prettyprint linenums">
+{
+  "iss": "scotch.io",
+  "exp": 1300819380,
+  "name": "Chris Sevilleja",
+  "admin": true
+}
+</pre>
+
+นำมาเข้ารหัสด้วย `base64encode`, พวกเราจะได้ส่วนที่สองของ JSON web token แล้ว
+
+<pre class="prettyprint linenums">
+eyJpc3MiOiJzY290Y2guaW8iLCJleHAiOjEzMDA4MTkzODAsIm5hbWUiOiJDaHJpcyBTZXZpbGxlamEiLCJhZG1pbiI6dHJ1ZX0
+</pre>
+
+
+<br/>
+
+### <ins>2.3 Signature</ins>
+
+ส่วนที่สามของ JSON Web Token คือ `signature`, ซึ่ง `signature` สร้างขึ้นมาจาก `hash` ของ components เหล่านี้ :
+
+* the header
+* the payload
+* secret
+
+This is how we get the third part of the JWT:
+<pre class="prettyprint linenums">
+var encodedString = base64UrlEncode(header) + "." + base64UrlEncode(payload);
+HMACSHA256(encodedString, 'secret');
+</pre>
+
+โดยที่ `secret` จะถูกเก็บไว้ที่ฝั่ง Server ซึ่ง `secret` จะช่วยให้ Server นำมาใช้ในการ verify token หรือใช้สำหรับสร้าง token ขึ้นมาใหม่ก็ได้
+
+This gives us the final part of our JWT.
+<pre class="prettyprint linenums">
+03f329983b86f7d9a9f5fef85305880101d5e302afafa20154d094b229f75773
+</pre>
+
+
+Now we have our full JSON Web Token:
+<pre class="prettyprint linenums">
+<mark>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</mark>.<mark>eyJpc3MiOiJzY290Y2guaW8iLCJleHAiOjEzMDA4MTkzODAsIm5hbWUiOiJDaHJpcyBTZXZpbGxlamEiLCJhZG1pbiI6dHJ1ZX0</mark>.<mark>03f329983b86f7d9a9f5fef85305880101d5e302afafa20154d094b229f75773</mark>
+</pre>
+
+
+### <ins>Conclusion</ins>
+
+The JSON Web Token standard can be used across multiple languages and is quickly and easily interchangeable.
+
+You can use the token in a URL, POST parameter, or an HTTP header. The versatility of the JSON Web Token let’s us authenticate an API quickly and easily by passing information through the token.
+
+
+<br/>
+
+
+
+
+---
+
+
+## 3. ติดตั้ง JWT ให้กับ Slim framework
+
+![separate line][1]	
+
+<pre class="prettyprint linenums">
+$ composer require tuupola/slim-jwt-auth
+</pre>
+
+เพิ่มข้อมูลเข้าไปใน ไฟล์ `.htaccess`
+
+Otherwise PHP wont have access to `Authorization: Bearer` header.
+
+<pre class="prettyprint linenums">
+RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</pre>
+
+ข้อมูลในไฟล์ `.htaccess` คือ
+
+<pre class="prettyprint linenums">
+RewriteEngine On 
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteRule ^(.*)$ %{ENV:BASE}index.php [QSA,L]
+RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</pre>
+
+---
+
+## 4. Configuration ให้กับ JWT ก่อนใช้งาน
+
+![separate line][1]	
+
+
+<pre class="prettyprint linenums">
+/* Slim framework 2.x */
+$app = new \Slim\Slim();
+
+use \Firebase\JWT\JWT;
+$app->add(new \Slim\Middleware\JwtAuthentication([
+     //"secure" => false,
+    "secret" => "supersecretkeyyoushouldnotcommittogithub",
+    //"path"=> "/user",
+    "callback" => function ($options) use ($app) {
+        $app->jwt = $options["decoded"];
+    },
+    "rules" => [
+        new \Slim\Middleware\JwtAuthentication\RequestPathRule([
+            "path" => ["/token", "/user"],
+            "passthrough" => ["/user"]
+        ]),
+        new \Slim\Middleware\JwtAuthentication\RequestMethodRule([
+            "passthrough" => ["OPTIONS"]
+        ])
+    ]
+]));
+</pre>
+
+---
+
+## 5. สร้าง RESTful Web Service เพื่อใช้งาน JWT
+
+![separate line][1]	
+
+<pre class="prettyprint linenums">
+$app->post("/token", function () use ($app) {
+
+  /* Here generate and return JWT to the client. */
+  // $key = "supersecretkeyyoushouldnotcommittogithub";
+  // $token = array(
+  //     "id" => "1",
+  //     "exp" => time() + (60 * 60 * 24)
+  //     );
+  // $jwt = JWT::encode($token, $key);
+  // $app->response->headers->set('Content-Type', 'application/json');
+  // echo json_encode(array("token" =>$jwt));
+
+   $secretKey = base64_decode("supersecretkeyyoushouldnotcommittogithub");
+
+
+   /*** Extract the jwt from the Bearer ***/
+   $request = $app->request();
+   $authHeader = $request->headers('authorization');
+   list($jwt) = sscanf( (string)$authHeader, 'Bearer %s');
+
+
+   if (in_array("delete", $app->jwt->scope)) {
+    /* Code for deleting item */
+    $token = $app->jwt->id;
+  } else {
+    /* No scope so respond with 401 Unauthorized */
+    $this->app->response->status(401);
+  }
+
+   echo json_encode(array("AuthHeader" => $authHeader, "Hash_Token" => $jwt, "token" => $token));
+  //print_r($app->jwt);
+
+});
+</pre>
+
+RESTful Web Service ต่อไปนี้ (`login`) จะสร้าง JWT ตาม Username & Password ที่ส่งมา
+
+<pre class="prettyprint linenums">
+$app->get("/user", function () use ($app) {
+
+    // $app->response->headers->set('Content-Type', 'application/json');
+    // echo json_encode(array("token" => $$app->jwt));
+
+  $key = "supersecretkeyyoushouldnotcommittogithub";
+  $token = array(
+      "id" => "1",
+      "exp" => time() + (60 * 10),
+      "scope" => ["read", "write", "delete"]
+      );
+  $jwt = JWT::encode($token, $key);
+  $app->response->headers->set('Content-Type', 'application/json');
+  echo json_encode(array("token" =>$jwt));
+
+});
+</pre>
+
+
+<pre class="prettyprint linenums">
+$app->get('/login', function () use ($app) {
+
+  $params = $app->request()->getBody();
+  $key = "supersecretkeyyoushouldnotcommittogithub";
+  $token = array(
+      "id" => "2",
+      "exp" => time() + (60 * 60 * 24),
+      "scope" => ["read", "write", "delete"]
+      );
+  $jwt = JWT::encode($token, $key);
+  $app->response->headers->set('Content-Type', 'application/json');
+  echo json_encode(array("token" =>$jwt));
+
+});
+</pre>
+
+---
+
+## 6. ทดลองใช้งาน JWT
+
+![separate line][1]	
+
+
+<h4><span class="label label-primary">GET</span> http://localhost/rmr/build/src/api/user </h4> [ทดสอบเรียกใช้งาน](https://paw.pt/a9zO1K2V "Test with PAW")
+
+#### Result
+<pre class="prettyprint linenums">
+{
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJleHAiOjE0NTQxMzQzNDIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSJdfQ.voHOA6sEPAMx_UglU77fPnSp-ZzSVroxsWACWCU_9f4"
+}
+</pre>
+
+<br/>
+
+<h4><span class="label label-success">POST</span> http://localhost/rmr/build/src/api/token </h4>
+
+
+#### Parameters
+<pre class="prettyprint linenums">
+<b>Authorization</b> Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJleHAiOjE0NTQxMzQzNDIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSJdfQ.voHOA6sEPAMx_UglU77fPnSp-ZzSVroxsWACWCU_9f4
+</pre>
+
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#home">Request</a></li>
+  <li><a data-toggle="tab" href="#menu1">Response</a></li>
+  <li><a data-toggle="tab" href="#menu2">Examples</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+    <h3>HOME</h3>
+    <p>Some content.</p>
+    
+<table class="table table-hover"> 
+    <thead> 
+        <tr> 
+            <th>#</th> 
+            <th>Name</th> 
+            <th>Description</th> 
+            <th>Format</th> 
+        </tr> 
+    </thead> 
+    <tbody> 
+        <tr> 
+            <th scope="row">1</th> 
+            <td>backupID</td> 
+            <td>bla bla bla</td> 
+            <td>String</td> 
+        </tr> 
+        <tr> 
+            <th scope="row">2</th> 
+            <td>Jacob</td> 
+            <td>bla bla bla</td> 
+            <td>String</td> 
+        </tr> 
+        <tr> 
+            <th scope="row">3</th> 
+            <td>Larry</td> 
+            <td>bla bla bla</td> 
+            <td>String</td> 
+        </tr> 
+    </tbody> 
+</table>
+    
+    
+  </div>
+  <div id="menu1" class="tab-pane fade">
+    <h3>Menu 1</h3>
+    <p>Some content in menu 1.</p>
+  </div>
+  <div id="menu2" class="tab-pane fade">
+    <h3>Menu 2</h3>
+    <p>Some content in menu 2.</p>
+  </div>
+</div>
+
+
+#### Response Messages
+<pre class="prettyprint linenums">
+{
+  "AuthHeader": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJleHAiOjE0NTQxMzQzNDIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSJdfQ.voHOA6sEPAMx_UglU77fPnSp-ZzSVroxsWACWCU_9f4",
+  "Hash_Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJleHAiOjE0NTQxMzQzNDIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSJdfQ.voHOA6sEPAMx_UglU77fPnSp-ZzSVroxsWACWCU_9f4",
+  "token": "1"
+}
+</pre>
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png
+
+[4]: <%= current_page.data.baseURL %>images/categories/RESTful%20Web%20Service/restful-web-service-php-authorization-with-jwt-001.png
+[5]: <%= current_page.data.baseURL %>images/categories/RESTful%20Web%20Service/restful-web-service-php-authorization-with-jwt-002.png
+[6]: <%= current_page.data.baseURL %>images/categories/RESTful%20Web%20Service/restful-web-service-php-authorization-with-jwt-003.png

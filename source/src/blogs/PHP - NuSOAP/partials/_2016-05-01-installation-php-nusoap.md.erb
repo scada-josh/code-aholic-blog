@@ -1,0 +1,188 @@
+# การติดตั้งและใช้งาน PHP - NuSOAP เบื้องต้น ![separate line][common-01] 
+
+### 1. ติดตั้งผ่าน Composer [![external-link-15x15][common-05]](https://packagist.org/packages/fergusean/nusoap){: target="_blank"}
+ ![separate-line-sub-topic][common-07] 
+
+<pre class="prettyprint linenums">
+$ php composer.phar require fergusean/nusoap
+</pre>
+
+[![installation-php-nusoap-001][1]](){: .fancybox-button 
+               data-fancybox-group="installation-php-nusoap-001"
+               href="<%= current_page.data.baseURL %>/images/categories/PHP - NuSOAP/installation-php-nusoap-001.png"}
+
+<br/>
+
+### 2. ทดลองสร้าง Web Service เบื้องต้น [![external-link-15x15][common-05]](http://www.sitepoint.com/web-services-with-php-and-soap-1/){: target="_blank"} ![separate-line-sub-topic][common-07] 
+
+#### 2.1) Building a SOAP Server
+
+<pre class="prettyprint linenums">
+---
+title: RMR - Web Service
+layout: &quot;layout-web-services&quot;
+---
+&lt;?php
+    date_default_timezone_set(&quot;Asia/Bangkok&quot;);
+
+    require_once '../../packages/autoload.php';
+
+	function getProd($category) {
+	    if ($category == &quot;books&quot;) {
+	        return join(&quot;,&quot;, array(
+	            &quot;The WordPress Anthology&quot;,
+	            &quot;PHP Master: Write Cutting Edge Code&quot;,
+	            &quot;Build Your Own Website the Right Way&quot;));
+		}
+		else {
+	            return &quot;No products listed under that category&quot;;
+		}
+	}
+
+	$server = new soap_server();
+	$server-&gt;register(&quot;getProd&quot;);
+
+	if ( !isset( $HTTP_RAW_POST_DATA ) ) $HTTP_RAW_POST_DATA =file_get_contents( 'php://input' );
+	$server-&gt;service($HTTP_RAW_POST_DATA);
+?&gt;
+</pre>
+
+ทดลองเรียกใช้งาน ผ่านเว็บบราวเซอร์ : http://localhost/rmr/build/src/web-services/
+
+[![installation-php-nusoap-003][3]](){: .fancybox-button 
+               data-fancybox-group="installation-php-nusoap-003"
+               href="<%= current_page.data.baseURL %>/images/categories/PHP - NuSOAP/installation-php-nusoap-003.png"}
+
+<br/>
+
+#### 2.2) Building a SOAP Client
+
+<pre class="prettyprint linenums">
+---
+title: RMR - Web Service
+layout: &quot;layout-web-services&quot;
+---
+
+&lt;?php
+require_once '../../packages/autoload.php';
+$client = new nusoap_client(&quot;http://localhost/rmr/build/src/web-services/&quot;);
+
+$error = $client-&gt;getError();
+if ($error) {
+    echo &quot;&lt;h2&gt;Constructor error&lt;/h2&gt;&lt;pre&gt;&quot; . $error . &quot;&lt;/pre&gt;&quot;;
+}
+
+$result = $client-&gt;call(&quot;getProd&quot;, array(&quot;category&quot; =&gt; &quot;books&quot;));
+$result_decode = json_decode($result);
+
+if ($client-&gt;fault) {
+    echo &quot;&lt;h2&gt;Fault&lt;/h2&gt;&lt;pre&gt;&quot;;
+    print_r($result);
+    echo &quot;&lt;/pre&gt;&quot;;
+} else {
+    $error = $client-&gt;getError();
+    if ($error) {
+        echo &quot;&lt;h2&gt;Error&lt;/h2&gt;&lt;pre&gt;&quot; . $error . &quot;&lt;/pre&gt;&quot;;
+    }
+    else {
+        echo &quot;&lt;h2&gt;Books&lt;/h2&gt;&lt;pre&gt;&quot;;
+        echo $result;
+        echo &quot;&lt;/pre&gt;&quot;;
+    }
+}
+</pre>
+
+---
+
+Now with both files in your web root directory, launch the client script (in my case http://localhost/rmr/build/src/web-services/productlistclient.php) in your browser. You should see the following:
+
+[![installation-php-nusoap-002][2]](){: .fancybox-button 
+               data-fancybox-group="installation-php-nusoap-002"
+               href="<%= current_page.data.baseURL %>/images/categories/PHP - NuSOAP/installation-php-nusoap-002.png"}
+
+
+#### Debug : 
+
+<pre class="prettyprint linenums">
+---
+title: RMR - Web Service
+layout: &quot;layout-web-services&quot;
+---
+ 
+&lt;?php
+require_once '../../packages/autoload.php';
+$client = new nusoap_client(&quot;http://localhost/rmr/build/src/web-services/&quot;);
+ 
+$error = $client-&gt;getError();
+if ($error) {
+    echo &quot;&lt;h2&gt;Constructor error&lt;/h2&gt;&lt;pre&gt;&quot; . $error . &quot;&lt;/pre&gt;&quot;;
+}
+ 
+$result = $client-&gt;call(&quot;getProd&quot;, array(&quot;category&quot; =&gt; &quot;books&quot;));
+$result_decode = json_decode($result);
+ 
+if ($client-&gt;fault) {
+    echo &quot;&lt;h2&gt;Fault&lt;/h2&gt;&lt;pre&gt;&quot;;
+    print_r($result);
+    echo &quot;&lt;/pre&gt;&quot;;
+} else {
+    $error = $client-&gt;getError();
+    if ($error) {
+        echo &quot;&lt;h2&gt;Error&lt;/h2&gt;&lt;pre&gt;&quot; . $error . &quot;&lt;/pre&gt;&quot;;
+    }
+    else {
+        echo &quot;&lt;h2&gt;Books&lt;/h2&gt;&lt;pre&gt;&quot;;
+        echo $result;
+        echo &quot;&lt;/pre&gt;&quot;;
+
+        <mark>echo &quot;&lt;h2&gt;Request&lt;/h2&gt;&quot;;
+        echo &quot;&lt;pre&gt;&quot; . htmlspecialchars($client-&gt;request, ENT_QUOTES) . &quot;&lt;/pre&gt;&quot;;
+        echo &quot;&lt;h2&gt;Response&lt;/h2&gt;&quot;;
+        echo &quot;&lt;pre&gt;&quot; . htmlspecialchars($client-&gt;response, ENT_QUOTES) . &quot;&lt;/pre&gt;&quot;;</mark>
+    }
+}
+</pre>
+
+
+[![installation-php-nusoap-004][4]](){: .fancybox-button 
+               data-fancybox-group="installation-php-nusoap-004"
+               href="<%= current_page.data.baseURL %>/images/categories/PHP - NuSOAP/installation-php-nusoap-004.png"}
+
+<br/>
+
+---
+
+#### 2.3) SOAP Client with `PAW`
+
+[![installation-php-nusoap-005][5]](){: .fancybox-button 
+               data-fancybox-group="installation-php-nusoap-005"
+               href="<%= current_page.data.baseURL %>/images/categories/PHP - NuSOAP/installation-php-nusoap-005.png"}
+
+
+<br/>
+
+---
+
+#### 2.4) SOAP Client with `Postman` [![external-link-15x15][common-05]](http://blog.getpostman.com/2014/08/22/making-soap-requests-using-postman/){: target="_blank"} ![separate-line-sub-topic][common-07] 
+
+[![installation-php-nusoap-006][6]](){: .fancybox-button 
+               data-fancybox-group="installation-php-nusoap-006"
+               href="<%= current_page.data.baseURL %>/images/categories/PHP - NuSOAP/installation-php-nusoap-006.png"}
+
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png
+
+[1]: <%= current_page.data.baseURL %>images/categories/PHP%20-%20NuSOAP/installation-php-nusoap-001.png
+[2]: <%= current_page.data.baseURL %>images/categories/PHP%20-%20NuSOAP/installation-php-nusoap-002.png
+[3]: <%= current_page.data.baseURL %>images/categories/PHP%20-%20NuSOAP/installation-php-nusoap-003.png
+[4]: <%= current_page.data.baseURL %>images/categories/PHP%20-%20NuSOAP/installation-php-nusoap-004.png
+[5]: <%= current_page.data.baseURL %>images/categories/PHP%20-%20NuSOAP/installation-php-nusoap-005.png
+[6]: <%= current_page.data.baseURL %>images/categories/PHP%20-%20NuSOAP/installation-php-nusoap-006.png
+
+

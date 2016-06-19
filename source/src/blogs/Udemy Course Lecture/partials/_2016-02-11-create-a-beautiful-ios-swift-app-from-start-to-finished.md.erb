@@ -1,0 +1,142 @@
+<%= partial blog_dir + "Udemy Course Lecture/partials/_temp" %>
+
+---
+
+[![ภาพแสดง ผลลัพธ์ที่ต้องการทำ][23]](){: .fancybox-button 
+                            data-fancybox-group="lecture22-003" 
+                            href="<%= current_page.data.baseURL %>images/categories/Udemy Course Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-017.png"}
+                            
+สิ่งที่จะทำต่อไปคือ 
+
+1. กำหนด delegate ให้กับ TextView และเพิ่ม Line spacing ให้เป็น 9 ด้วย
+2. ถ้ามีการเปลี่ยนแปลงค่าใน `quoteTextView.text` ให้บันทึกลงฐานข้อมูล CoreData ด้วย ในจังหวะ `viewWillDisappear(animated: Bool)`
+
+#### ไฟล์ `QuoteViewController.swift`
+<pre class="prettyprint linenums">
+import UIKit
+
+class QuoteViewController: UIViewController, <mark>UITextViewDelegate</mark>, <mark>NSLayoutManagerDelegate</mark> {
+    
+    @IBOutlet weak var borderView: UIView!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var authorNameLabel: UILabel!
+    @IBOutlet weak var quoteTextView: UITextView!
+    @IBOutlet weak var authorImageView: UIImageView!
+    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet weak var authorBackgroundImageView: UIImageView!
+    @IBOutlet weak var smallBookmarkTopConstraint: NSLayoutConstraint!
+    
+    <mark>var moc: NSManagedObjectContext!</mark>
+    var quote: Quote!
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setQuoteInformation()
+    }
+    
+<mark>    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if quoteTextView.text != quote.content {
+            quote.content = quoteTextView.text
+            
+            try! moc.save()
+        }
+    }</mark>
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        <mark>moc = CoreDataHelper.managedObjectContext()</mark>
+        
+        <mark>quoteTextView.delegate = self</mark>
+        <mark>quoteTextView.layoutManager.delegate = self</mark>
+        
+        createBorder()
+    }
+    
+    func createBorder() {
+        
+        let borderLayer = CAShapeLayer()
+        borderLayer.strokeColor = UIColor(white:0.95, alpha: 1).CGColor
+        borderLayer.lineWidth = 24
+        borderLayer.fillColor = UIColor.clearColor().CGColor
+        borderLayer.path = UIBezierPath(rect: self.view.bounds).CGPath
+        
+        self.borderView.layer.addSublayer(borderLayer)
+    }
+    
+    func setQuoteInformation() {
+        let author = quote.author
+        
+        if let imageData = author?.image {
+            authorImageView.image = UIImage(data: imageData)
+        } else {
+            authorBackgroundImageView.alpha = 0
+            authorImageView.image = UIImage(named: "avatarBig")
+        }
+        
+        ImageMasker.maskImage(authorImageView, size: CGSizeMake(118, 118))
+        
+        authorNameLabel.text = author!.name!.uppercaseString
+        quoteTextView.text = quote.content
+        
+        let dateFormat = NSDateFormatter()
+            dateFormat.dateFormat = "MM/dd/yyyy HH:mm"
+        
+        let dateString = dateFormat.stringFromDate(quote.createdAt!)
+            dateLabel.text = dateString
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+       
+    }
+    
+    @IBAction func dismiss(sender: AnyObject) {
+        let button = sender as! UIButton
+        button.enabled = false
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+<mark>    func layoutManager( layoutManager: NSLayoutManager,
+                        lineSpacingAfterGlyphAtIndex glyphIndex: Int,
+                        withProposedLineFragmentRect rect: CGRect) -> CGFloat {
+        return 9
+    }</mark>
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+}
+</pre>
+
+---
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+
+[7]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-001.png
+[8]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-002.png
+[9]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-003.png
+[10]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-004.png
+[11]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-005.png
+[12]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-006.png
+[13]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-007.png
+[14]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-008.png
+[15]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-009.png
+[16]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-010.png
+[17]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-011.png
+[18]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-012.png
+[19]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-013.png
+[20]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-014.png
+[21]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-015.png
+[22]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-016.png
+[23]: <%= current_page.data.baseURL %>images/categories/Udemy%20Course%20Lecture/create-a-beautiful-ios-swift-app-from-start-to-finished-017.png
+

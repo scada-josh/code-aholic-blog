@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>childOrder</key>
+	<array>
+		<string>css</string>
+		<string>demo</string>
+		<string>fonts</string>
+		<string>images</string>
+	</array>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>changelog.txt</string>
+		</array>
+		<array>
+			<string>CONTRIBUTING.md</string>
+		</array>
+		<array>
+			<string>jquery.flexslider-min.js</string>
+		</array>
+		<array>
+			<string>jquery.flexslider.js</string>
+		</array>
+		<array>
+			<string>LICENSE.md</string>
+		</array>
+		<array>
+			<string>README.mdown</string>
+		</array>
+	</array>
+</dict>
+</plist>

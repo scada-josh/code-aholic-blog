@@ -1,0 +1,220 @@
+# เริ่มต้นสร้าง iOS Application อย่างง่าย
+![separate line][1]	
+
+> Note : 
+> 
+> 1. This
+
+---
+
+## Creating an Xcode Project
+![separate line][1]	
+
+
+![ภาพแสดง Xcode workspace window][4]	
+<p class="text-center"> <strong> <ins>รูปภาพ</ins> <i>Xcode workspace window</i></strong> </p>
+
+
+
+---
+
+<br/>
+
+## Model-View-Controller
+![separate line][1]	
+
+* **The model layer** holds data and knows nothing about the user interface.
+* **The view layer** contains objects that are visible to the user.
+* **The controller layer**  is where the application is managed.
+
+![ภาพแสดง MVC pattern][5]	
+<p class="text-center"> <strong> <ins>รูปภาพ</ins> <i>MVC pattern</i></strong> </p>
+
+---
+
+<br/>
+
+## ออกแบบหน้าจอ โปรแกรม Quiz (Designing Quiz)
+![separate line][1]	
+
+* **The model layer** ประกอบไปด้วย instances ของ [String] จำนวน 2 ชุดข้อมูล
+* **The view layer** ประกอบไปด้วย instances ของ `UILabel` และ `UIButton` อย่างละ 2 ตัว
+* **The controller layer**  ประกอบไปด้วย instance ของ `AppDelegate` และ `ViewController`
+
+![ภาพแสดง Object diagram for Quiz][6]	
+<p class="text-center"> <strong> <ins>รูปภาพ</ins> <i>Object diagram for Quiz</i></strong> </p>
+
+---
+
+<br/>
+
+## Interface Builder
+![separate line][1]	
+
+`Interface Builder` is an object editor that can create instances of objects and manipulate their properties. 
+
+`A .storyboard file` is an archive of object instances to be loaded into memory when necessary.
+
+![ภาพแสดง Interface Builder showing Main.storyboard][7]	
+<p class="text-center"> <strong> <ins>รูปภาพ</ins> <i>Interface Builder showing Main.storyboard</i></strong> </p>
+
+---
+
+<br/>
+
+## Building the Interface
+![separate line][1]	
+
+### <ins>Creating view objects</ins>
+
+![ภาพแสดง Xcode utility area][8]
+<p class="text-center"> <strong> <ins>รูปภาพ</ins> <i>Xcode utility area</i></strong> </p>
+
+<br/>
+
+![ภาพแสดง Building the Quiz interface][9]
+<p class="text-center"> <strong> <ins>รูปภาพ</ins> <i>Building the Quiz interface</i></strong> </p>
+
+<br/>
+
+### <ins>Configuring view objects</ins>
+
+<br/>
+
+### <ins>Running on the simulator</ins>
+
+(If you would like to run the application on an actual device, read our <a href="https://www.bignerdranch.com/we-teach/how-to-prepare/ios-device-provisioning/" target="_blank">iOS Device Provision Guide </a>)
+
+<br/>
+
+### <ins>A brief introduction to Auto Layout</ins>
+
+`Auto Layout` works by specifying position and size constraints for each view object in a scene. 
+
+These constraints can be relative to `neighboring views` or `container views`.
+
+> `A container view` is just a view object that contains another view.
+
+
+<br/>
+
+---
+
+<br/>
+
+## Making connections
+![separate line][1]	
+
+### <ins>Declaring outlets</ins>
+
+<pre class="prettyprint linenums">
+import UIKit
+
+class ViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+}
+</pre>
+
+Next, add the following code that declares two properties
+
+<pre class="prettyprint linenums">
+import UIKit
+
+class ViewController: UIViewController {
+<mark>    @IBOutlet var questionLabel: UILabel!    @IBOutlet var answerLabel: UILabel!</mark>
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+}
+</pre>
+
+This code gives every instance of ViewController 
+	* an outlet named `questionLabel` 
+	* and an outlet named `answerLabel`. 
+
+The view controller can use each outlet to reference a particular UILabel object (i.e., one of the labels in your view). 
+
+> `The @IBOutlet keyword` tells Xcode that you will connect these outlets to label objects using Interface Builder.
+
+<br/>
+
+### <ins>Setting outlets</ins>
+
+<br/>
+
+### <ins>Defining action methods</ins>
+
+When a UIButton is tapped, it calls a method on another object. That object is called the `target`. The method that is triggered is called the `action`.
+
+ปุ่มทั้งสอง คือ `showNextQuestion` และ `showAnswer` คือ instance ของ **ViewController**, โดยแต่ละปุ่มจะมี action เป็นของตัวเอง 
+
+โดยเราจะประกาศเมธอด `showNextQuestion(_:)` และ `showAnswer(_:)` ให้กับแต่ละปุ่มตามลำดับ
+
+<ins>`The @IBAction keyword`</ins> tells Xcode that you will be making these connections in <ins>`Interface Builder`</ins>.
+
+<pre class="prettyprint linenums">
+import UIKit
+
+class ViewController: UIViewController {
+    @IBOutlet var questionLabel: UILabel!    @IBOutlet var answerLabel: UILabel!
+    
+<mark>    @IBAction func showNextQuestion(sender: AnyObject) {
+            }</mark>
+    <mark>    @IBAction func showAnswer(sender: AnyObject) {
+                }</mark>
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+}
+</pre>
+<br/>
+
+### <ins>Setting targets and actions</ins>
+
+---
+
+## Creating the Model Layer
+![separate line][1]	
+
+![ภาพแสดง Setting Next Question target/action][10]
+<p class="text-center"> <strong> <ins>รูปภาพ</ins> <i>Setting Next Question target/action</i></strong> </p>
+
+<br/>
+
+---
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png
+
+[4]: <%= current_page.data.baseURL %>images/categories/iOS%20Development/creating-simple-ios-application-001.png
+[5]: <%= current_page.data.baseURL %>images/categories/iOS%20Development/creating-simple-ios-application-002.png
+[6]: <%= current_page.data.baseURL %>images/categories/iOS%20Development/creating-simple-ios-application-003.png
+[7]: <%= current_page.data.baseURL %>images/categories/iOS%20Development/creating-simple-ios-application-004.png
+[8]: <%= current_page.data.baseURL %>images/categories/iOS%20Development/creating-simple-ios-application-005.png
+[9]: <%= current_page.data.baseURL %>images/categories/iOS%20Development/creating-simple-ios-application-006.png
+[10]: <%= current_page.data.baseURL %>images/categories/iOS%20Development/creating-simple-ios-application-007.png
+
+

@@ -1,0 +1,103 @@
+# Protocols
+
+
+## Formatting a Table of Data
+
+
+
+
+![separate-line][1]
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;สร้างไฟล์ playground ใหม่ ชื่อว่า `Protocols.playground`
+
+#### Listing 19.1 Setting up a table
+
+
+<pre class="prettyprint linenums">
+import UIKit
+
+func printTable(data: [[Int]]) {
+
+    for row in data {
+        
+        // Create an empty string
+        var out = ""
+        
+        // Append each item in this row to our string
+        for item in row {
+            out += " \(item) |"
+        }
+        
+        // Done - print it!
+        print(out) }
+}
+
+let data = [
+    [30, 6],
+    [40, 18],
+    [50, 20]
+]
+
+printTable(data)
+</pre>
+
+
+
+#### Listing 19.2 Labeling the rows
+
+<pre class="prettyprint linenums">
+import UIKit
+
+<mark>func padding(amount: Int) -> String {
+    
+    var paddingString = ""
+    for _ in 0 ..< amount {
+        paddingString += " "
+    }
+    
+    return paddingString
+}</mark>
+
+func printTable(rowLabels: [String], data: [[Int]]) {
+    
+<mark>    // Create an array of the width of each row label
+    let rowLabelWidths = rowLabels.map { $0.characters.count }</mark>
+    
+<mark>    // Determine length of longest row label
+    guard let maxRowLabelWidth = rowLabelWidths.maxElement() else { return }</mark>
+    
+    for (i, row) in data.enumerate() {
+        
+<mark>        // Pad the row label out so they are all the same length
+        let paddingAmount = maxRowLabelWidth - rowLabelWidths[i]
+        var out = rowLabels[i] + padding(paddingAmount) + " |" </mark>
+        
+        // Append each item in this row to our string
+        for item in row {
+            out += " \(item) |"
+        }
+        
+        // Done - print it!
+        print(out)
+    }
+    
+}
+
+<mark>let rowLabels = ["Joe", "Karen", "Fred"]</mark>
+
+let data = [
+            [30, 6],
+            [40, 18],
+            [50, 20],
+            ]
+
+printTable(<b>rowLabels, data:</b> data)
+</pre>
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png
+
+

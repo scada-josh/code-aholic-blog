@@ -1,0 +1,96 @@
+# การใช้งาน ScrollView (widget.*) [![external link 30x30][6]](https://docs.coronalabs.com/api/library/widget/newScrollView.html){: target="_blank"}
+![separate line][1]	
+
+
+[![ภาพแสดง ผลลัพธ์ของการสร้าง ScrollView][7]](){: .fancybox-button 
+               data-fancybox-group="using-scrollview-001"
+               href="<%= current_page.data.baseURL %>images/categories/Corona SDK/using-scrollview-001.png"}
+
+
+<br/>
+
+## 1. เพิ่ม widget library
+
+---
+
+<pre class="prettyprint linenums">
+local widget = require( "widget" )
+</pre>
+
+
+<br/>
+
+## 2. สร้าง ScrollView
+
+---
+
+#### ไฟล์ home.lua
+<pre class="prettyprint linenums">
+-- Create the widget
+local scrollView = widget.newScrollView(
+    {
+        top = 0,
+        left = 0,
+        width = display.contentWidth,
+        height = display.contentHeight,
+        scrollWidth = display.contentWidth,
+        scrollHeight = display.contentHeight,
+        listener = scrollListener
+    }
+)
+
+local background = display.newImage( "assets/view.jpg", 0, 0 )
+background.anchorX = 0
+background.anchorY = 0
+
+scrollView:insert( background )
+
+sceneGroup:insert( scrollView )
+</pre>
+
+<br/>
+
+## 3. สร้าง Event Listener ให้กับ ScrollView
+
+---
+
+#### ไฟล์ home.lua
+<pre class="prettyprint linenums">
+-- ScrollView listener
+local function scrollListener( event )
+
+    local phase = event.phase
+
+    if ( phase == "began" ) then 
+        print( "Scroll view was touched" )
+    elseif ( phase == "moved" ) then 
+        print( "Scroll view was moved" )
+    elseif ( phase == "ended" ) then 
+        print( "Scroll view was released" )
+    end
+
+    -- In the event a scroll limit is reached...
+    if ( event.limitReached ) then
+        if ( event.direction == "up" ) then 
+            print( "Reached bottom limit" )
+        elseif ( event.direction == "down" ) then 
+            print( "Reached top limit" )
+        elseif ( event.direction == "left" ) then 
+            print( "Reached right limit" )
+        elseif ( event.direction == "right" ) then 
+            print( "Reached left limit" )
+        end
+    end
+
+    return true
+end
+</pre>
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+[7]: <%= current_page.data.baseURL %>images/categories/Corona%20SDK/using-scrollview-001.png

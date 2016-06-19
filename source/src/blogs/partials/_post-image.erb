@@ -1,0 +1,24 @@
+<% page_articles[0...5].each_with_index do |article, i| %>
+  <% if article.data.isIndexPage != true %>
+
+        <article>
+            <div class="post-image">
+              <div class="post-heading">
+                <h3><a href="#"><%= link_to article.title, '../..' + article.url %></a></h3>
+              </div>
+              <img src="../../images/<%= article.data.thumb %>" alt="" class: 'thumbnail'/>
+            </div>
+            <p>
+               <%= article.data.introText %>
+            </p>
+            <div class="bottom-article">
+              <ul class="meta-post">
+                <li><i class="icon-calendar"></i><a href="#"> <%= article.date.strftime('%b %d, %Y') %></a></li>
+                <li><i class="icon-user"></i><a href="#"> DevJosh</a></li>
+              </ul>
+              <a href="<%= '../../' + article.url %>" class="pull-right">Continue reading <i class="icon-angle-right"></i></a>
+            </div>
+        </article>
+
+  <% end %>
+<% end %>

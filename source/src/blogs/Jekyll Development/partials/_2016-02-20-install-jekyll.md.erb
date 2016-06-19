@@ -1,0 +1,52 @@
+# การใช้งาน Jekyll
+![separate line][1]	
+
+<br/>
+
+## การติดตั้ง Jekyll
+
+---
+
+
+<%= current_page.path %>
+<br/>
+<%= current_page.url %>
+<br/>
+<%= request.path %>
+<br/>
+
+{% if current_page.previous %}
+{{current_page.previous.url}}
+{% endif %}
+
+<pre class="prettyprint linenums">
+$ <strong>xcode-select -p</strong>
+</pre>
+
+
+<pre class="prettyprint linenums">
+$ <strong>sudo gem install jekyll</strong>
+</pre>
+
+[![ภาพแสดง ผลลัพธ์การติดตั้ง jekyll ][7]](){: .fancybox-button 
+							data-fancybox-group="install-jekyll-001" 
+							href="<%= current_page.data.baseURL %>images/categories/Jekyll Development/install-jekyll-001.png"}	
+
+<br/>
+
+	
+## การโปรเจ็คใหม่ด้วย Jekyll		
+---			
+							
+							
+	
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+[7]: <%= current_page.data.baseURL %>images/categories/Jekyll%20Development/install-jekyll-001.png
+

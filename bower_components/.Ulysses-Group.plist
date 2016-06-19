@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>childOrder</key>
+	<array>
+		<string>angular</string>
+		<string>angular-mocks</string>
+		<string>angular-resource</string>
+		<string>angular-route</string>
+		<string>animate.css</string>
+		<string>bootstrap</string>
+		<string>bootstrap-star-rating</string>
+		<string>bower-jquery-sparkline</string>
+		<string>chosen</string>
+		<string>classie</string>
+		<string>datatables</string>
+		<string>datatables-bootstrap3-plugin</string>
+		<string>fancybox</string>
+		<string>fancyselect</string>
+		<string>FitVids</string>
+		<string>flexslider</string>
+		<string>flot.tooltip</string>
+		<string>font-awesome</string>
+		<string>fontawesome</string>
+		<string>gmap3</string>
+		<string>google-code-prettify</string>
+		<string>highcharts-release</string>
+		<string>ionicons</string>
+		<string>jcarousel</string>
+		<string>jquery</string>
+		<string>jquery-flot</string>
+		<string>jquery-legacy</string>
+		<string>jquery-modern</string>
+		<string>jQuery-One-Page-Nav</string>
+		<string>jquery-placeholder</string>
+		<string>jquery-slotmachine</string>
+		<string>jquery-unveil</string>
+		<string>jquery.cookie</string>
+		<string>jquery.easing</string>
+		<string>jquery.lazyload</string>
+		<string>jquery.scrollTo</string>
+		<string>leaflet</string>
+		<string>moment</string>
+		<string>moment-duration-format</string>
+		<string>normalize-css</string>
+		<string>openlayers</string>
+		<string>owl.carousel</string>
+		<string>quicksand</string>
+		<string>rs-plugin</string>
+		<string>slimScroll</string>
+		<string>sparkline</string>
+		<string>wow</string>
+	</array>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>FitText.js</string>
+		</array>
+		<array>
+			<string>reveal.js</string>
+		</array>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,94 @@
+<table class="table table-striped table-bordered"> 
+    <thead> 
+        <tr> 
+            <th>Field Name</th> 
+            <th>Description</th>
+            <th>Field Type</th>
+            <th>Null</th>
+            <th>PK/FK</th>
+            <th>Default Value</th>
+        </tr> 
+    </thead> 
+    <tbody> 
+        <tr> 
+            <td>id</td> 
+            <td>เลขลำดับ</td> 
+            <td>INT(6)</td>
+            <td>No</td>
+            <td>PK</td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>branch_code</td> 
+            <td>รหัสสาขา</td> 
+            <td>VARCHAR(32)</td>
+            <td>No</td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>zone_code</td> 
+            <td>รหัส Zone</td> 
+            <td>VARCHAR(32)</td>
+            <td>No</td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>dma_code</td> 
+            <td>รหัส DMA</td> 
+            <td>VARCHAR(32)</td>
+            <td>No</td>
+            <td>UNIQUE</td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>dm_code</td> 
+            <td>รหัส DM</td> 
+            <td>VARCHAR(32)</td>
+            <td>No</td>
+            <td>UNIQUE</td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>ip_address</td> 
+            <td>IP Address</td> 
+            <td>VARCHAR(32)</td>
+            <td>No</td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>comm_type</td> 
+            <td>ชนิดของการสื่อสาร</td> 
+            <td>VARCHAR(32)</td>
+            <td>Yes</td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>logger_code</td> 
+            <td>ยี่ห้ออุปกรณ์ RTU</td> 
+            <td>VARCHAR(32)</td>
+            <td>Yes</td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>rtu_status</td> 
+            <td>สถานะพร้อมใช้ของตู้ RTU</td> 
+            <td>VARCHAR(32)</td>
+            <td>No</td>
+            <td></td>
+            <td></td>
+        </tr> 
+        <tr> 
+            <td>remark</td> 
+            <td>หมายเหตุ</td> 
+            <td>VARCHAR(255)</td>
+            <td>Yes</td>
+            <td></td>
+            <td></td>
+        </tr> 
+    </tbody> 
+</table>

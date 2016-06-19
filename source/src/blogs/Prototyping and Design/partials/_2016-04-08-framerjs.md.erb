@@ -1,0 +1,108 @@
+# สร้าง Prototype ด้วย Framer
+![separate line][common-01] 
+
+<pre class="prettyprint linenums">
+# Create a PageComponent 
+page = new PageComponent
+    width: screen.width, height: screen.height
+    x: screen.centerX, y: screen.centerY
+    scrollVertical: false
+ 
+# Create page layers 
+layerA = new Layer
+    backgroundColor: "green", borderRadius: 8,
+    width: page.width, height: 950, 
+    superLayer: page.content
+
+layerA_button = new Layer
+	# backgroundColor: "red"
+	width: 300, height: 100,
+	borderRadius: 15,
+	image: "http://lorempixel.com/300/100/cats",
+	html: "Click"
+	style:
+        fontSize: "40px"
+        lineHeight: "100px"
+        textAlign: "center"
+	# superLayer: layerA.content
+layerA_button.centerX()
+layerA_button.midY = layerA.height - 200
+layerA.addChild(layerA_button)
+
+layerA.states.add
+    show:
+        x: 0
+        y: 0
+        opacity: 1
+        visible: true
+        curve: "linear"
+        time: 2
+    hide:
+        x: page.content.width
+        opacity: 0
+        delay: 2
+        visible: false
+        curve: "linear"
+
+layerA_button.on Events.Click, ->
+	layerA.states.switch("default")
+	layerB.states.switch("show")
+
+    
+layerB = new Layer
+    backgroundColor: "blue", borderRadius: 8,
+    width: page.width, height: 950, 
+    superLayer: page.content
+page.addPage(layerB, "right")
+
+layerB.states.add
+    show:
+        x: 0
+        y: 0
+        opacity: 1
+        visible: true
+        curve: "linear"
+        time: 1000
+    hide:
+    	x: page.content.width
+    	opacity: 0
+    	delay: 2
+    	visible: false
+    	curve: "linear",
+    	time: 10
+    	
+    	
+layerB_button = new Layer
+	# backgroundColor: "red"
+	width: 300, height: 100,
+	borderRadius: 15,
+	html: "Go to A"
+	style:
+        fontSize: "40px"
+        lineHeight: "100px"
+        textAlign: "center"
+	# superLayer: layerA.content
+layerB_button.centerX()
+layerB_button.midY = layerB.height - 200
+layerB.addChild(layerB_button)
+
+layerB_button.on Events.Click, ->
+	layerB.states.switch("default")
+	layerA.states.switch("show")
+</pre>
+
+<pre class="prettyprint linenums">
+mv ./app.coffee.js ./app.coffee
+</pre>
+
+
+
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-topic.png
+[common-08]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png

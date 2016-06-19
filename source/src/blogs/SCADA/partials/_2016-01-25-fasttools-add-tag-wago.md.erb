@@ -1,0 +1,205 @@
+# การเพิ่ม Tag ใน SCADA (ยี่ห้อ WAGO)
+
+![separate line][1]	
+
+
+> ขั้นตอนการปฏิบติ : 
+> 
+> 1. ตรวจสอบ `ชื่อ DM` และ `IP Address` ในไฟล์ Host ว่าเคยมีการใช้งานหรือยัง?
+> 2. แก้ไขข้อมูลในไฟล์ Host
+> 3. แก้ไขข้อมูลใน Quickload ซึ่งสามารถดาวน์โหลด ไฟล์เทมเพลตได้จาก  [ดาวน์โหลด ไฟล์เทมเพลต WAGO]("<%= current_page.data.fileURL %>files/Quickload_for_MODBUS(WAGO)_Template.xls "เทมเพลต WAGO")
+> 4. เพิ่ม / ลด ข้อมูลใน SCADA Fast/Tools ผ่านทาง Quickload
+
+---
+
+![separate line][1]	
+
+## ขั้นตอนการปฏิบัติ แบบละเอียด :
+
+![separate line][1]	
+
+
+### (1) ตรวจสอบชื่อ DM และ IP Address
+
+![ภาพหน้าจอ เว็บตรวจสอบ DM และ IP][4]	
+
+---
+
+
+### (2) แก้ไขข้อมูลในไฟล์ Host
+
+#### http://localhost/scada-it/build/src/api/AdminAPI/addUserInfoManager/
+
+
+<pre class="prettyprint linenums">
+{
+  "listRTU": [
+    {
+      "branch_code": "",
+      "zone_code": "",
+      "dma_code": "",
+      "dm_code": "DM-55-05-02-03",
+      "ip": "10.202.71.43",
+      "logger_code": "WAGO",
+      "comm": "GPRS",
+      "rtu_status": "1"
+    }
+  ]
+}
+</pre>
+
+#### http://localhost/scada-it/build/src/api/AdminAPI/addScadaInfoManager/
+
+
+<pre class="prettyprint linenums">
+{
+  "listRTU": [
+    {
+      "branch_code": "",
+      "zone_code": "",
+      "dma_code": "",
+      "dm_code": "DM-54-04-03-02",
+      "ip": "10.50.135.43",
+      "logger_code": "WAGO",
+      "comm": "GPRS",
+      "rtu_status": "1"
+    }
+  ]
+}
+</pre>
+
+#### http://localhost/scada-it/build/src/api/AdminAPI/createHostFileManager/
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เราก็จะได้ไฟล์ Host ออกมาใช้งานแล้ว
+
+---
+
+### (3) แก้ไขข้อมูลใน Quickload
+
+#### ยกตัวอย่างเช่น เราต้องการ `ลบ` DM-02-05-01-02 ที่อยู่ในสาขา B14
+
+* แท็บ `MODBUS_LINE_DF`
+	* ในคอลัมภ์ `NAME` ให้ตรวจสอบ เลข Zone ด้วย, รูปแบบ คือ BxxMDC_zone เช่น B14MDC_05
+	* ในคอลัมภ์ `DESCRIPTION` ให้ตรวจสอบ เลข Zone ด้วย
+	* ในคอลัมภ์ `EQUIPMENT_MAN` ให้ตรวจสอบ เลข Zone ด้วย
+	* เลือก Highlight แถวที่ต้องการทำงานด้วย
+	* ค้นหาและแทนชื่อ - คีย์ลัด Replace (Ctrl + H)
+		* ค้นหา `B55` และแทนด้วย `B14`
+* แท็บ `MODBUS_STATION_DF`
+	* ในคอลัมภ์ `LINE` ให้ตรวจสอบ เลข Zone ด้วย, รูปแบบ คือ BxxMDC_zone เช่น B14MDC_05
+	* เลือก Highlight แถวที่ต้องการทำงานด้วย
+	* ค้นหาและแทนชื่อ - คีย์ลัด Replace (Ctrl + H)
+		* ค้นหา `B55` และแทนด้วย `B14`
+		* ค้นหา `DM-55-05-02-03` และแทนด้วย `DM-02-05-01-02`
+* แท็บ `MODBUS_POINT_DF`
+	* เลือก Highlight แถวที่ต้องการทำงานด้วย
+	* ค้นหาและแทนชื่อ - คีย์ลัด Replace (Ctrl + H)
+		* ค้นหา `DM-55-05-02-03` และแทนด้วย `DM-02-05-01-02`
+* แท็บ `SECTION_DF`
+	* เลือก Highlight แถวที่ต้องการทำงานด้วย
+	* ค้นหาและแทนชื่อ - คีย์ลัด Replace (Ctrl + H)
+		* ค้นหา `B55` และแทนด้วย `B14`
+		* ค้นหา `DM-55-05-02-03` และแทนด้วย `DM-02-05-01-02`
+* แท็บ `ITEM_DF`
+	* เลือก Highlight แถวที่ต้องการทำงานด้วย
+	* ค้นหาและแทนชื่อ - คีย์ลัด Replace (Ctrl + H)
+		* ค้นหา `B55` และแทนด้วย `B14`
+		* ค้นหา `DM-55-05-02-03` และแทนด้วย `DM-02-05-01-02`
+		* ค้นหา `DB55` แทนด้วย `DB14` (ในส่วนี้ถูกเปลี่ยนไปแล้ว จากขั้นตอนข้างบน)
+* แท็บ `OBJECT_DF`
+	* เลือก Highlight แถวที่ต้องการทำงานด้วย
+	* ค้นหาและแทนชื่อ - คีย์ลัด Replace (Ctrl + H)
+		* ค้นหา `B55` และแทนด้วย `B14`
+		* ค้นหา `DM-55-05-02-03` และแทนด้วย `DM-02-05-01-02`
+* แท็บ `ITEM_HIS_DF`
+ 	* เลือก Highlight แถวที่ต้องการทำงานด้วย
+	* ค้นหาและแทนชื่อ - คีย์ลัด Replace (Ctrl + H)
+		* ค้นหา `B55` และแทนด้วย `B14`
+		* ค้นหา `DM-55-05-02-03` และแทนด้วย `DM-02-05-01-02`
+
+
+
+
+
+
+---
+
+### (4) เพิ่ม / ลด ข้อมูลใน SCADA Fast/Tools ผ่านทาง Quickload
+
+#### กรณี ต้องการลบข้อมูลออกจาก SCADA
+* ไปที่เมนู `ADD-INS` > `F/T Quickload` > `Connect FAST/TOOLS`
+* ไปที่แท็บ `MODBUS_STATION_DF`
+	* ในคอลัมภ์ `STATUS_ITEM` ให้ลบข้อมูลออก
+	* ในคอลัมภ์ `ON_SCAN` ให้เปลี่ยนค่าจาก `1` ให้เป็น `0`
+	* Highlight แถวที่ต้องการทำงานด้วย
+	* ไปที่เมนู `ADD-INS` > `F/T Quickload` > `Export to` > `FAST/TOOLS...`
+		* เลือก option : **Modify from FAST/TOOLS**
+		* กดปุ่ม **Export**
+		* สังเกต หน้าจอ **Popup** ในส่วนของ Errors ควรจะมีค่าเป็นศูนย์
+* ไปที่แท็บ `ITEM_HIS_DF`
+	* Highlight แถวที่ต้องการทำงานด้วย
+	* ไปที่เมนู `ADD-INS` > `F/T Quickload` > `Export to` > `FAST/TOOLS...`
+		* เลือก option : **Remove from FAST/TOOLS**
+		* กดปุ่ม **Export**
+		* สังเกต หน้าจอ **Popup** ในส่วนของ Errors ควรจะมีค่าเป็นศูนย์
+* ไปที่แท็บ `OBJECT_DF`
+	* Highlight แถวที่ต้องการทำงานด้วย
+	* ไปที่เมนู `ADD-INS` > `F/T Quickload` > `Export to` > `FAST/TOOLS...`
+		* เลือก option : **Remove from FAST/TOOLS**
+		* กดปุ่ม **Export**
+		* สังเกต หน้าจอ **Popup** ในส่วนของ Errors ควรจะมีค่าเป็นศูนย์
+* ไปที่แท็บ `ITEM_DF`
+	* Highlight แถวที่ต้องการทำงานด้วย
+	* ไปที่เมนู `ADD-INS` > `F/T Quickload` > `Export to` > `FAST/TOOLS...`
+		* เลือก option : **Remove from FAST/TOOLS**
+		* กดปุ่ม **Export**
+		* สังเกต หน้าจอ **Popup** ในส่วนของ Errors ควรจะมีค่าเป็นศูนย์
+* ไปที่แท็บ `SECTION_DF`
+	* Highlight แถวที่ต้องการทำงานด้วย
+	* ไปที่เมนู `ADD-INS` > `F/T Quickload` > `Export to` > `FAST/TOOLS...`
+		* เลือก option : **Remove from FAST/TOOLS**
+		* กดปุ่ม **Export**
+		* สังเกต หน้าจอ **Popup** ในส่วนของ Errors ควรจะมีค่าเป็นศูนย์
+* ไปที่แท็บ `MODBUS_POINT_DF`
+	* Highlight แถวที่ต้องการทำงานด้วย
+	* ไปที่เมนู `ADD-INS` > `F/T Quickload` > `Export to` > `FAST/TOOLS...`
+		* เลือก option : **Remove from FAST/TOOLS**
+		* กดปุ่ม **Export**
+		* สังเกต หน้าจอ **Popup** ในส่วนของ Errors ควรจะมีค่าเป็นศูนย์
+* ไปที่แท็บ `MODBUS_STATION_DF`
+	* Highlight แถวที่ต้องการทำงานด้วย
+	* ไปที่เมนู `ADD-INS` > `F/T Quickload` > `Export to` > `FAST/TOOLS...`
+		* เลือก option : **Remove from FAST/TOOLS**
+		* กดปุ่ม **Export**
+		* สังเกต หน้าจอ **Popup** ในส่วนของ Errors ควรจะมีค่าเป็นศูนย์
+* ไปที่แท็บ `MODBUS_LINE_DF` (**ในส่วนของ `MODBUS_LINE_DF` ไม่ต้องลบ เพราะอาจจะมีการใช้งานร่วมกันกับ DM อื่นๆ** )
+	* Highlight แถวที่ต้องการทำงานด้วย
+	* ไปที่เมนู `ADD-INS` > `F/T Quickload` > `Export to` > `FAST/TOOLS...`
+		* เลือก option : **Remove from FAST/TOOLS**
+		* กดปุ่ม **Export**
+		* สังเกต หน้าจอ **Popup** ในส่วนของ Errors ควรจะมีค่าเป็นศูนย์
+		
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png
+[4]: <%= current_page.data.baseURL %>images/categories/SCADA/scada-add-tag-wago-001.png
+

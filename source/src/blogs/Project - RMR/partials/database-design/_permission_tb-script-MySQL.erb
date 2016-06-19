@@ -1,0 +1,20 @@
+<pre class="prettyprint linenums">
+CREATE TABLE IF NOT EXISTS `permission_tb` (
+ `id` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+ `page_name` VARCHAR(100) NOT NULL,
+ `page_path` VARCHAR(255) NOT NULL,
+ `feature_name` VARCHAR(100) NOT NULL,
+ `feature_desc` VARCHAR(255) NOT NULL,
+ `role` VARCHAR(100) NOT NULL,
+ `visible` VARCHAR(1) NOT NULL,
+ `allow_read` VARCHAR(1) NOT NULL,
+ `allow_write` VARCHAR(1) NOT NULL,
+ `allow_update` VARCHAR(1) NOT NULL,
+ `allow_delete` VARCHAR(1) NOT NULL,
+ `print` VARCHAR(1) NOT NULL,
+ `pdf` VARCHAR(1) NOT NULL,
+ `excel` VARCHAR(1) NOT NULL,
+ `remark` VARCHAR(255) NOT NULL,
+ UNIQUE (id)
+) 
+</pre>

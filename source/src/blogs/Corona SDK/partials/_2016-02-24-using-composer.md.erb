@@ -1,0 +1,163 @@
+# การใช้งาน Composer สำหรับควบคุม Scene
+![separate line][1]	
+
+
+* Scene
+	* create
+	* show
+		* phase `will`
+		* phase `did`
+	* hide
+	* destroy
+
+<br/>
+
+## การส่งค่า params ผ่าน Scene
+
+---
+
+<br/>
+
+#### ไฟล์ main.lua
+<pre class="prettyprint linenums">
+---------------------------------------------------------------------------------
+--
+-- main.lua
+--
+---------------------------------------------------------------------------------
+
+-- hide the status bar
+-- display.setStatusBar( display.HiddenStatusBar )
+
+-- require the composer library
+local composer = require "composer"
+
+-- load scene1
+-- composer.gotoScene( "scene1" )
+
+-- Add any objects that should appear on all scenes below (e.g. tab bar, hud, etc)
+
+
+local options = {
+    effect = "slideLeft",
+    time = 800,
+    <mark>params = {productID = 12, color = "red"}</mark>
+}
+composer.gotoScene( "home", options )
+
+</pre>
+
+
+<br/>
+
+#### ไฟล์ home.lua
+<pre class="prettyprint linenums">
+local composer = require( "composer" )
+
+local scene = composer.newScene()
+
+-- -----------------------------------------------------------------------------------------------------------------
+-- All code outside of the listener functions will only be executed ONCE unless "composer.removeScene()" is called
+-- -----------------------------------------------------------------------------------------------------------------
+
+-- Local forward references should go here
+
+-- -------------------------------------------------------------------------------
+
+
+-- "scene:create()"
+function scene:create( event )
+
+    local sceneGroup = self.view
+	-------------------
+<mark>    local params = event.params
+          print("productID : ", params.productID)
+          print("color : ", params.color)</mark>
+
+    -- local rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY, 100, 100 )
+    local rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
+    	  rect:setFillColor( 0, 0, 1 )
+
+
+    local  nextBtn = display.newText( sceneGroup, "Next", display.contentWidth - 40, display.contentCenterY , native.systemFont , 22 )
+
+	-- myScene2 : create function
+    local function listener(event) 
+		local options = {
+		    effect = "slideLeft",
+		    time = 800
+		}
+		composer.gotoScene( "myScene2", options )
+    end
+
+
+    nextBtn:addEventListener( "tap", listener )
+
+    -- Initialize the scene here
+    -- Example: add display objects to "sceneGroup", add touch listeners, etc.
+end
+
+
+-- "scene:show()"
+function scene:show( event )
+
+    local sceneGroup = self.view
+    local phase = event.phase
+
+    if ( phase == "will" ) then
+        -- Called when the scene is still off screen (but is about to come on screen)
+    elseif ( phase == "did" ) then
+        -- Called when the scene is now on screen
+        -- Insert code here to make the scene come alive
+        -- Example: start timers, begin animation, play audio, etc.
+    end
+end
+
+
+-- "scene:hide()"
+function scene:hide( event )
+
+    local sceneGroup = self.view
+    local phase = event.phase
+
+    if ( phase == "will" ) then
+        -- Called when the scene is on screen (but is about to go off screen)
+        -- Insert code here to "pause" the scene
+        -- Example: stop timers, stop animation, stop audio, etc.
+    elseif ( phase == "did" ) then
+        -- Called immediately after scene goes off screen
+    end
+end
+
+
+-- "scene:destroy()"
+function scene:destroy( event )
+
+    local sceneGroup = self.view
+
+    -- Called prior to the removal of scene's view
+    -- Insert code here to clean up the scene
+    -- Example: remove display objects, save state, etc.
+end
+
+
+-- -------------------------------------------------------------------------------
+
+-- Listener setup
+scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
+
+-- -------------------------------------------------------------------------------
+
+return scene
+</pre>
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png

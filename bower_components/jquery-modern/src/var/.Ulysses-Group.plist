@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>arr.js</string>
+		</array>
+		<array>
+			<string>class2type.js</string>
+		</array>
+		<array>
+			<string>concat.js</string>
+		</array>
+		<array>
+			<string>hasOwn.js</string>
+		</array>
+		<array>
+			<string>indexOf.js</string>
+		</array>
+		<array>
+			<string>pnum.js</string>
+		</array>
+		<array>
+			<string>push.js</string>
+		</array>
+		<array>
+			<string>rnotwhite.js</string>
+		</array>
+		<array>
+			<string>slice.js</string>
+		</array>
+		<array>
+			<string>strundefined.js</string>
+		</array>
+		<array>
+			<string>support.js</string>
+		</array>
+		<array>
+			<string>toString.js</string>
+		</array>
+	</array>
+</dict>
+</plist>

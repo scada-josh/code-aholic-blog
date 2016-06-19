@@ -1,0 +1,44 @@
+# การใช้งาน jQuery เพื่อควบคุม Web App.
+![separate line][1]	
+
+
+#### **การประกาศใช้งาน initial jQuery**
+<pre class="prettyprint linenums">
+(function ($) {
+    "use strict";
+
+    ///////////////////////////////////////////////////// Your
+    // var venueAddress = "Grand Place, 1000, Brussels"; // Venue
+    
+    /////////////////////////////////////////////////// Adress
+
+    var fn = {
+
+        // Launch Functions
+        Launch: function () {
+            fn.OpenLayers();
+            fn.Apps();
+        },
+
+        // OpenLayers
+        OpenLayers: function () {
+        	console.log('OpenLayers');
+        },
+
+        // Apps
+        Apps: function () {
+        	console.log('Apps');
+        }
+    };
+
+    $(document).ready(function () {
+        fn.Launch();
+    });
+
+})(jQuery);
+</pre>
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png

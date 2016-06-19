@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>childOrder</key>
+	<array>
+		<string>ArcXML</string>
+		<string>CSWGetDomain</string>
+		<string>CSWGetRecords</string>
+		<string>Filter</string>
+		<string>GML</string>
+		<string>OWSCommon</string>
+		<string>OWSContext</string>
+		<string>SLD</string>
+		<string>SOSCapabilities</string>
+		<string>WCSCapabilities</string>
+		<string>WCSDescribeCoverage</string>
+		<string>WFSCapabilities</string>
+		<string>WFST</string>
+		<string>WMC</string>
+		<string>WMSCapabilities</string>
+		<string>WMTSCapabilities</string>
+		<string>WPSCapabilities</string>
+		<string>XLS</string>
+		<string>XML</string>
+	</array>
+	<key>createMarkedFile</key>
+	<false/>
+</dict>
+</plist>

@@ -1,0 +1,96 @@
+# การติดตั้งและใช้งาน Middleman Blog [![ภาพ external-link-30x30][common-06]](){: href="https://www.packtpub.com/books/content/migrating-wordpress-blog-middleman-and-deploying-amazon-s3" target="_blank"}
+![separate line][common-01] 
+
+
+
+<br/>
+
+## ติดตั้ง Middleman Blog
+![separate line][common-07]	
+
+#### เพิ่มข้อมูลใน ไฟล์ Gemfile
+---
+<pre class="prettyprint linenums">
+gem "middleman-blog", "~> 3.5.3"
+</pre>
+
+<br/>
+
+#### ติดตั้งก่อนใช้งาน Middleman Blog
+---
+<pre class="prettyprint linenums">
+$ bundle install
+</pre>
+
+<br/>
+
+#### เพิ่มข้อมูลใน ไฟล์ config.rb
+---
+<pre class="prettyprint linenums">
+###
+# Blog settings
+###
+
+# Time.zone = "UTC"
+Time.zone = "Bangkok"
+
+activate :blog do |blog|
+  # This will add a prefix to all links, template references and source paths
+  blog.prefix = "/src/blogs/"
+
+  blog.permalink = "{category}/{year}/{month}/{day}/{title}.html"
+  # Matcher for blog source files
+  blog.sources = "{category}/{year}-{month}-{day}-{title}.html"
+end
+</pre>
+
+<br/>
+
+#### Write a quick blog post
+---
+
+First, create a directory to house the blog posts:
+
+<pre class="prettyprint linenums">
+$ mkdir source/src/blogs
+</pre>
+
+<br/>
+
+#### Create a markdown file for middleman-demo ’s first post:
+
+<pre class="prettyprint linenums">
+$ touch source/src/blogs/first-blog/2016-05-28-new-blog.markdown.erb
+</pre>
+
+<br/>
+
+#### ไฟล์ 2016-05-28-new-blog.markdown.erb
+---
+
+<pre class="prettyprint linenums">
+---
+title: New Blog
+date: 2016-05-28
+tags: middleman, blog
+published: true
+category: first-blog
+layout: "layout-blog-post"
+---
+</pre>
+
+<br/>
+
+#### ทดลองทำการ Build ด้วยคำสั่ง และสังเกตุผลลัพธ์
+<pre class="prettyprint linenums">
+$ bundle exec middleman build --verbose
+</pre>
+
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png

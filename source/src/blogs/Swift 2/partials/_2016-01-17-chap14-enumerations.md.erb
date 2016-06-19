@@ -1,0 +1,841 @@
+# Enumerations
+
+> Note : 
+> 
+> 1. ในการประกาศตัวแปรแบบ enumeration จะต้องมีอย่างน้อย 1 case statment
+> 2. 
+
+---
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enumerations
+
+# Basic Enumerations
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; สร้างไฟล์ Enumerations.playground ขึ้นมาใหม่ พร้อมทั้งประกาศตัวแปร TextAlignment
+
+<br/>
+
+#### Listing 14.1 Defining an enumeration
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment {
+    case Left
+    case Right
+    case Center
+}
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; คุณได้ประกาศตัวแปร enumeration ด้วยคีย์เวิร์ด `enum` แล้วตามด้วยชื่อของตัวแปรประเภท enumeration, มาถึงตอนนี้ ชื่อของตัวแปร `enum` จะถูกนำไปใช้งานเป็นชนิดของตัวแปร (Type) ซึ่งก็จะเหมือนกับ <b>Int</b> หรือ <b>String</b> ที่เราเคยรู้จักมา
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; โดยทั่วไปแล้ว ชนิดของตัวแปร จะขึ้นต้นด้วยตัวอักษรตัวใหญ่, ในส่วนของตัวแปรและฟังก์ชัน จะขึ้นต้นด้วยตัวอักษรตัวเล็ก
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เพราะว่า enumeration ประกาศให้เป็นชนิดของตัวแปร ชนิดใหม่ขึ้นมา, เราสามารถสร้าง instance ได้ ดังนี้
+<br/>
+
+#### Listing 14.2 Creating an instance of TextAlignment
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment {
+    case Left
+    case Right
+    case Center
+}
+
+<mark>var alignment: TextAlignment = TextAlignment.Left</mark>
+</pre>
+
+ถึงแม้ว่า `TextAlignment` จะเป็นชนิดของตัวแปร ชนิดใหม่ ที่คุณสร้างขึ้นมา, คอมไพเลอร์สามารถอ้างถึงชนิดตัวแปรของ `alignment` ได้ นั่นหมายความว่า เราไม่จำเป็นต้องระบุชนิดของตัวแปร ในตอนประกาศตัวแปร `alignment` ก็ได้
+
+<br/>
+
+#### Listing 14.3 Taking advantage of type inference
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment {
+    case Left
+    case Right
+    case Center
+}
+<mark>var alignment = TextAlignment.Left</mark>
+</pre>
+
+ถ้าคอมไพเลอร์รู้แล้วว่าเรากำลังทำงานกับตัวแปรประเภท `enum`, เราไม่จำเป็นต้องระบุชื่อของชนิดตัวแปร `enum` ก็ได้ ดังตัวอย่างต่อไปนี้
+
+<br/>
+
+#### Listing 14.4 Inferring the enum type
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment {
+    case Left
+    case Right
+    case Center
+}
+<mark>
+var alignment = TextAlignment.Left
+    alignment = .Right </mark>
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; สังเกตว่า เราระบุชื่อชนิดของตัวแปรประเภท `enum` เฉพาะในตอนเริ่มประกาศตัวแปร `alignment` เท่านั้น, ในบรรทัดนี้เป็นการกำหนดค่าและชนิดของตัวแปรให้กับ `alignment`
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ในบรรทัดถัดมา คุณไม่จำเป็นต้องระบุชนิดของตัวแปร เราสามารถเรียกใช้งานตัวแปร `enum` ได้เลย
+
+#### Listing 14.5 Type inference when comparing values
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment {
+    case Left
+    case Right
+    case Center
+}
+
+var alignment = TextAlignment.Left
+    alignment = .Right
+<mark>
+if alignment == .Right {
+    print("we should right-align the text!")
+}</mark>
+</pre>
+
+#### Listing 14.6 Switching to switch
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment {
+    case Left
+    case Right
+    case Center
+}
+
+var alignment = TextAlignment.Left
+    alignment = .Right
+<mark>
+switch alignment {
+    case .Left:
+        print("left aligned")
+    case .Right:
+        print("right aligned")
+    case .Center:
+        print("center aligned")
+}</mark>
+</pre>
+
+#### Listing 14.7 Making center the default case
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment {
+    case Left
+    case Right
+    case Center
+}
+
+var alignment = TextAlignment.Left
+    alignment = .Right
+<mark>
+switch alignment {
+    case .Left:
+        print("left aligned")
+    case .Right:
+        print("right aligned")
+    default:
+        print("center aligned")
+}</mark>
+</pre>
+
+#### Listing 14.8 Adding a case
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment {
+    case Left
+    case Right
+    case Center
+    case Justify
+}
+<mark>
+var alignment = TextAlignment.Justify
+</mark>
+
+switch alignment {
+    case .Left:
+        print("left aligned")
+    case .Right:
+        print("right aligned")
+    default:
+        print("center aligned")
+}
+</pre>
+
+จะเห็นว่าโปรแกรมยังคงทำงานได้ แต่แสดงค่าผิด เพราะเรากำหนดค่าให้ `alignment` ให้เป็น "Justify" แต่ใน switch statement จะแสดงค่า "center aligned" ออกมา, ที่เป็นแบบนี้เพราะมันไปเข้ากรณี `default:`
+
+แสดงว่าถ้าเราจะใช้ switch statement แบบมี `default:` จะต้องให้สอดคล้องกับข้อมูลที่เราทำงานอยู่ด้วย
+
+#### Listing 14.9 Returning to explicit cases
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment {
+    case Left
+    case Right
+    case Center
+    case Justify
+}
+<mark>
+var alignment = TextAlignment.Justify
+</mark>
+
+switch alignment {
+    case .Left:
+        print("left aligned")
+    case .Right:
+        print("right aligned")
+    case .Center:
+        print("center aligned")
+}
+</pre>
+
+ในกรณีนี้ คุณได้เพิ่ม `case Justify` เข้าไปในตัวแปร `enum` แต่ใน switch statement ไม่ได้ระบุ `case .Justify` และไม่ได้ใช้ `default:` จะเกิด compile-time error ขึ้นทันที
+
+<br/>
+
+#### Listing 14.10 Including all cases
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment {
+    case Left
+    case Right
+    case Center
+    <mark>case Justify</mark>
+}
+var alignment = TextAlignment.Justify
+
+
+switch alignment {
+    case .Left:
+        print("left aligned")
+    case .Right:
+        print("right aligned")
+    case .Center:
+        print("center aligned")
+    <mark>case .Justify:
+        print("justify aligned")</mark>
+}
+</pre>
+
+---
+
+# Raw Value Enumerations
+<br/>
+
+#### Listing 14.11 Using raw values
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment: <mark>Int</mark> {
+    case Left
+    case Right
+    case Center
+    case Justify
+}
+
+var alignment = TextAlignment.Justify
+
+switch alignment {
+    case .Left:
+        print("left aligned")
+    case .Right:
+        print("right aligned")
+    case .Center:
+        print("center aligned")
+    case .Justify:
+        print("justify aligned")
+}
+
+</pre>
+
+
+#### Listing 14.12 Confirming the raw values
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment: <mark>Int</mark> {
+    case Left
+    case Right
+    case Center
+    case Justify
+}
+
+var alignment = TextAlignment.Justify
+
+switch alignment {
+    case .Left:
+        print("left aligned")
+    case .Right:
+        print("right aligned")
+    case .Center:
+        print("center aligned")
+    case .Justify:
+        print("justify aligned")
+}
+<mark>
+print("Left has raw value \(TextAlignment.Left.rawValue)")
+print("Right has raw value \(TextAlignment.Right.rawValue)")
+print("Center has raw value \(TextAlignment.Center.rawValue)")
+print("Justify has raw value \(TextAlignment.Justify.rawValue)")
+print("The alignment variable has raw value \(alignment.rawValue)")</mark>
+</pre>
+
+สังเกตผลลัพธ์...
+
+![image](<%= current_page.data.baseURL %>images/categories/Swift%202/Enumerations%20Example%20Listing%2014.12.png)
+
+
+#### Listing 14.13 Specifying raw values
+
+<pre class="prettyprint linenums">
+import UIKit
+<mark>
+enum TextAlignment: Int {
+    case Left = 20
+    case Right = 30
+    case Center = 40
+    case Justify = 50
+}</mark>
+
+print("Left has raw value \(TextAlignment.Left.rawValue)")
+print("Right has raw value \(TextAlignment.Right.rawValue)")
+print("Center has raw value \(TextAlignment.Center.rawValue)")
+print("Justify has raw value \(TextAlignment.Justify.rawValue)")
+</pre>
+
+#### Listing 14.14 Converting raw values to enum types
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment: Int {
+    case Left = 20
+    case Right = 30
+    case Center = 40
+    case Justify = 50
+}
+
+print("Left has raw value \(TextAlignment.Left.rawValue)")
+print("Right has raw value \(TextAlignment.Right.rawValue)")
+print("Center has raw value \(TextAlignment.Center.rawValue)")
+print("Justify has raw value \(TextAlignment.Justify.rawValue)")
+
+<mark>
+// Create a raw value.
+let myRawValue = 20
+
+// Try to convert the raw value into a TextAlignment
+if let myAlignment = TextAlignment(rawValue: myRawValue) {
+    // Conversion succeeded!
+    print("successfully converted \(myRawValue) into a TextAlignment")
+} else {
+    // Conversion failed.
+    print("\(myRawValue) has no corresponding TextAlignment case")
+}</mark>
+</pre>
+
+
+#### Listing 14.15 Trying a bad value
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum TextAlignment: Int {
+    case Left = 20
+    case Right = 30
+    case Center = 40
+    case Justify = 50
+}
+
+print("Left has raw value \(TextAlignment.Left.rawValue)")
+print("Right has raw value \(TextAlignment.Right.rawValue)")
+print("Center has raw value \(TextAlignment.Center.rawValue)")
+print("Justify has raw value \(TextAlignment.Justify.rawValue)")
+
+
+// Create a raw value.
+let myRawValue = <mark>100</mark>
+
+// Try to convert the raw value into a TextAlignment
+if let myAlignment = TextAlignment(rawValue: myRawValue) {
+    // Conversion succeeded!
+    print("successfully converted \(myRawValue) into a TextAlignment")
+} else {
+    // Conversion failed.
+    print("\(myRawValue) has no corresponding TextAlignment case")
+}
+</pre>
+
+
+#### Listing 14.16 Creating an enum with strings
+
+<pre class="prettyprint linenums">
+import UIKit
+<mark>
+enum ProgrammingLanguage: String {
+    case Swift      = "Swift"
+    case ObjectiveC = "Objective-C"
+    case C          = "C"
+    case Cpp        = "C++"
+    case Java       = "Java"
+}</mark>
+
+let myFavoriteLanguage = ProgrammingLanguage.Swift
+print("My favorite programming language is \(myFavoriteLanguage.rawValue)")
+
+</pre>
+
+#### Listing 14.17 Using default string raw values
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum ProgrammingLanguage: String {
+    <mark>case Swift</mark>
+    case ObjectiveC = "Objective-C"
+    <mark>case C</mark>
+    case Cpp        = "C++"
+    <mark>case Java</mark>
+}
+
+
+let myFavoriteLanguage = ProgrammingLanguage.Swift
+print("My favorite programming language is \(myFavoriteLanguage.rawValue)")
+
+</pre>
+
+
+---
+
+# Methods
+
+#### Listing 14.18 Lightbulbs can be on or off
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum Lightbulb {
+    case On
+    case Off
+}
+</pre>
+
+
+#### Listing 14.19 Establishing temperature behaviors
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum Lightbulb {
+    case On
+    case Off
+    
+<mark>    func surfaceTemperatureForAmbientTemperature(ambient: Double) -> Double {
+        switch self {
+        case .On:
+            return ambient + 150.0
+        case .Off:
+            return ambient
+        }
+    }</mark>
+}
+</pre>
+
+
+#### Listing 14.20 Turning on the light
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum Lightbulb {
+    case On
+    case Off
+    
+    func surfaceTemperatureForAmbientTemperature(ambient: Double) -> Double {
+        switch self {
+        case .On:
+            return ambient + 150.0
+        case .Off:
+            return ambient
+        }
+    }
+}
+
+<mark>var bulb = Lightbulb.On
+let ambientTemperature = 77.0
+var bulbTemperature = bulb.surfaceTemperatureForAmbientTemperature(ambientTemperature)
+
+print("the bulb's temperature is \(bulbTemperature)")</mark>
+</pre>
+
+#### Listing 14.21 Trying to toggle
+
+<pre class="prettyprint linenums">
+import UIKit
+
+enum Lightbulb {
+    case On
+    case Off
+    
+    func surfaceTemperatureForAmbientTemperature(ambient: Double) -> Double {
+        switch self {
+        case .On:
+            return ambient + 150.0
+        case .Off:
+            return ambient
+        }
+    }
+    
+<mark>    func toggle() {
+        switch self {
+        case .On:
+            self = .Off
+        case .Off:
+            self = .On }
+    }</mark>
+}
+
+
+var bulb = Lightbulb.On
+let ambientTemperature = 77.0
+var bulbTemperature = bulb.surfaceTemperatureForAmbientTemperature(ambientTemperature)
+
+print("the bulb's temperature is \(bulbTemperature)")
+
+</pre>
+
+หลังจากที่เพิ่มโค้ดนี้ เข้าไป จะเกิด compiler error แสดงว่าเราไม่สามารถกำหนดค่าให้กับ self ในเมธอดได้
+
+ในภาษา Swift, Enumeration เป็นชนิด <i>value type</i> และเมธอดของ <i>value type</i> ไม่สามารถเปลี่ยนแปลงได้ด้วย `self` แต่ถ้าคุณต้องการให้เมธอดสามารถเปลี่ยนแปลงได้ด้วย `self` คุณจะต้องกำหนดให้เป็นแบบ <i>mutating method</i> สามารถทำได้ดังต่อไปนี้
+
+#### Listing14.22 Making toggle a mutating method
+<pre class="prettyprint linenums">
+import UIKit
+
+enum Lightbulb {
+    case On
+    case Off
+    
+    func surfaceTemperatureForAmbientTemperature(ambient: Double) -> Double {
+        switch self {
+        case .On:
+            return ambient + 150.0
+        case .Off:
+            return ambient
+        }
+    }
+    
+    <mark>mutating</mark> func toggle() {
+        switch self {
+        case .On:
+            self = .Off
+        case .Off:
+            self = .On }
+    }
+}
+
+
+var bulb = Lightbulb.On
+let ambientTemperature = 77.0
+var bulbTemperature = bulb.surfaceTemperatureForAmbientTemperature(ambientTemperature)
+
+print("the bulb's temperature is \(bulbTemperature)")
+
+</pre>
+
+
+#### Listing 14.23 Turning off the light
+<pre class="prettyprint linenums">
+import UIKit
+
+enum Lightbulb {
+    case On
+    case Off
+    
+    func surfaceTemperatureForAmbientTemperature(ambient: Double) -> Double {
+        switch self {
+        case .On:
+            return ambient + 150.0
+        case .Off:
+            return ambient
+        }
+    }
+    
+    mutating func toggle() {
+        switch self {
+        case .On:
+            self = .Off
+        case .Off:
+            self = .On }
+    }
+}
+
+
+var bulb = Lightbulb.On
+let ambientTemperature = 77.0
+var bulbTemperature = bulb.surfaceTemperatureForAmbientTemperature(ambientTemperature)
+
+print("the bulb's temperature is \(bulbTemperature)")
+
+<mark>bulb.toggle()
+bulbTemperature = bulb.surfaceTemperatureForAmbientTemperature(ambientTemperature)
+print("the bulb's temperature is \(bulbTemperature)")</mark>
+
+</pre>
+
+---
+
+# Associated Values
+
+Associated values allow you to attach data to instances of an enumeration, and different cases can have different types of associated values.
+
+#### Listing14.24 SettingupShapeDimensions
+<pre class="prettyprint linenums">
+import UIKit
+
+enum ShapeDimensions {
+    // Square's associated value is the length of one side
+    case Square(Double)
+    // Rectangle's associated value defines its width and height
+    case Rectangle(width: Double, height: Double)
+}
+</pre>
+
+คุณได้สร้างชนิดข้อมูลที่เป็น `enum` ขึ้นมาใหม่, ชื่อว่า `ShapeDimensions` ประกอบไปด้วย 2 case
+
+1. `Square(Double)` เป็น associated ของ Double
+2. `Rectangle(width: Double, height: Double)` เป็น associated ของ `(width: Double, height: Double)` เราเรียกว่า `tuple`
+
+ในการสร้าง instance ของ `ShapeDimensions`, คุณจะต้องระบุให้ครบทั้ง 2 case
+
+#### Listing 14.25 Creating shapes
+<pre class="prettyprint linenums">
+import UIKit
+
+enum ShapeDimensions {
+    // Square's associated value is the length of one side
+    case Square(Double)
+    // Rectangle's associated value defines its width and height
+    case Rectangle(width: Double, height: Double)
+}
+
+<mark>var squareShape = ShapeDimensions.Square(10.0)
+var rectShape = ShapeDimensions.Rectangle(width: 5.0, height: 10.0)</mark>
+</pre>
+
+#### Listing 14.26 Using associated values to compute area
+<pre class="prettyprint linenums">
+import UIKit
+
+enum ShapeDimensions {
+    // Square's associated value is the length of one side
+    case Square(Double)
+    // Rectangle's associated value defines its width and height
+    case Rectangle(width: Double, height: Double)
+    
+<mark>    func area() -> Double {
+        switch self {
+            case let .Square(side):
+                return side * side
+            case let .Rectangle(width: w, height: h):
+                return w * h
+        }
+    }</mark>
+}
+
+var squareShape = ShapeDimensions.Square(10.0)
+var rectShape = ShapeDimensions.Rectangle(width: 5.0, height: 10.0)
+</pre>
+
+
+#### Listing 14.27 Computing areas
+<pre class="prettyprint linenums">
+import UIKit
+
+enum ShapeDimensions {
+    // Square's associated value is the length of one side
+    case Square(Double)
+    // Rectangle's associated value defines its width and height
+    case Rectangle(width: Double, height: Double)
+    
+    func area() -> Double {
+        switch self {
+            case let .Square(side):
+                return side * side
+            case let .Rectangle(width: w, height: h):
+                return w * h
+        }
+    }
+}
+
+var squareShape = ShapeDimensions.Square(10.0)
+var rectShape = ShapeDimensions.Rectangle(width: 5.0, height: 10.0)
+
+<mark>print("square's area = \(squareShape.area())")
+print("rectangle's area = \(rectShape.area())")</mark>
+</pre>
+
+
+#### Listing 14.28 Setting up a Point
+<pre class="prettyprint linenums">
+import UIKit
+
+enum ShapeDimensions {
+    // Point has no associated value - it is dimensionless
+<mark>    case Point</mark>
+    // Square's associated value is the length of one side
+    case Square(Double)
+    // Rectangle's associated value defines its width and height
+    case Rectangle(width: Double, height: Double)
+    
+    func area() -> Double {
+        switch self {
+<mark>            case .Point:
+                return 0</mark>
+            case let .Square(side):
+                return side * side
+            case let .Rectangle(width: w, height: h):
+                return w * h
+        }
+    }
+}
+
+var squareShape = ShapeDimensions.Square(10.0)
+var rectShape = ShapeDimensions.Rectangle(width: 5.0, height: 10.0)
+
+print("square's area = \(squareShape.area())")
+print("rectangle's area = \(rectShape.area())")
+</pre>
+
+#### Listing 14.29 What is the area of a point?
+<pre class="prettyprint linenums">
+import UIKit
+
+enum ShapeDimensions {
+    // Point has no associated value - it is dimensionless
+    case Point
+    // Square's associated value is the length of one side
+    case Square(Double)
+    // Rectangle's associated value defines its width and height
+    case Rectangle(width: Double, height: Double)
+    
+    func area() -> Double {
+        switch self {
+            case .Point:
+                return 0
+            case let .Square(side):
+                return side * side
+            case let .Rectangle(width: w, height: h):
+                return w * h
+        }
+    }
+}
+
+var squareShape = ShapeDimensions.Square(10.0)
+var rectShape = ShapeDimensions.Rectangle(width: 5.0, height: 10.0)
+<mark>var pointShape = ShapeDimensions.Point</mark>
+
+print("square's area = \(squareShape.area())")
+print("rectangle's area = \(rectShape.area())")
+<mark>print("point's area = \(pointShape.area())")</mark>
+</pre>
+
+---
+
+# Recursive Enumerations
+
+เราได้เรียนรู้วิธีผูก `associated values` ให้กับ `enum cases` ไปเรียบร้อยแล้ว, แล้วเราสามารถใช้งานในลักษณะ Recursive ได้ไหม?, หมายความว่า ผูก `enum` เป็น case หนึ่งของตัวมันเอง ได้ไหม?
+
+Figure 14.2 A family tree
+![image](<%= current_page.data.baseURL %>images/categories/Swift%202/Enumerations%20Figure%2014.2.png)
+
+
+#### Listing14.30 IncorrectattemptatFamilyTree
+<pre class="prettyprint linenums">
+import UIKit
+
+enum FamilyTree {
+    case NoKnownParents
+    case OneKnownParent(name: String, ancestors: FamilyTree)
+    case TwoKnownParents(fatherName: String, fatherAncestors: FamilyTree,
+                         motherName: String, motherAncestors: FamilyTree)
+}
+</pre>
+
+#### Listing14.31 CorrectFamilyTree
+<pre class="prettyprint linenums">
+import UIKit
+
+<mark>indirect</mark> enum FamilyTree {
+    case NoKnownParents
+    case OneKnownParent(name: String, ancestors: FamilyTree)
+    case TwoKnownParents(fatherName: String, fatherAncestors: FamilyTree,
+                         motherName: String, motherAncestors: FamilyTree)
+}
+</pre>
+
+#### Listing 14.32 FamilyTree indirect cases
+<pre class="prettyprint linenums">
+import UIKit
+
+enum FamilyTree {
+    case NoKnownParents
+    <mark>indirect</mark> case OneKnownParent(name: String, ancestors: FamilyTree)
+    <mark>indirect</mark> case TwoKnownParents(fatherName: String, fatherAncestors: FamilyTree,
+                         motherName: String, motherAncestors: FamilyTree)
+}
+</pre>
+
+#### Listing14.33 Creating a FamilyTree
+<pre class="prettyprint linenums">
+import UIKit
+
+enum FamilyTree {
+    case NoKnownParents
+    indirect case OneKnownParent(name: String, ancestors: FamilyTree)
+    indirect case TwoKnownParents(fatherName: String, fatherAncestors: FamilyTree,
+                         motherName: String, motherAncestors: FamilyTree)
+}
+
+
+<mark>let fredAncestors = FamilyTree.TwoKnownParents(
+    fatherName: "Fred Sr.",
+    fatherAncestors: .OneKnownParent(name: "Beth", ancestors: .NoKnownParents),
+    motherName: "Marsha",
+    motherAncestors: .NoKnownParents
+)</mark>
+</pre>
+
+Figure 14.3 Fred’s family tree
+![image](<%= current_page.data.baseURL %>images/categories/Swift%202/Enumerations%20Figure%2014.3.png)
+
+
+---
+
+# Bronze Challenge
+
+# Silver Challenge

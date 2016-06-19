@@ -1,0 +1,117 @@
+# ปัญหาและแนวทางการแก้ปัญหา จากการใช้งาน JSON Web Tokens
+
+![separate line][1]	
+
+
+![ภาพแสดงปัญหาที่พบ][4]	
+<p class="text-center"> <strong> <ins>รูปภาพ</ins> <i>ปัญหาที่พบจากการเรียกใช้งาน RESTful Web Service แบบแลก Token Base</i></strong> </p>
+
+<br/>
+
+### จากการค้นหาใน Google พบคำตอบ [จากลิ้งค์นี้...](https://github.com/tuupola/slim-basic-auth#security)
+
+
+![separate line][1]	
+
+![ภาพแสดงการแก้ปัญหา][5]	
+
+<pre class="prettyprint linenums">
+
+---
+title: MWA Academic Fun Fest - API
+layout: &quot;layout-api&quot;
+---
+&lt;?php
+    date_default_timezone_set(&quot;Asia/Bangkok&quot;);
+
+    require_once '../../packages/autoload.php';
+
+    /* Connect Database Manager Partial */
+    &lt;%= partial &quot;/ConnectDatabase/_connectDB2_Localhost&quot; %&gt;
+    &lt;%= partial &quot;/ConnectDatabase/_connectMySQL_Localhost&quot; %&gt;
+
+    /* Secret Key */
+    $key = &quot;supersecretkeyyoushouldnotcommittogithub&quot;;
+
+    /* Slim framework 2.x */
+    $app = new \Slim\Slim();
+
+    use \Firebase\JWT\JWT;
+    $app-&gt;add(new \Slim\Middleware\JwtAuthentication([
+<mark>         &quot;secure&quot; =&gt; false,
+        &quot;relaxed&quot; =&gt; [&quot;localhost&quot;],</mark>
+        &quot;secret&quot; =&gt; $key,
+        //&quot;path&quot;=&gt; &quot;/user&quot;,
+        &quot;callback&quot; =&gt; function ($options) use ($app) {
+            $app-&gt;jwt = $options[&quot;decoded&quot;];
+        },
+        &quot;rules&quot; =&gt; [
+            new \Slim\Middleware\JwtAuthentication\RequestPathRule([
+                &quot;path&quot; =&gt; [&quot;/token&quot;, &quot;/user&quot;, &quot;/rtuManager/informationOnload/&quot;],
+                &quot;passthrough&quot; =&gt; [&quot;/user&quot;]
+            ]),
+            new \Slim\Middleware\JwtAuthentication\RequestMethodRule([
+                &quot;passthrough&quot; =&gt; [&quot;OPTIONS&quot;]
+            ])
+        ]
+    ]));
+
+
+    /* Test Manager */
+    $app-&gt;get('/testManager/getMsg/:name',function($name) use ($app) { getMsg($app, $name); });
+    &lt;%= partial &quot;/TestManager/_user&quot; %&gt;
+    &lt;%= partial &quot;/TestManager/_login&quot; %&gt;
+    &lt;%= partial &quot;/TestManager/_token&quot; %&gt;
+
+    /* Login manager */
+    $app-&gt;post('/loginManager/checkUserPassword/',function() use ($app, $pdo, $db, $key) { checkUserPassword($app, $pdo, $db, $key); });
+    $app-&gt;post('/loginManager/logout/',function() use ($app, $pdo, $db) { logout($app, $pdo, $db); });
+    $app-&gt;get('/loginManager/getJWT/',function() use ($app) { getJWT($app); });
+
+    /* WLMA manager */
+    $app-&gt;post('/wlmaManager/checkUserPasswordFromWLMA/',function() use ($app, $pdo, $conn_db2) { checkUserPasswordFromWLMA($app, $pdo, $conn_db2); });
+    $app-&gt;post('/wlmaManager/reportPressureAverage/',function() use ($app, $pdo, $conn_db2) { reportPressureAverage($app, $pdo, $conn_db2); });
+    $app-&gt;post('/wlmaManager/reportWLMA1125/',function() use ($app, $pdo, $conn_db2) { reportWLMA1125($app, $pdo, $conn_db2); });
+
+    /* RTU manager */
+    $app-&gt;get('/rtuManager/informationOnload/',function() use ($app, $pdo, $conn_db2, $key) { informationOnload($app, $pdo, $conn_db2, $key); });
+    $app-&gt;get('/rtuManager/listRTUFromBranch/',function() use ($app, $pdo, $conn_db2, $key) { listRTUFromBranch($app, $pdo, $conn_db2, $key); });
+
+    // $corsOptions = array(&quot;origin&quot; =&gt; &quot;*&quot;);
+    // $app-&gt;post('/loginManager/logout/',\CorsSlim\CorsSlim::routeMiddleware($corsOptions) ,function() use ($app, $pdo, $db) { 
+    //     logout($app, $pdo, $db); 
+    // });
+	
+
+	$app-&gt;run();
+
+    /* Test Manager Partial */
+    &lt;%= partial &quot;/TestManager/_getMsg&quot; %&gt;
+
+    /* Login Manager Partial */
+    &lt;%= partial &quot;/LoginManager/_checkUserPassword&quot; %&gt;
+    &lt;%= partial &quot;/LoginManager/_logout&quot; %&gt;
+    &lt;%= partial &quot;/LoginManager/_getJWT&quot; %&gt;
+
+    /* WLMA Manager Partial */
+    &lt;%= partial &quot;/WlmaManager/_checkUserPasswordFromWLMA&quot; %&gt;
+    &lt;%= partial &quot;/WlmaManager/_reportPressureAverage&quot; %&gt;
+    &lt;%= partial &quot;/WlmaManager/_reportWLMA1125&quot; %&gt;
+
+    /* RTU Manager Partial */
+    &lt;%= partial &quot;/RtuManager/_informationOnload&quot; %&gt;
+    &lt;%= partial &quot;/RtuManager/_listRTUFromBranch&quot; %&gt;
+    
+    
+?&gt;
+</pre>
+
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png
+
+[4]: <%= current_page.data.baseURL %>images/categories/RESTful%20Web%20Service/php-authorization-with-jwt-troubleshooting-001.png
+[5]: <%= current_page.data.baseURL %>images/categories/RESTful%20Web%20Service/php-authorization-with-jwt-troubleshooting-002.png
+

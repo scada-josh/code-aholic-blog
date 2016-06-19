@@ -1,0 +1,180 @@
+# เริ่มต้นใช้งาน Leaflet
+![separate line][common-01] 
+
+
+<pre class="prettyprint linenums">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;
+        &lt;title&gt;&lt;%= current_page.data.title %&gt;&lt;/title&gt;
+        &lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+
+        &lt;!-- Place favicon.ico and apple-touch-icon.png in the root directory --&gt;
+        
+        &lt;%= stylesheet_link_tag &quot;stylesheet-unit-test-leaflet&quot; %&gt;
+        
+        
+
+    &lt;/head&gt;
+    &lt;body&gt;
+
+        &lt;%= yield %&gt;
+        
+        
+        &lt;%= javascript_include_tag  &quot;javascript-unit-test-leaflet&quot; %&gt;
+        &lt;script src=&quot;http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;http://matchingnotes.com/javascripts/leaflet-google.js&quot;&gt;&lt;/script&gt;
+
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<br/>
+
+<pre class="prettyprint linenums">
+#map {
+      height: 700px;
+      width: 900px;
+      background-color: red
+}
+
+.leaflet-map-pane {
+	z-index: 2 !important;
+}
+.leaflet-google-layer{
+	z-index: 1 !important;
+}
+</pre>
+
+<br/>
+
+<pre class="prettyprint linenums">
+(function ($) {
+    "use strict";
+
+    ///////////////////////////////////////////////////// Your
+    // var venueAddress = "Grand Place, 1000, Brussels"; // Venue
+
+    // Map Object
+    var map = null;
+
+
+
+    /////////////////////////////////////////////////// Adress
+
+    var fn = {
+
+        // Launch Functions
+        Launch: function () {
+            fn.Apps();
+            fn.LeafLet();
+        },
+
+        // LeafLet
+		LeafLet: function () {
+		    console.log('LeafLet');
+
+		    L.Icon.Default.imagePath = '../../../../bower_components/leaflet/images/'
+
+		    // Using multiple tile layers on your map
+		    var osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>', 
+		    	thunLink = '<a href="http://thunderforest.com/">Thunderforest</a>';
+		    var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+				osmAttrib = '&amp;copy; ' + osmLink + ' Contributors',
+				landUrl = 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png', 
+				thunAttrib = '&amp;copy; ' + osmLink+' Contributors & '+thunLink;
+
+			var osmMap = L.tileLayer(osmUrl, {attribution: osmAttrib, minZoom: 0, maxZoom: 18}),
+				landMap = L.tileLayer(landUrl, {attribution: thunAttrib, minZoom: 0, maxZoom: 16});
+
+		    var googleRoadmapLayer = new L.Google('ROADMAP', {attribution: 'การประปานครหลวง', minZoom: 0, maxZoom: 21});
+		    // map.addLayer(googleRoadmapLayer);
+
+		    var googleSatelliteLayer = new L.Google('SATELLITE', {attribution: 'การประปานครหลวง', minZoom: 0, maxZoom: 21});
+		    // map.addLayer(googleSatelliteLayer);
+
+		    var googleHybridLayer = new L.Google('HYBRID', {attribution: 'การประปานครหลวง', minZoom: 0, maxZoom: 21});
+		    // map.addLayer(googleHybridLayer);
+
+			map = L.map('map', {
+									layers: [googleRoadmapLayer] // only add one! 
+								})
+					.setView([13.708189, 100.599608], 14);
+
+		    var baseMaps = {
+		    	"ROADMAP": googleRoadmapLayer,
+		    	"SATELLITE" : googleSatelliteLayer,
+		    	"HYBRID" : googleHybridLayer,
+		    	"OSM Mapnik": osmMap,
+		        "Landscape": landMap
+		    };
+
+
+		    var rtu = L.marker([13.708189, 100.599608])
+				       // .addTo(map)
+				       .bindPopup("I’m here!")
+				       .openPopup();
+
+		    var rtus = L.layerGroup([rtu]);
+
+		    var overlayMaps = {
+		    	"RTU": rtus
+		    };
+
+		    L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+		    var zoomLev;
+		    map.on("zoomend", function(){
+		    	zoomLev = map.getZoom();
+		    	console.log(zoomLev);
+		    	if (zoomLev < 14){
+		    		// map.removeLayer(lariac);
+		    		// $('#zoom').val(zoomLev);
+		    	} else{
+		    		// $('#zoom').val(zoomLev);
+		    		// map.addLayer(lariac);
+		    	}
+		    });
+		},
+	// Apps
+    Apps: function () {
+    	console.log('Apps');
+    }
+
+    };
+
+    $(document).ready(function () {
+        fn.Launch();
+    });
+
+})(jQuery);
+</pre>
+
+
+---
+
+[![ภาพแสดง getting-started-leaflet-001][1]](){: .fancybox-buttons 
+                            data-fancybox-group="getting-started-leaflet-001" 
+                            href="<%= current_page.data.baseURL %>images/categories/leaflet/getting-started-leaflet-001.png"} 
+
+---
+
+[![ภาพแสดง getting-started-leaflet-002][2]](){: .fancybox-buttons 
+                            data-fancybox-group="getting-started-leaflet-002" 
+                            href="<%= current_page.data.baseURL %>images/categories/leaflet/getting-started-leaflet-002.png"} 
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png
+
+[1]: <%= current_page.data.baseURL %>images/categories/Leaflet/getting-started-leaflet-001.png
+[2]: <%= current_page.data.baseURL %>images/categories/Leaflet/getting-started-leaflet-002.png
+
+

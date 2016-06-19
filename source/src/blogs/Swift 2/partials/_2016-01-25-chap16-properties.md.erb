@@ -1,0 +1,318 @@
+# ทำความรู้จัก Properties
+
+![separate line][1]	
+
+> Note : 
+> 
+> 1. `Properties` can be of two varieties: **stored** and **computed**.
+> 2. You can observe properties for changes and can execute specific code when the property is set to a new value.
+> 3. You can even establish rules that determine properties’ visibility to other files in your application.
+> 4. Recall that functions and closures are first-class types and that properties can reference functions and closures.
+
+---
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **`Properties`** มี 2 รูปแบบ คือ
+
+* `stored` : Stored properties can be given default values
+* `computed` : computed properties can return the result of some calculation based on available information
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; คุณสามารถ Observer ว่าแต่ละ properties มีการเปลี่ยนแปลงค่าหรือเปล่า ถ้ามีการเปลี่ยนแปลงอาจจะให้คำนวณอะไรบางอย่างก็สามารถทำได้
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Basic Stored Properties
+
+![separate line][1]	
+
+
+#### **เปิด Town.swift ที่เคยทำมาแล้ว**
+<pre class="prettyprint linenums">
+var population = 5422
+</pre>
+
+สำหรับโค้ดนี้ มีจุดสำคัญ 3 จุด คือ
+
+1. คีเวิร์ด `var` เป็นการกำหนดให้เป็น variable นั่นคือ สามารถเปลี่ยนแปลงค่าได้ (mutable)
+2. `population` มีค่าเป็น 5422
+3. `population` เป็น property ที่สามารถอ่านค่า (read) และ กำหนดค่า (set) ได้ด้วย
+
+<br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; คุณสามารถใช้คีเวิร์ด `let` ในการสร้าง read-only property สำหรับเก็บค่าที่ไม่เปลี่ยนแปลง
+
+#### **Adding a region constant (Town.swift)**
+<pre class="prettyprint linenums">
+struct Town {
+    
+<mark>    let region = "South"</mark>
+    var population = 5422
+    var numberOfStoplights = 4
+    
+    func printTownDescription() {
+        print("Population: \(population) number of stoplights: \(numberOfStoplights)");
+    }
+    
+    mutating func changePopulation(amount: Int) {
+        population += amount
+    }
+}
+</pre>
+
+
+
+
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Nested Types
+
+![separate line][1]	
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `Nested Types` คือ ชนิดข้อมูลหนึ่ง ประกาศภายใต้อีกชนิดข้อมูลหนึ่ง ซ้อนๆกัน โดยเฉพาะข้อมูลชนิด enumeration ถูกประกาศแบบ nested types บ่อยมาก
+
+#### **Setting up the Size enum(Town.swift)**
+<pre class="prettyprint linenums">
+struct Town {
+    let region = "South"
+    var population = 5422
+    var numberOfStoplights = 4
+    
+<mark>    enum Size {
+        case Small
+        case Medium
+        case Large
+    }</mark>
+    
+    func printTownDescription() {
+        print("Population: \(population) number of stoplights: \(numberOfStoplights)");
+    }
+    
+    mutating func changePopulation(amount: Int) {
+        population += amount
+    }
+}
+</pre>
+
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Lazy Stored Properties
+
+![separate line][1]	
+
+#### **Setting up townSize(Town.swift)**
+<pre class="prettyprint linenums">
+struct Town {
+    let region = "South"
+    var population = 5422
+    var numberOfStoplights = 4
+    
+    enum Size {
+        case Small
+        case Medium
+        case Large
+    }
+    
+<mark>    lazy var townSize: Size = {
+        
+        switch self.population {
+        case 0...10000:
+            return Size.Small
+        case 10001...100000:
+            return Size.Medium
+        default:
+            return Size.Large
+        }
+    }()</mark>
+    
+    func printTownDescription() {
+        print("Population: \(population) number of stoplights: \(numberOfStoplights)");
+    }
+    
+    mutating func changePopulation(amount: Int) {
+        population += amount
+    }
+}
+</pre>
+
+ลำดับการทำงาน :
+
+1. คุณใส่ `lazy` นำหน้าตัวแปร `townSize` 
+	* หมายความว่า ตัวแปร `townSize` จะมีการคำนวณก็ต่อเมื่อมีการ access ในครั้งแรกก่อน
+2. ถัดมา, คุณได้ประกาศชนิดข้อมูลของตัวแปร `townSize` ให้เป็นชนิด `Size`
+	* แสดงว่า คุณไม่ได้กำหนดค่าให้กับ propery โดยตรง ยกตัวอย่างเช่น คุณคงไม่เขียนโค้ดในลักษณะนี้นะ ก็คือว่า `myTown.townSize = Size.Small` Instead, you will take advantage of the nested enum Size in coordination with a closure to calculate the town’s size given its population.
+3. ผลลัพธ์ของ `townSize` จะส่งกลับมาเป็นแบบ **closure** `lazy var townSize: Size = {}()`
+4. **closure** ใช้ switch statement ในการระบุขนาดของ `town` โดยใช้ ค่า population ของ instance (self.population) ใน switch statement เราแยกออกเป็น 3 แบบ คือ
+	* 0...10000
+	* 10001...100000
+	* มากกว่า  100,000
+	
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; โดยที่จะ return มาเป็น instance ของ enum Size	
+5. สังเกตว่า ส่วนท้ายสุด ของ closure จะลงท้ายด้วย เครื่องหมาย `()` These parentheses, combined with the lazy marking, ensure that Swift will call the closure and assign the result it returns to townSize when the property is accessed for the first time. 
+	* ถ้าใส่เครื่องหมาย `()` ต่อจาก closure, เพื่อให้แน่ใจว่า swift จะเรียก closure and assign the result it returns to townSize when the property is accessed for the first time. 
+	* ถ้าไม่ใส่เครื่องหมาย `()` ต่อจาก closure, you would simply be assigning a closure to the townSize property. 
+
+6. Finally, let’s return to the importance of the self reference in `self.population` and the need for townSize to be lazy. If a closure works with an instance’s properties, then the compiler requires that the closure use `self` when accessing any property on that instance. The requirement to use `self` explicitly inside of a closure is a reminder to developers that **the closure is capturing a reference to the instance in order to access its properties.** This capture may cause a memory leak if the closure is stored in a property, and so they need to be careful. (Do not worry about memory management issues right now; they will be discussed in Chapter 24.)
+
+<span class="pullquote-left">With the parentheses, the closure will be executed the first time you access the townSize property.</span>
+
+<span class="pullquote-left">
+The self reference in this line is important and we will return to it in a moment.</span>
+
+<span class="pullquote-left">Because the closure needs to reference self in order to gain access to the instance’s population property, the property townSize needs to be marked as lazy in order to ensure that the instance (what self references) is fully prepared to do work.</span>
+
+
+#### **Using the lazy town Size property(main.swift)**
+<pre class="prettyprint linenums">
+var myTown = Town()
+let ts = myTown.townSize
+print(ts)
+</pre>
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Computed Properties
+
+![separate line][1]	
+
+#### **Setting up townSize(Town.swift)**
+<pre class="prettyprint linenums">
+struct Town {
+    let region = "South"
+    var population = 5422
+    var numberOfStoplights = 4
+    
+    enum Size {
+        case Small
+        case Medium
+        case Large
+    }
+    
+    <strike style='color:red'>lazy</strike> var townSize: Size = {
+        
+        switch self.population {
+        case 0...10000:
+            return Size.Small
+        case 10001...100000:
+            return Size.Medium
+        default:
+            return Size.Large
+        }
+    }<strike style='color:red'>()</strike> 
+    
+    func printTownDescription() {
+        print("Population: \(population) number of stoplights: \(numberOfStoplights)");
+    }
+    
+    mutating func changePopulation(amount: Int) {
+        population += amount
+    }
+}
+</pre>
+
+<span style="text-decoration: line-through">`lazy`</span> และลบส่วนนี้ออก <span style="text-decoration: line-through">`()`</span>
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# A getter and a setter
+
+![separate line][1]	
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Property Observers
+
+![separate line][1]	
+
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Type Properties
+
+![separate line][1]	
+
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Access Control
+
+![separate line][1]	
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Controlling getter and setter visibility
+
+![separate line][1]
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Bronze Challenge
+
+![separate line][1]
+
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Silver Challenge
+
+![separate line][1]
+
+
+---
+
+<br/>
+
+![separate line][1]	
+
+# Gold Challenge
+
+![separate line][1]	
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png

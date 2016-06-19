@@ -1,0 +1,189 @@
+# installation-search-for-middleman
+![separate line][1]	
+
+
+
+## ติดตั้งระบบ Search
+![separate line][1]	
+
+
+
+#### Installation - ติดตั้งผ่านทาง Gemfile
+---
+<pre class="prettyprint linenums">
+$ <mark>sudo gem install middleman-search</mark>
+</pre>
+
+<br/>
+
+#### Usage - การใช้งาน
+---
+
+You need to activate the module in your `config.rb`, telling the extension how to index your resources:
+
+<pre class="prettyprint linenums">
+# Build-specific configuration
+configure :build do
+
+<mark>activate :search do |search|
+
+  search.resources = ['blog/', 'index.html', 'contactus/index.html']
+
+  search.index_path = 'search/lunr-index.json' # defaults to `search.json`
+
+  search.fields = {
+    title:   {boost: 100, store: true, required: true},
+    content: {boost: 50},
+    url:     {index: false, store: true},
+    author:  {boost: 30}
+  }
+end</mark>
+
+...
+
+end
+</pre>
+
+ทดลองรัน โดยใช้คำสั่ง **$ `bundle exec middleman build --verbose`**
+
+[![ภาพแสดง โฟลเดอร์ search ที่เก็บผลลัพธ์การค้นหาในเว็บ][7]](){: .fancybox-button 
+							data-fancybox-group="search-001" 
+							href="<%= current_page.data.baseURL %>images/categories/Middleman Development/installation-search-for-middleman-001.png"}
+							
+							
+							
+							
+
+# Others
+![separate line][1]	
+
+ลิ้งค์ [ที่มา](http://egardner.github.io/posts/2015/implementing-client-side-search-in-middleman/)
+
+
+
+<pre class="prettyprint linenums">
+&lt;%
+pages = sitemap.resources.find_all { |p| p.source_file.match(/\.markdown/) }
+entries = []
+
+pages.each_with_index do |page, index|
+  object = {}
+    # ... some specifics ommitted
+    entry = {
+      :id    =&gt; index,
+      :title =&gt; page.data.title,
+      :url   =&gt; page.url,
+      :content =&gt; page.render({:layout =&gt; false }).gsub(
+        %r{&lt;/?[^&gt;]+?&gt;}, '' )
+    }
+  entries &lt;&lt; entry
+end
+%&gt;&lt;%= entries.to_json %&gt;
+</pre>
+
+#### 1. Asynchronous Loading
+
+---
+
+The code to load our index looks like this:
+
+<pre class="prettyprint linenums">
+// various function declarations and set-up
+// has happened already at this point
+$.getJSON("/contents.json", function(data) {
+  var index = populateIndex(data);
+  var contents = contentList(data);
+  searchSetup(index, contents);
+  // other code for app below - anything that needs search functionality
+  // lives inside of this callback
+  // ...
+});
+</pre>
+
+<br/>
+
+#### 2. Set up the Lunr Index
+
+---
+
+<pre class="prettyprint linenums">
+// Feed data into an empty lunr index and return the populated result
+function populateIndex(data) {
+  var index = lunr(function(){
+    this.field('title', { boost: 10 });
+    this.field('content');
+    this.ref('id');
+  });
+  data.forEach(function(item) {
+    index.add(item);
+  });
+  return index;
+}
+</pre>
+
+<br/>
+
+#### 3. Keep a content list to cross-reference results against
+
+---
+
+<pre class="prettyprint linenums">
+// Create an array of contents to reference our search results against
+function contentList(data) {
+  var contents = [];
+  data.forEach(function(item) {
+    contents.push(item);
+  });
+  return contents;
+}
+</pre>
+
+
+<br/>
+
+#### 4. Present the results to the User
+
+---
+
+<pre class="prettyprint linenums">
+&lt;script id=&quot;results-template&quot; type=&quot;text/x-handlebars-template&quot;&gt;
+  &lt;li class=&quot;result-item&quot;&gt;
+    &lt;a href=&quot;{{url}}&quot;&gt;{{title}}&lt;/a&gt;&lt;br /&gt;
+  &lt;/li&gt;
+&lt;/script&gt;
+</pre>
+
+<pre class="prettyprint linenums">
+function searchSetup(index, contents){
+  // Set up Handlebars template
+  var resultsTemplate = Handlebars.compile($("#results-template").html());
+
+  // various event handlers...
+
+  $("#search-field").bind("keyup", debounce(function(){
+    $(".search-results").empty();
+    if ($(this).val() < 2) return;
+    var query = $(this).val();
+    var results = index.search(query);
+    $.each(results, function(index, result){
+      $(".search-results").append(resultsTemplate({
+        title: contents[result.ref].title,
+        url: contents[result.ref].url
+      }));
+    });
+  }));
+}
+</pre>
+
+
+[1]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[2]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[3]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[4]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[5]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[6]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+
+[7]: <%= current_page.data.baseURL %>images/categories/Middleman%20Development/installation-search-for-middleman-001.png
+
+
+

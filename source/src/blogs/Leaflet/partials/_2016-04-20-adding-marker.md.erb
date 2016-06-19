@@ -1,0 +1,118 @@
+# การเพิ่ม Marker
+![separate line][common-01] 
+
+### Adding a marker to our map ![separate-line-sub-topic][common-07] 
+
+<pre class="prettyprint linenums">
+var marker = L.marker([13.708189, 100.599608]) 
+              .addTo(map);
+</pre>
+
+[![ภาพแสดง adding-marker-001][1]](){: .fancybox-buttons 
+                            data-fancybox-group="adding-marker-001" 
+                            href="<%= current_page.data.baseURL %>images/categories/leaflet/adding-marker-001.png"} 
+
+---                            
+
+### Adding a popup to our marker ![separate-line-sub-topic][common-07] 
+
+<pre class="prettyprint linenums">
+var marker = L.marker([13.708189, 100.599608]) 
+              .addTo(map)
+              .bindPopup("<b>MWA</b><br>I’m here!")
+              .openPopup();
+</pre>
+
+[![ภาพแสดง adding-marker-002][2]](){: .fancybox-buttons 
+                            data-fancybox-group="adding-marker-002" 
+                            href="<%= current_page.data.baseURL %>images/categories/leaflet/adding-marker-002.png"} 
+
+---   
+
+<br/>
+
+
+### Marker options ![separate-line-sub-topic][common-07] 
+
+<pre class="prettyprint linenums">
+var marker = L.marker([-41.29042, 174.78219], {
+              option1: true, // a boolean value 
+              option2: 'a string lives here', // a string 
+              option3: 1234 // a number
+              })
+              .addTo(map);
+</pre>
+
+---   
+
+<br/>
+
+
+### Drag a marker ![separate-line-sub-topic][common-07] 
+
+<pre class="prettyprint linenums">
+var marker = L.marker([-41.29042, 174.78219], {draggable: true})
+              .addTo(map);
+</pre>
+
+---
+
+<br/>
+
+
+### Add a title to a marker ![separate-line-sub-topic][common-07] 
+
+<pre class="prettyprint linenums">
+var marker = L.marker([-41.29042, 174.78219], {title: 'Hover Text'})
+              .addTo(map);
+</pre>
+
+[![ภาพแสดง adding-marker-003][3]](){: .fancybox-buttons 
+                            data-fancybox-group="adding-marker-003" 
+                            href="<%= current_page.data.baseURL %>images/categories/leaflet/adding-marker-003.png"} 
+
+---
+
+<br/>
+
+
+### Adjust the markers transparency ![separate-line-sub-topic][common-07] 
+
+<pre class="prettyprint linenums">
+var marker = L.marker([-41.29042, 174.78219], {opacity: 0.5})
+              .addTo(map);
+</pre>
+
+[![ภาพแสดง adding-marker-004][4]](){: .fancybox-buttons 
+                            data-fancybox-group="adding-marker-004" 
+                            href="<%= current_page.data.baseURL %>images/categories/leaflet/adding-marker-004.png"} 
+
+
+<br/>
+
+
+
+
+<%= partial blog_dir + "Leaflet/partials/2016-04-20-adding-marker/_adding_multiple_markers_to_our_map" %>
+
+<%= partial blog_dir + "Leaflet/partials/2016-04-20-adding-marker/_leaflet_create_marker_on_map_click" %>
+
+<%= partial blog_dir + "Leaflet/partials/2016-04-20-adding-marker/_leaflet_custom_marker" %>
+
+
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png
+
+[1]: <%= current_page.data.baseURL %>images/categories/Leaflet/adding-marker-001.png
+[2]: <%= current_page.data.baseURL %>images/categories/Leaflet/adding-marker-002.png
+[3]: <%= current_page.data.baseURL %>images/categories/Leaflet/adding-marker-003.png
+[4]: <%= current_page.data.baseURL %>images/categories/Leaflet/adding-marker-004.png
+[5]: <%= current_page.data.baseURL %>images/categories/Leaflet/adding-marker-005.png
+[6]: <%= current_page.data.baseURL %>images/categories/Leaflet/adding-marker-006.png
+

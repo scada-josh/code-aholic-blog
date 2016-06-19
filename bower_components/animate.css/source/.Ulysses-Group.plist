@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>childOrder</key>
+	<array>
+		<string>attention_seekers</string>
+		<string>bouncing_entrances</string>
+		<string>bouncing_exits</string>
+		<string>fading_entrances</string>
+		<string>fading_exits</string>
+		<string>flippers</string>
+		<string>lightspeed</string>
+		<string>rotating_entrances</string>
+		<string>rotating_exits</string>
+		<string>sliding_entrances</string>
+		<string>sliding_exits</string>
+		<string>specials</string>
+		<string>zooming_entrances</string>
+		<string>zooming_exits</string>
+	</array>
+	<key>createMarkedFile</key>
+	<false/>
+</dict>
+</plist>

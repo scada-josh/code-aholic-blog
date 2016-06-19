@@ -1,0 +1,113 @@
+![bookmark][common-04]{: #goto-array-01 }
+
+### PHP เชื่อมต่อกับ Oracle ยังไง? ![separate line sub topic][common-08] 
+
+
+1. ก็ต้องมี ฐานข้อมูล Oracle ก่อน
+2. สำหรับการติดตั้ง oci8 สำหรับออราเคิลนั้น ขอให้ทำการติดตั้งตามคำแนะนำที่ www.oracle.com 
+โดยทำการติดตั้ง instantclient (หรือถ้าเครื่องดังกล่าวลงออราเคิลเซอร์เวอร์ไว้ก็ไม่จำเป็น) เสียก่อน
+3. Config ไฟล์ php.ini ในบรรทัด extension = php_oci8.dll ให้เอาคอมเม้นต์ออก
+4. การติดตั้ง oci8 บนวินโดวส์นั้น หลังจากที่เราได้ทำขั้นตอนต่อไปนี้ผ่านมาแล้ว คือ 
+	* ปลดคอมเมนต์ออกจากบรรทัด extension=php_oci8.dll แล้ว 
+	* และติดตั้ง Oracle Client หรือ Instant Client แล้ว 
+
+
+	***อย่าลืม!!*** เซ็ต system environment ดังนี้
+
+	- LD_LIBRARY_PATH เป็นไดรฟ์และไดเรกตอรีที่ติดตั้งเช่น C:ORACLE ORACLE_HOME C:ORACLE (หรือไดเรกตอรีที่ติดตั้งอื่นใด)
+	- NLS_LANG ระบบภาษาที่ใช้เช่น THAI_THAILAND.TH8TISASCII เป็นรหัสสมอ 8 บิต (TIS-620)
+	- LD_PRELOAD C:ORACLE (หรือไดเรกตอรีที่ติดตั้งอื่นใด) เพิ่มไดเรกตอรีของ instantclient นี้ลงใน PATH ของ system environment
+
+> ถ้ารีสตาร์ทเซอร์วิสแล้วใน phpinfo ยังไม่ปรากฏ `oci8` ให้ลองก็อปปี้ไฟล์ `oci.dll`
+ไปวางที่ C:WINDOWSSYSTEM32 และอาจจะลองก็อปปี้ไฟล์ `oci.dll`, `oraocci10.dll` และ `oraociei10.dll` 
+ไปวางไว้ที่ไดเรกตอรี ext หรือที่ php5/php ซึ่งเป็นที่วางไฟล์ของ php หรือ extension ของ php แล้วทดลองรีบูตเครื่องใหม่ 
+
+#### การเชื่อมต่อกับ Oracle (Connecting to Oracle)
+สิ่งที่จะต้องเตรียม
+
+* Username
+* Password
+* tnsname
+
+<pre class="prettyprint linenums">
+&lt;?php
+    $conn=oci_connect(‘username’,’password’, ‘//localhost:port/sid’ );
+?&gt;
+</pre>
+
+<pre class="prettyprint linenums">
+&lt;?php
+    $conn=oci_connect(‘root’, ‘pass@123’, ‘localhost’);
+?&gt;
+</pre>
+
+<pre class="prettyprint linenums">
+// ชุดคำสั่งการติดต่อฐานข้อมูล
+&lt;?php
+	Oracle $resource = oci_connect('รหัสชื่อผู้ใช้','รหัสผ่าน','รายละเอียดการเชื่อมต่อฐานข้อมูล');
+	$resource = oci_new_connect('รหัสชื่อผู้ใช้','รหัสผ่าน','รายละเอียดการเชื่อมต่อฐานข้อมูล'); 
+	$db = "//123.456.789.123:1521/DATABASE_SID.DATABASENAME";
+	$c1 = oci_connect("scott", "tiger", $db);
+?&gt;
+
+
+// ตัวอย่าง การ Query ของ Oracle
+&lt;?php
+	read(100)."";  //this will output first 100 bytes from LOB
+}
+?&gt;
+</pre>
+
+
+#### การดึงข้อมูลจากฐานข้อมูล Oracle (Retrieving and Modifying data in Oracle using PHP)
+<pre class="prettyprint linenums">
+// Below is example code for “SELECT” statement.
+&lt;?php
+$s = oci_parse($conn, ‘select * from employees’);
+oci_execute($s);
+while ($row = oci_fetch_array($s))
+foreach ($row as $item)
+print $item;
+?&gt;
+</pre>
+
+
+#### การแทรกข้อมูลลงในฐานข้อมูล Oracle (INSERT)
+<pre class="prettyprint linenums">
+// Below is example code for “SELECT” statement.
+&lt;?php
+$s = oci_parse($conn, ‘insert into employees(id,firstname,lastname,dob) values (1,‘Amit’, ‘Surana’, ’15-JUL-1990’)’);
+oci_execute($s);
+oci_commit($conn);
+?&gt;
+</pre>
+
+OCI_PARSE()  –  Prepares an Oracle statement for execution  
+OCI_EXECUTE() -  Executes a statement  
+OCI_FETCH_ARRAY() – Returns the next row from a query as an associative or numeric array  
+OCI_COMMIT() -  Commits the outstanding database transaction  
+
+
+#### การเรียกใช้ Stored Procedure (Calling Oracle Stored Procedure from PHP)
+<pre class="prettyprint linenums">
+$s = oci_parse($conn, “begin 
+						atulorc_tk_pkg.ATL_TK_GET_WEEKOFF(:bind0,TO_DATE(:bind1,’DD-Mon-YYYY’),TO_DATE(:bind2,’DD-Mon-YYYY’),:bind3);
+                        exception when others then
+                        :bind4:=sqlerrm;
+                       end;”);
+               oci_bind_by_name($s, “:bind0″, $_GET['emp_weekoff_chg'],32);                                                                                    
+               oci_bind_by_name($s, “:bind1″, $_GET['weekoff_date'],32);
+               oci_bind_by_name($s, “:bind2″, $_GET['new_date'],32);
+               oci_bind_by_name($s, “:bind3″, $msg,1000); // 32 is the return length
+               oci_bind_by_name($s, “:bind4″, $err,1000);
+               oci_execute($s, OCI_DEFAULT);
+</pre>
+
+OCI_BIND_BY_NAME() -  Binds a PHP variable to an Oracle placeholder
+
+
+ลิ้งค์ ที่น่าสนใจ : 
+
+- http://www.webub.com/php_connect_กับ_oracelไงครับ-232-43.html [![ภาพ external-link-15x15][common-05]](){: href="http://www.webub.com/php_connect_กับ_oracelไงครับ-232-43.html" target="_blank"}
+- http://www.notorm.com/#why [![ภาพ external-link-15x15][common-05]](){: href="http://www.notorm.com/#why" target="_blank"}
+- http://www.atulinfotech.com/blog/473-2/ [![ภาพ external-link-15x15][common-05]](){: href="http://www.atulinfotech.com/blog/473-2/" target="_blank"}

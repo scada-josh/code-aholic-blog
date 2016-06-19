@@ -1,0 +1,42 @@
+BlogDetailsDataTable: function () {
+	// console.log('BlogDetailsDataTable');
+
+	//------------------------ BlogDetailsDataTable -----------------------//
+    if (jQuery().dataTable) {
+ 
+        blogDetailsDataTable = $('#BlogDetailsDataTable').DataTable( {
+            "aLengthMenu": [
+                    [5, 10, 15, 25, 50, 100, -1],
+                    [5, 10, 15, 25, 50, 100, "All"]
+                ],
+            "iDisplayLength": 5,
+            "oLanguage": {
+                    "sLengthMenu": "_MENU_ Records per page",
+                    "sInfo": "_START_ - _END_ of _TOTAL_",
+                    "sInfoEmpty": "0 - 0 of 0",
+                    "oPaginate": {
+                        "sPrevious": "Prev",
+                        "sNext": "Next"
+                    }
+            },
+            "aoColumnDefs": [
+                    {
+                        'sWidth': '20px',
+                        'bSortable': true,
+                        "bAutoWidth": true,
+                        'aTargets': [0]
+                    },{
+                        'sWidth': '110px',
+                        'bSortable': true,
+                        'aTargets': [2]
+                    }
+            ],
+            "order" : [] //disable default sorting, eg sorting on 1st column
+            
+        });
+    }
+
+
+
+},
+
