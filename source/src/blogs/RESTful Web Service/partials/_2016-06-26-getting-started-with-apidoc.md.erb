@@ -1,0 +1,90 @@
+# การใช้งาน APIDOC [![ภาพ external-link-30x30][common-06]](){: href="http://apidocjs.com" target="_blank"}
+![separate line][common-01]	
+
+[![ภาพแสดง getting-started-with-apidoc-003][3]](){: .fancybox-buttons 
+                            data-fancybox-group="getting-started-with-apidoc-003" 
+                            href="<%= current_page.data.baseURL %>images/categories/RESTful Web Service/getting-started-with-apidoc-003.png"} 
+
+<br/>
+
+## เริ่มติดตั้ง APIDOC ![separate line][common-07]	
+
+<pre class="prettyprint linenums">
+$ npm install apidoc -g
+</pre>
+
+[![ภาพแสดง getting-started-with-apidoc-001][1]](){: .fancybox-buttons 
+                            data-fancybox-group="getting-started-with-apidoc-001" 
+                            href="<%= current_page.data.baseURL %>images/categories/RESTful Web Service/getting-started-with-apidoc-001.png"} 
+
+
+
+
+<br/>
+
+## ทดสอบใช้งาน APIDOC ![separate line][common-07]	
+
+<pre class="prettyprint linenums">
+$ apidoc -h
+</pre>
+
+[![ภาพแสดง getting-started-with-apidoc-002][2]](){: .fancybox-buttons 
+                            data-fancybox-group="getting-started-with-apidoc-002" 
+                            href="<%= current_page.data.baseURL %>images/categories/RESTful Web Service/getting-started-with-apidoc-002.png"} 
+
+<br/>
+
+## คำสั่งที่ใช้บ่อยๆ ![separate line][common-07]	
+
+<pre class="prettyprint linenums">
+$ apidoc -i ./ -o apidoc/
+</pre>
+
+<br/>
+
+## ตัวอย่างไฟล์ apidoc.json.erb ![separate line][common-07]	
+
+<pre class="prettyprint linenums">
+---
+title: IEL MIS - API
+layout: "layout-blank"
+url: "http://localhost/iel-mis/build/src/api/restful-api"
+sampleUrl: "http://localhost/iel-mis/build/src/api/restful-api"
+---
+
+{
+  "name": "IEL MIS - RESTful Service",
+  "version": "0.1.0",
+  "description": "RESTful Web Service สำหรับ iTMS Project",
+  "title": "RESTful Web Service สำหรับ iTMS Project",
+  "url" : "<%= current_page.data.url %>",
+  "sampleUrl" : "<%= current_page.data.sampleUrl %>",
+   "header": {
+    "title": "IEL MIS - API",
+    "filename": "./apidoc/header.html"
+  },
+  "footer": {
+    "title": "แหล่งข้อมูลอ้างอิง",
+    "filename": "./apidoc/footer.html"
+  },
+  "order": [
+  ]
+}
+</pre>
+
+<br/>
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png
+
+[1]: <%= current_page.data.baseURL %>images/categories/RESTful%20Web%20Service/getting-started-with-apidoc-001.png
+[2]: <%= current_page.data.baseURL %>images/categories/RESTful%20Web%20Service/getting-started-with-apidoc-002.png
+[3]: <%= current_page.data.baseURL %>images/categories/RESTful%20Web%20Service/getting-started-with-apidoc-003.png
+
+
+

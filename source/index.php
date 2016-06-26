@@ -1,5 +1,5 @@
 <?php
 
-header('Location: ./build/src/home/'); //redirect URL
+header('Location: ./src/blogs/'); //redirect URL
 
 ?>
