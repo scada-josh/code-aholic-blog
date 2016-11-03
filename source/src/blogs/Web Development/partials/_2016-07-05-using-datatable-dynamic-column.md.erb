@@ -1,0 +1,142 @@
+# การใช้งาน Datatable - Dynamic column
+![separate line][common-01]	
+
+[![ภาพแสดง ความต้องการของผู้ใช้งาน][1]](){: .fancybox-button 
+							data-fancybox-group="using-datatable-dynamic-column-001" 
+							href="<%= current_page.data.baseURL %>images/categories/Web Development/using-datatable-dynamic-column-001.png"}
+
+<br/>
+
+### เตรียมข้อมูลจำลอง พร้อมกำหนด `id="datatableDrop"` ให้กับตาราง ![separate-line-sub-topic][common-07]	
+
+<pre class="prettyprint linenums">
+&lt;table class=&quot;table table-striped table-bordered table-hover&quot; width=&quot;100%&quot; id=&quot;datatableDrop&quot;&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th class=&quot;all&quot;&gt;Box&lt;/th&gt;
+            &lt;th class=&quot;&quot;&gt;16/06/2016&lt;/th&gt;
+            &lt;th class=&quot;&quot;&gt;17/06/2016&lt;/th&gt;
+            &lt;th class=&quot;&quot;&gt;18/06/2016&lt;/th&gt;
+            &lt;th class=&quot;&quot;&gt;19/06/2016&lt;/th&gt;
+            &lt;th class=&quot;&quot;&gt;20/06/2016&lt;/th&gt;
+            &lt;th class=&quot;&quot;&gt;21/06/2016&lt;/th&gt;
+            &lt;th class=&quot;&quot;&gt;22/06/2016&lt;/th&gt;
+            &lt;th class=&quot;&quot;&gt;23/06/2016&lt;/th&gt;
+            &lt;th class=&quot;&quot;&gt;Average&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td class=&quot;all&quot;&gt;1&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;45&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;55&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;67&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;99&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;33&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;45&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;56&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;88&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;123&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td class=&quot;all&quot;&gt;2&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;45&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;55&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;67&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;99&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;33&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;45&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;56&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;88&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;123&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td class=&quot;all&quot;&gt;3&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;45&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;55&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;67&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;99&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;33&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;45&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;56&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;88&lt;/td&gt;
+            &lt;td class=&quot;&quot;&gt;123&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+</pre>
+
+
+<br/>
+
+### สร้าง Object ใน Javascript เพื่อควบคุม Datatable ![separate-line-sub-topic][common-07]	
+
+<pre class="prettyprint linenums">
+//------------------------ DatatableDrop -----------------------//
+if (jQuery().dataTable) {
+   
+    datatableDrop = $('#datatableDrop').DataTable( {
+        "aLengthMenu": [
+        [5, 10, 15, 25, 50, 100, -1],
+        [5, 10, 15, 25, 50, 100, "All"]
+        ],
+        "iDisplayLength": 5,
+        "oLanguage": {
+            "sLengthMenu": "_MENU_ Records per page",
+            "sInfo": "_START_ - _END_ of _TOTAL_",
+            "sInfoEmpty": "0 - 0 of 0",
+            "oPaginate": {
+                "sPrevious": "Prev",
+                "sNext": "Next"
+            }
+        },
+        "aoColumnDefs": [
+        {
+            'bSortable': true,
+            "bAutoWidth": true,
+            'aTargets': [0]
+        }
+        ],
+        "order": [
+            [0, 'asc']
+        ],
+<mark>        // setup colreorder extension: http://datatables.net/extensions/colreorder/
+        colReorder: {
+            reorderCallback: function () {
+                console.log( 'callback' );
+            }
+        },
+        "lengthMenu": [
+            [5, 10, 15, 20, -1],
+            [5, 10, 15, 20, "All"] // change per page values here
+        ],
+        scroller:       true,
+        deferRender:    true,
+        scrollX:        true,
+        scrollY:        '50vh',
+        scrollCollapse: true,
+        "order" : [] //disable default sorting, eg sorting on 1st column</mark>
+        
+    });
+}
+</pre>
+
+[![ภาพแสดง using-datatable-dynamic-column-002][2]](){: .fancybox-button 
+							data-fancybox-group="using-datatable-dynamic-column-002" 
+							href="<%= current_page.data.baseURL %>images/categories/Web Development/using-datatable-dynamic-column-002.png"}
+
+<br/>
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png
+
+
+[1]: <%= current_page.data.baseURL %>images/categories/Web%20Development/using-datatable-dynamic-column-001.png
+[2]: <%= current_page.data.baseURL %>images/categories/Web%20Development/using-datatable-dynamic-column-002.png
+
+

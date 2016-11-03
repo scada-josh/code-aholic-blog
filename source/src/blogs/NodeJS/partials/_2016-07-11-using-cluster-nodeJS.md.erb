@@ -1,0 +1,76 @@
+# การใช้งาน Cluster ใน NodeJS
+![separate line][common-01]	
+
+
+### ติดตั้ง โมดูล `colors` ![separate-line-sub-topic][common-07]   
+<pre class="prettyprint linenums">
+npm install colors --save-dev
+</pre>
+
+<br/>
+
+
+
+### ทดลองใช้งานโมดูล `colors` ![separate-line-sub-topic][common-07]  
+<pre class="prettyprint linenums">
+//======= include ========
+var colors = require('colors');
+//========================
+
+ var str = "tree step";
+ console.log(str.red);
+</pre>
+
+
+
+### ใช้งานโมดูล `cluster` ![separate-line-sub-topic][common-07]  
+<pre class="prettyprint linenums">
+//========= include ==============
+var _colors = require('colors');
+var _cluster = require('cluster');
+//================================
+
+var _cluster_node_num = 8 ;
+
+if (_cluster.isMaster) {
+    console.log(' i am master'.blue + ' : ' + process.pid);
+    for (var i = 0; i < _cluster_node_num; ++i) {
+        var _slave_node = _cluster.fork();
+    }
+
+    Object.keys(_cluster.workers).forEach(function(wpid,index,arr){
+        _cluster.workers[wpid].on('message',function(_slave_message){
+            console.log(_slave_message);
+        });
+    });
+
+
+} else {
+    //==== slave process ====
+    setInterval(function(){
+
+        var _slave_message = process.pid.toString().green + ' : ' + (+new Date()) ;
+        process.send(_slave_message);
+    },500);
+    //=======================
+}
+</pre>
+
+<br/>
+
+
+### ติดตั้ง โมดูล `memcached` ![separate-line-sub-topic][common-07]  
+<pre class="prettyprint linenums">
+npm install memcached --save-dev
+</pre>
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png
+
+
+
