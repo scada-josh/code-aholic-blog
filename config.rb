@@ -164,6 +164,8 @@ set :categoryURL_phpNusoapIndex, "/src/blogs/php-nusoap/2016/05/01/php-nusoap-in
 set :categoryURL_mongoDbIndex, "/src/blogs/mongodb/2016/07/14/mongo-db-index/"
 set :categoryURL_phpPdoIndex, "/src/blogs/php-pdo/2016/11/03/php-pdo-index/"
 set :categoryURL_vueJsIndex, "/src/blogs/vuejs/2016/11/03/vuejs-index/"
+set :categoryURL_technologyAuthenticationIndex, "/src/blogs/technology-authentication/2016/11/03/technology-authentication-index/"
+set :categoryURL_swift3Index, "/src/blogs/swift-3/2016/11/03/swift-3-index/"
 
 
 # Build-specific configuration
