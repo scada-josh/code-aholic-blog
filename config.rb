@@ -166,41 +166,46 @@ set :categoryURL_phpPdoIndex, "/src/blogs/php-pdo/2016/11/03/php-pdo-index/"
 set :categoryURL_vueJsIndex, "/src/blogs/vuejs/2016/11/03/vuejs-index/"
 set :categoryURL_technologyAuthenticationIndex, "/src/blogs/technology-authentication/2016/11/03/technology-authentication-index/"
 set :categoryURL_swift3Index, "/src/blogs/swift-3/2016/11/03/swift-3-index/"
+set :categoryURL_maya2017Index, "/src/blogs/maya-2017/2016/11/03/maya-2017-index/"
+set :categoryURL_afterEffectCCIndex, "/src/blogs/after-effect-cc/2016/11/03/after-effect-cc-index/"
+set :categoryURL_unity5Index, "/src/blogs/unity-5/2016/11/03/unity-5-index/"
 
 
 # Build-specific configuration
 configure :build do
 
-  activate :search do |search|
+  # activate :search do |search|
 
-    # search.pipeline = {
-    #   tildes: <<-JS
-    #     function(token, tokenIndex, tokens) {
-    #       return token
-    #         .replace('á', 'a')
-    #         .replace('é', 'e')
-    #         .replace('í', 'i')
-    #         .replace('ó', 'o')
-    #         .replace('ú', 'u');
-    #     }
-    #   JS
-    # }
+  #   # search.pipeline = {
+  #   #   tildes: <<-JS
+  #   #     function(token, tokenIndex, tokens) {
+  #   #       return token
+  #   #         .replace('á', 'a')
+  #   #         .replace('é', 'e')
+  #   #         .replace('í', 'i')
+  #   #         .replace('ó', 'o')
+  #   #         .replace('ú', 'u');
+  #   #     }
+  #   #   JS
+  #   # }
 
 
-    # search.resources = ['src/blogs/iOS Development/','src/blogs/', 'index.php', 'src/desktop/HOME/index.php']
-    # search.resources = ['src/blogs', 'index.html', 'build/src/desktop']
-    # search.resources = ['src/blogs/', 'src/desktop/']
-    search.resources = ['src/', 'src/blogs/', '*.markdown']
+  #   # search.resources = ['src/blogs/iOS Development/','src/blogs/', 'index.php', 'src/desktop/HOME/index.php']
+  #   # search.resources = ['src/blogs', 'index.html', 'build/src/desktop']
+  #   # search.resources = ['src/blogs/', 'src/desktop/']
+  #   search.resources = ['src/', 'src/blogs/', '*.markdown']
    
-    search.index_path = 'search/lunr-index.json' # defaults to `search.json`
+  #   search.index_path = 'search/lunr-index.json' # defaults to `search.json`
    
-    search.fields = {
-      title:   {boost: 100, store: true, required: true},
-      content: {boost: 50},
-      url:     {index: false, store: true},
-      author:  {boost: 30}
-    }
-  end
+  #   search.fields = {
+  #     title:   {boost: 100, store: true, required: true},
+  #     content: {boost: 50},
+  #     url:     {index: false, store: true},
+  #     author:  {boost: 30}
+  #   }
+  # end
+
+
 
   # activate :asset_hash do |asset_hash|
   #   asset_hash.exts << '.json'
