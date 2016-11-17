@@ -169,7 +169,9 @@ set :categoryURL_swift3Index, "/src/blogs/swift-3/2016/11/03/swift-3-index/"
 set :categoryURL_maya2017Index, "/src/blogs/maya-2017/2016/11/03/maya-2017-index/"
 set :categoryURL_afterEffectCCIndex, "/src/blogs/after-effect-cc/2016/11/03/after-effect-cc-index/"
 set :categoryURL_unity5Index, "/src/blogs/unity-5/2016/11/03/unity-5-index/"
-
+set :categoryURL_javascriptIndex, "/src/blogs/javascript/2016/11/16/javascript-index/"
+set :categoryURL_projectDhlIndex, "/src/blogs/project-dhl/2016/11/16/project-dhl-index/"
+set :categoryURL_microsoftVisualStudioIndex, "/src/blogs/microsoft-visual-studio/2016/11/16/microsoft-visual-studio-index/"
 
 # Build-specific configuration
 configure :build do

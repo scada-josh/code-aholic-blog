@@ -1,0 +1,116 @@
+# การติดตั้งและใช้งาน MongoDB [![ภาพ external-link-30x30][common-06]](){: href="http://devahoy.com/posts/getting-started-with-mongodb/" target="_blank"}
+![separate line][common-01]	
+
+[![ภาพแสดง logo MongoDB][1]](){: .fancybox-button 
+                            data-fancybox-group="installation-mongo-db-001" 
+                            href="<%= current_page.data.baseURL %>images/categories/mongodb/installation-mongo-db-001.png"}  
+
+### ติดตั้ง `MongoDB` ![separate-line-sub-topic][common-07]   
+<pre class="prettyprint linenums">
+brew install mongodb
+</pre>
+
+[![ภาพแสดง การติดตั้ง MongoDB][2]](){: .fancybox-button 
+                            data-fancybox-group="installation-mongo-db-002" 
+                            href="<%= current_page.data.baseURL %>images/categories/mongodb/installation-mongo-db-002.png"}  
+
+<br/>
+
+
+
+### สร้าง data directory ![separate-line-sub-topic][common-07]   
+<pre class="prettyprint linenums">
+mkdir -p /data/db
+</pre>
+
+[![ภาพแสดง การสร้าง data directory และกำหนด Permission][3]](){: .fancybox-button 
+                            data-fancybox-group="installation-mongo-db-003" 
+                            href="<%= current_page.data.baseURL %>images/categories/mongodb/installation-mongo-db-003.png"}  
+<br/>
+
+### Set permissions for the data directory ![separate-line-sub-topic][common-07]   
+<pre class="prettyprint linenums">
+sudo chown `id -u` /data/db
+</pre>
+
+<br/>
+
+### Run `MongoDB` ![separate-line-sub-topic][common-07]   
+<pre class="prettyprint linenums">
+sudo mongod
+</pre>
+
+<br/>
+
+[![ภาพแสดง การ Run MongoDB][4]](){: .fancybox-button 
+                            data-fancybox-group="installation-mongo-db-004" 
+                            href="<%= current_page.data.baseURL %>images/categories/mongodb/installation-mongo-db-004.png"}  
+
+<br/>
+
+### การสร้างฐานข้อมูลใน MongoDB  [![ภาพ external-link-15x15][common-05]](){: href="http://www.w3ii.com/th/mongodb/mongodb_create_database.html" target="_blank"} ![separate-line-sub-topic][common-07]   
+
+ในที่นี้เราต้องการสร้างฐานข้อมูลชื่อว่า `library_database`
+<pre class="prettyprint linenums">
+use library_database
+</pre>
+
+<pre class="prettyprint linenums">
+db.books.insert({"title":"test title", "author":"test author", "releaseDate":"test releaseDate"})
+</pre>
+
+<br/>
+
+[![ภาพแสดง หน้าจอจากโปรแกรม Robomongo][5]](){: .fancybox-button 
+                            data-fancybox-group="installation-mongo-db-005" 
+                            href="<%= current_page.data.baseURL %>images/categories/mongodb/installation-mongo-db-005.png"}  
+
+
+<br/>
+
+### การเข้าถึงข้อมูล JSON - Post data ใน Express application   [![ภาพ external-link-15x15][common-05]](){: href="http://stackoverflow.com/questions/10005939/how-to-consume-json-post-data-in-an-express-application" target="_blank"} ![separate-line-sub-topic][common-07]  
+
+For Express v4+
+
+install body-parser from the npm. [![ภาพ external-link-15x15][common-05]](){: href="https://www.npmjs.com/package/body-parser#installation" target="_blank"}
+<pre class="prettyprint linenums">
+npm install body-parser
+</pre>
+
+
+<pre class="prettyprint linenums">
+var express    = require('express')
+var bodyParser = require('body-parser')
+
+var app = express()
+
+// parse application/json
+app.use(bodyParser.json())
+
+app.use(function (req, res, next) {
+  console.log(req.body) // populated!
+  next()
+})
+</pre>
+
+[![ภาพแสดง ข้อมูลจาก Stack Overflow][6]](){: .fancybox-button 
+                            data-fancybox-group="installation-mongo-db-006" 
+                            href="<%= current_page.data.baseURL %>images/categories/mongodb/installation-mongo-db-006.png"}  
+
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png
+
+[1]: <%= current_page.data.baseURL %>images/categories/MongoDB/installation-mongo-db-001.png
+[2]: <%= current_page.data.baseURL %>images/categories/MongoDB/installation-mongo-db-002.png
+[3]: <%= current_page.data.baseURL %>images/categories/MongoDB/installation-mongo-db-003.png
+[4]: <%= current_page.data.baseURL %>images/categories/MongoDB/installation-mongo-db-004.png
+[5]: <%= current_page.data.baseURL %>images/categories/MongoDB/installation-mongo-db-005.png
+[6]: <%= current_page.data.baseURL %>images/categories/MongoDB/installation-mongo-db-006.png
+
+
