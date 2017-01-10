@@ -1,0 +1,33 @@
+![bookmark][common-04]{: #goto-topic-07 }
+
+## เพิ่ม &lt;router-link&gt; เพื่อเชื่อมโยงคอมโพเนนต์
+![separate line][common-07]	
+
+
+#### แก้ไขไฟล์ `App.vue`
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+<mark>  	&lt;router-link to=&quot;/&quot;&gt;Home&lt;/router-link&gt;
+  	&lt;router-link to=&quot;/profile&quot;&gt;Profile&lt;/router-link&gt;
+  	&lt;router-link to=&quot;/user/1&quot;&gt;User&lt;/router-link&gt;
+  	&lt;router-link to=&quot;/signin&quot;&gt;Sing-in&lt;/router-link&gt;</mark>
+
+  	&lt;router-view&gt;&lt;/router-view&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+
+}
+&lt;/script&gt;
+
+</pre>
+
+[![ภาพแสดงผลลัพธ์หลังจากใส่ router-link เพื่อเชื่อมโยงคอมโพเนนต์][7]](){: .fancybox-button 
+                            data-fancybox-group="vue-js-for-real-world-day03-007" 
+                            href="<%= current_page.data.baseURL %>images/categories/vuejs/vue-js-for-real-world-day03-007.png"}  
+
+<br/>
+

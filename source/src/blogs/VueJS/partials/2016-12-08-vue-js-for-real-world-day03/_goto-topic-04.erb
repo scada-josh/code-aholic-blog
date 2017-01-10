@@ -1,0 +1,45 @@
+![bookmark][common-04]{: #goto-topic-04 }
+
+## นำ Firebase เข้ามาใช้ในโปรเจ็ค
+![separate line][common-07]	
+
+[![ภาพแสดงการนำข้อมูล Web Config ของ firebase มาใช้งาน][5]](){: .fancybox-button 
+                            data-fancybox-group="vue-js-for-real-world-day03-005" 
+                            href="<%= current_page.data.baseURL %>images/categories/vuejs/vue-js-for-real-world-day03-005.png"}  
+
+
+#### แก้ไข ไฟล์ `main.js`
+<pre class="prettyprint linenums">
+import Vue from 'vue'
+import router from './router'
+<mark>import firebase from 'firebase'</mark>
+import App from './App'
+
+// Initialize Firebase
+<mark>var config = {
+  apiKey: 'AIzaSyCM0996plGhdDM0QnnCovnpkKp4QkiZnK4',
+  authDomain: 'twitty-project.firebaseapp.com',
+  databaseURL: 'https://twitty-project.firebaseio.com',
+  storageBucket: 'twitty-project.appspot.com',
+  messagingSenderId: '1031160639233'
+}
+
+firebase.initializeApp(config)</mark>
+
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  router,
+  render: h => h(App)
+})
+
+</pre>
+
+#### ทำการ Enable - Sign-in method ผ่านทาง Google
+
+[![ภาพแสดงการ Enable Sign-in method ผ่านทาง Google][6]](){: .fancybox-button 
+                            data-fancybox-group="vue-js-for-real-world-day03-006" 
+                            href="<%= current_page.data.baseURL %>images/categories/vuejs/vue-js-for-real-world-day03-006.png"}  
+
+<br/>
+

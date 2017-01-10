@@ -1,0 +1,47 @@
+![bookmark][common-04]{: #goto-topic-06 }
+
+## ใช้งาน jQuery ผ่านทาง Script & Style loader
+![separate line][common-07]	
+
+
+#### ติดตั้ง Script loader และ Style loader
+<pre class="prettyprint linenums">
+$ npm install --save script-loader style-loader
+</pre>
+
+
+#### แก้ไขไฟล์ `main.js`
+<pre class="prettyprint linenums">
+import Vue from 'vue'
+import router from './router'
+import firebase from 'firebase'
+import App from './App'
+
+<mark>import '!script!jquery/dist/jquery.min.js'
+import '!script!semantic-ui-css/semantic.min.js'
+import '!style!css!semantic-ui-css/semantic.min.css'</mark>
+
+// Initialize Firebase
+var config = {
+  apiKey: 'AIzaSyCM0996plGhdDM0QnnCovnpkKp4QkiZnK4',
+  authDomain: 'twitty-project.firebaseapp.com',
+  databaseURL: 'https://twitty-project.firebaseio.com',
+  storageBucket: 'twitty-project.appspot.com',
+  messagingSenderId: '1031160639233'
+}
+
+firebase.initializeApp(config)
+
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  router,
+  render: h => h(App)
+})
+
+</pre>
+
+
+
+<br/>
+

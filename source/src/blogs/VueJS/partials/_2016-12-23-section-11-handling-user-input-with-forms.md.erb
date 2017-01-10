@@ -1,0 +1,58 @@
+# Handling User Input with Forms
+![separate line][common-01] 
+
+<br/>
+
+## ทดลองใช้งาน VueJS กับฟอร์ม
+![separate line][common-07] 
+
+
+สร้างโปรเจ็ค ผ่านทาง `vue-cli` โดยใช้เทมเพลต `webpack-simple` :
+<pre class="prettyprint linenums">
+$ cd /Applications/XAMPP/htdocs
+$ vue init webpack-simple vue-form-user-input
+</pre>
+
+ติดตั้ง dependencies
+<pre class="prettyprint linenums">
+$ cd vue-form-user-input
+$ npm install
+</pre>
+  
+Run application : 
+<pre class="prettyprint linenums">
+$ npm run dev
+</pre>
+
+<br/>
+
+คำสั่งนี้จะเปิด Web Browser ให้อัตโนมัติ `localhost:8080`
+
+
+[![ภาพแสดง vue applicaiton][1]](){: .fancybox-button 
+                            data-fancybox-group="section11-handling-user-input-with-forms-001" 
+                            href="<%= current_page.data.baseURL %>images/categories/vuejs/section11-handling-user-input-with-forms-001.png"} 
+
+<br/>
+
+ติดตั้ง jQuery และ Bootstrap
+<pre class="prettyprint linenums">
+$ npm install jquery bootstrap --save-dev
+</pre>
+
+ติดตั้ง script-loader และ style-loader เพื่อนำ jQuery และ Bootstrap มาใช้งาน
+<pre class="prettyprint linenums">
+$ npm install script-loader style-loader --save-dev
+</pre>
+
+[common-01]: <%= current_page.data.baseURL %>images/blog-common/separate-line.png  
+[common-02]: <%= current_page.data.baseURL %>images/blog-common/separate-line-with-indent.png  
+[common-03]: <%= current_page.data.baseURL %>images/blog-common/icon-h1.png  
+[common-04]: <%= current_page.data.baseURL %>images/blog-common/bookmark-blank-image.png  
+[common-05]: <%= current_page.data.baseURL %>images/blog-common/external-link-15x15.png  
+[common-06]: <%= current_page.data.baseURL %>images/blog-common/external-link-30x30.png
+[common-07]: <%= current_page.data.baseURL %>images/blog-common/separate-line-sub-topic.png
+
+[1]: <%= current_page.data.baseURL %>images/categories/VueJS/section11-handling-user-input-with-forms-001.png
+
+

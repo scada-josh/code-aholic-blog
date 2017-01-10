@@ -172,6 +172,23 @@ set :categoryURL_unity5Index, "/src/blogs/unity-5/2016/11/03/unity-5-index/"
 set :categoryURL_javascriptIndex, "/src/blogs/javascript/2016/11/16/javascript-index/"
 set :categoryURL_projectDhlIndex, "/src/blogs/project-dhl/2016/11/16/project-dhl-index/"
 set :categoryURL_microsoftVisualStudioIndex, "/src/blogs/microsoft-visual-studio/2016/11/16/microsoft-visual-studio-index/"
+set :categoryURL_businessProcessModeling2Index, "/src/blogs/business-process-modeling-2/2016/11/23/business-process-modeling-2-index/"
+set :categoryURL_webpackIndex, "/src/blogs/webpack/2016/11/24/webpack-index/"
+set :categoryURL_reactivexRxjsIndex, "/src/blogs/reactivex-rxjs/2016/11/24/reactivex-rxjs-index/"
+set :categoryURL_gitIndex, "/src/blogs/git/2016/12/03/git-index/"
+set :categoryURL_sublimeTextIndex, "/src/blogs/sublime-text/2016/12/07/sublime-text-index/"
+set :categoryURL_pageKitIndex, "/src/blogs/Pagekit/2016/12/07/pagekit-index/"
+set :categoryURL_semanticUiIndex, "/src/blogs/semantic-ui/2016/12/11/semantic-ui-index/"
+set :categoryURL_dockerIndex, "/src/blogs/docker/2016/12/17/docker-index/"
+set :categoryURL_microservicesIndex, "/src/blogs/microservices/2016/12/18/microservices-index/"
+set :categoryURL_loadAndPerformanceTestIndex, "/src/blogs/load-and-performance-test/2016/12/18/load-and-performance-test-index/"
+set :categoryURL_loadBalancerIndex, "/src/blogs/load-balancer/2016/12/18/load-balancer-index/"
+set :categoryURL_phpLaravelIndex, "/src/blogs/php-laravel/2016/12/23/php-laravel-index/"
+set :categoryURL_esp8266Index, "/src/blogs/esp8266/2016/12/24/esp8266-index/"
+set :categoryURL_flaskIndex, "/src/blogs/flask/2017/01/04/flask-index/"
+set :categoryURL_raspberryPiIndex, "/src/blogs/raspberry-pi/2017/01/10/raspberry-pi-index/"
+set :categoryURL_mqttIndex, "/src/blogs/mqtt/2017/01/10/mqtt-index/"
+
 
 # Build-specific configuration
 configure :build do

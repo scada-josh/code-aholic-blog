@@ -1,0 +1,51 @@
+![bookmark][common-04]{: #goto-topic-05 }
+
+## สร้าง Component และกำหนด Route
+![separate line][common-07]	
+
+
+#### แก้ไข ไฟล์ `route.js`
+<pre class="prettyprint linenums">
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+<mark>import Home from './components/Home'
+import Profile from './components/Profile'
+import User from './components/User'
+import SignIn from './components/SignIn'</mark>
+
+Vue.use(VueRouter)
+
+Vue.component('home', Home)
+
+const router = new VueRouter({
+  mode: 'history',
+  routes: [
+<mark>    { path: '/', component: Home },
+    { path: '/profile', component: Profile, meta: {requiresAuth: true} },
+    { path: '/user/:id', component: User },
+    { path: '/signin', component: SignIn }</mark>
+  ]
+})
+
+export default router
+</pre>
+
+#### แก้ไข ไฟล์ `App.vue`
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    <mark>&lt;router-view&gt;&lt;/router-view&gt;</mark>
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+
+}
+&lt;/script&gt;
+
+</pre>
+
+
+<br/>
+

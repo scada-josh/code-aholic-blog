@@ -1,0 +1,43 @@
+![bookmark][common-04]{: #goto-topic-02 }
+
+## สร้างโปรเจ็คใน Firebase
+![separate line][common-07]	
+
+#### สร้างโปรเจ็คชื่อว่า `twitty-project`
+
+[![ภาพแสดงการสร้างโปรเจ็คใหม่ใน Firebase][3]](){: .fancybox-button 
+                            data-fancybox-group="vue-js-for-real-world-day03-003" 
+                            href="<%= current_page.data.baseURL %>images/categories/vuejs/vue-js-for-real-world-day03-003.png"}  
+
+<br/>
+
+#### ติดตั้ง Firebase Tools ไว้ในเครื่องของเรา
+<pre class="prettyprint linenums">
+$ npm install -g firebase-tools
+$ firebase login
+
+$ cd /Applications/XAMPP/xamppfiles/htdocs/vue-project-day03
+$ firebase init
+
+
+? What Firebase project do you want to associate as default? <mark>twitty-project</mark> (twitty-project)
+? What do you want to use as your public directory? (public) <mark>dist</mark>
+? Configure as a single-page app (rewrite all urls to /index.html)? (y/N) <mark>y</mark>
+</pre>
+
+
+
+[![ภาพแสดงผลลัพธ์ที่ได้จากการใช้คำสั่ง firebase init][4]](){: .fancybox-button 
+                            data-fancybox-group="vue-js-for-real-world-day03-004" 
+                            href="<%= current_page.data.baseURL %>images/categories/vuejs/vue-js-for-real-world-day03-004.png"}  
+
+
+<br/>
+
+#### ติดตั้ง Dependency (vue-router, firebase, jquery, semantic-ui-css)
+<pre class="prettyprint linenums">
+$ npm install --save vue-router firebase jquery semantic-ui-css
+</pre>
+
+<br/>
+

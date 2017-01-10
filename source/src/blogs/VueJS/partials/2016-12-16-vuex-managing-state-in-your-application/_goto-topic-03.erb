@@ -1,0 +1,743 @@
+![bookmark][common-04]{: #goto-topic-03 }
+
+## ทดลองใช้งาน Vuex
+![separate line][common-07] 
+
+
+สร้างโปรเจ็ค ผ่านทาง `vue-cli` โดยใช้เทมเพลต `webpack-simple` :
+<pre class="prettyprint linenums">
+$ cd /Applications/XAMPP/htdocs
+$ vue init webpack-simple vuex-store-in-action
+</pre>
+
+ติดตั้ง dependencies
+<pre class="prettyprint linenums">
+$ cd vuex-store-in-action
+$ npm install
+</pre>
+  
+Run application : 
+<pre class="prettyprint linenums">
+$ npm run dev
+</pre>
+
+<br/>
+
+คำสั่งนี้จะเปิด Web Browser ให้อัตโนมัติ `localhost:8080`
+
+
+[![ภาพแสดง vuex applicaiton][1]](){: .fancybox-button 
+                            data-fancybox-group="vuex-managing-state-in-your-application-001" 
+                            href="<%= current_page.data.baseURL %>images/categories/vuejs/vuex-managing-state-in-your-application-001.png"} 
+
+<br/>
+
+สำหรับโปรเจ็ค `Greetings` จะเป็นการสื่อสารกันของคอมโพเนนต์ 2 ตัว คือ
+
+- `ShowGreetingsComponent` ทำหน้าที่แสดงข้อความทักทาย (greetings message) 
+- `ChangeGreetingsComponent` ทำหน้านที่แสดงช่องกรอกข้อความ สามารถเปลี่ยนแปลงข้อความได้
+
+
+ให้ทำการสร้างคอมโพเนนต์ทั้ง 2 ตัว ในโฟลเดอร์ `components` 
+
+[![ภาพแสดง คอมโพเนนต์][2]](){: .fancybox-button 
+                            data-fancybox-group="vuex-managing-state-in-your-application-002" 
+                            href="<%= current_page.data.baseURL %>images/categories/vuejs/vuex-managing-state-in-your-application-002.png"} 
+
+
+ไฟล์ `ShowGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;h1&gt;{{ msg }}&lt;/h1&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  export default {
+    props: ['msg']
+  } 
+&lt;/script&gt;
+</pre>
+
+
+ไฟล์ `ChangeGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;input v-model='msg'&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  export default {
+    props: ['msg']
+  } 
+&lt;/script&gt;
+</pre>
+
+
+ไฟล์ `App.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+   &lt;div id=&quot;app&quot;&gt;
+     &lt;show-greetings-component :msg='msg'&gt;&lt;/show-greetings-component&gt;
+     &lt;change-greetings-component :msg='msg'&gt;&lt;/change-greetings-component&gt;
+   &lt;div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+ import ShowGreetingsComponent from './components/ShowGreetingsComponent.vue'
+ import ChangeGreetingsComponent from './components/ChangeGreetingsComponent.vue'
+
+ export default {
+  components: { ShowGreetingsComponent, ChangeGreetingsComponent }, 
+    data () {
+     return {
+       msg: 'Hello Vue!'
+     } 
+  }
+ } 
+&lt;/script&gt;
+</pre>
+
+[![ภาพแสดง Error หลังจากที่พยายามกรอกข้อมูล][3]](){: .fancybox-button 
+                            data-fancybox-group="vuex-managing-state-in-your-application-003" 
+                            href="<%= current_page.data.baseURL %>images/categories/vuejs/vuex-managing-state-in-your-application-003.png"} 
+
+
+
+<br/>
+
+#### ถึงเวลาที่เราจะมาทำความรู้จักกับ **`Vuex`** ซึ่งจะมาทำหน้าที่สื่อสารข้อมูลระหว่างคอมโพเนนต์ 
+
+ติดตั้ง Vuex : 
+<pre class="prettyprint linenums">
+$ npm install vuex --save
+</pre>
+
+<br/>
+
+ไฟล์ `store.js` : 
+<pre class="prettyprint linenums">
+//store.js
+import Vue from 'vue' 
+import Vuex from 'vuex' 
+
+Vue.use(Vuex)
+
+const state = {
+  <mark>msg: 'Hello Vue!'</mark>
+}
+
+const mutations = {
+<mark>  changeMessage(state, msg) {
+    state.msg = msg
+  }</mark>
+}
+
+export default new Vuex.Store({
+  <mark>state: state,</mark>
+  <mark>mutations: mutations</mark>
+})
+</pre>
+
+<br/>
+
+ไฟล์ `App.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+   &lt;div id=&quot;app&quot;&gt;
+     &lt;show-greetings-component&gt;&lt;/show-greetings-component&gt;
+     &lt;change-greetings-component&gt;&lt;/change-greetings-component&gt;
+   &lt;div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+ import ShowGreetingsComponent from './components/ShowGreetingsComponent.vue'
+ import ChangeGreetingsComponent from './components/ChangeGreetingsComponent.vue'
+ <mark>import store from './vuex/store'</mark>
+
+ export default {
+  components: { ShowGreetingsComponent, ChangeGreetingsComponent }, 
+  <mark>store</mark>
+ } 
+&lt;/script&gt;
+</pre>
+
+<br/>
+
+ไฟล์ `ShowGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;h1&gt;{{ msg }}&lt;/h1&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  export default {
+    computed: {
+      msg () {
+        return <mark>this.$store.state.msg</mark>
+      }
+    }
+  } 
+&lt;/script&gt;
+</pre>
+
+
+ไฟล์ `ChangeGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;input :value='msg' @keyup='changeMsg'&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  export default {
+    computed: {
+      msg() {
+          return <mark>this.$store.state.msg</mark>
+      } 
+    },
+    methods: {
+      changeMsg(ev) {
+        <mark>this.$store.commit('changeMessage', ev.target.value)</mark>
+      }
+    }
+  } 
+&lt;/script&gt;
+</pre>
+
+#### สังเกตผลลัพธ์ที่ได้
+
+
+[![ภาพแสดงผลลัพธ์จากการติดตั้ง vuex store ให้กับ application ของเรา][4]](){: .fancybox-button 
+                            data-fancybox-group="vuex-managing-state-in-your-application-004" 
+                            href="<%= current_page.data.baseURL %>images/categories/vuejs/vuex-managing-state-in-your-application-004.png"} 
+
+
+<br/>
+
+มาถึงตอนนี้ จะเห็นว่าแต่ละคอมโพเนนต์มีการใช้ข้อมูลที่เก็บไว้ใน store ร่วมกันได้แล้ว 
+และถ้า state มีการเปลี่ยนแปลง เราสามารถรับ reacitive data ได้ ผ่านทาง computed properties ของแต่ละคอมโพเนนต์
+
+<br/>
+
+#### Store state and getters
+
+ก่อนหน้านี้เราสามารถเข้าถึง state ได้ ด้วยคำสั่ง `this.$store.state` แต่ยังมีความไม่ยืดหยุ่นมากนัก
+
+- ลองคิดดูว่า ถ้าเรามีคอมโพเนนต์หลายๆตัวที่เข้าถึง state ด้วย `$this.store.state.somevalue` ถ้าเรามีการเปลี่ยนชื่อของ `somevalue` ล่ะ แน่นอน!!! เราจะต้องไปไล่เปลี่ยนชื่อ ในทุกๆ คอมโพเนนต์ที่มีการใช้งาน
+- และถ้าเราต้องการคำนวณค่า เช่น เราต้องการเพิ่มค่าของมัน นั่นหมายความว่า เราจะต้องมีฟังก์ชันสำหรับเปลี่ยนแปลงค่า (ในที่นี้คือเพิ่มค่า) เข้าไปด้วย และจะเห็นว่าเราจะมีการเขียนโค้ดที่ซ้ำกัน ในหลายที่ หากมีการใช้งานฟังก์ชันเพิ่มค่า ในคอมโพเนนต์อื่นๆ ด้วย
+
+
+ให้สร้างไฟล์ `getters.js` ไว้ในโฟลเดอร์ vuex
+
+<br/>
+
+ไฟล์ `getters.js` :
+
+<pre class="prettyprint linenums">
+//getters.js
+export default {
+  getMessage(state) {
+    return state.msg
+  }
+}
+</pre>
+
+
+ไฟล์ `store.js` : 
+<pre class="prettyprint linenums">
+//store.js
+import Vue from 'vue' 
+import Vuex from 'vuex' 
+<mark>import getters from './getters'</mark>
+
+Vue.use(Vuex)
+
+const state = {
+  msg: 'Hello Vue!'
+}
+
+const mutations = {
+  changeMessage(state, msg) {
+    state.msg = msg
+  }
+}
+
+export default new Vuex.Store({
+  state: state,
+  mutations: mutations,
+  <mark>getters</mark>
+})
+</pre>
+
+ไฟล์ `ShowGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;h1&gt;{{ msg }}&lt;/h1&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  export default {
+    computed: {
+      msg () {
+        return <mark>this.$store.getters.getMessage</mark>
+      }
+    }
+  } 
+&lt;/script&gt;
+</pre>
+
+
+ไฟล์ `ChangeGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;input :value='msg' @keyup='changeMsg'&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  export default {
+    computed: {
+      msg() {
+          return <mark>this.$store.getters.getMessage</mark>
+      } 
+    },
+    methods: {
+      changeMsg(ev) {
+        this.$store.commit('changeMessage', ev.target.value)
+      }
+    }
+  } 
+&lt;/script&gt;
+</pre>
+
+
+#### สังเกตผลลัพธ์ที่ได้ จะเห็นว่า App ของเรายังคงทำงานได้ปกติ :)
+
+
+แต่การเรียกใช้งาน เราพบว่ายังมีการใช้คำสั่งที่ยาวอยู่นะ `this.$store.getters`, 
+สำหรับ Vue จะมี `mapGetters` **helper** มาช่วยให้ชีวิตเราดีขึ้น
+
+
+ไฟล์ `ShowGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;h1&gt;<mark>{{ getMessage }}</mark>&lt;/h1&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  <mark>import { mapGetters } from 'vuex'</mark>
+
+  export default {
+    <mark>computed: mapGetters(['getMessage']),</mark>
+  } 
+&lt;/script&gt;
+</pre>
+
+
+ไฟล์ `ChangeGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;input :value='<mark>getMessage</mark>' @keyup='changeMsg'&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  <mark>import { mapGetters } from 'vuex'</mark>
+
+  export default {
+    <mark>computed: mapGetters(['getMessage']),</mark>
+    methods: {
+      changeMsg(ev) {
+        this.$store.commit('changeMessage', ev.target.value)
+      }
+    }
+  } 
+&lt;/script&gt;
+</pre>
+
+
+จากโค้ดที่เราแก้ไปข้างบน จะเป็นการเรียกใช้งานโดยการใช้ชื่อเดียวกับใน getter, แต่เราสามารถ map ชื่อใน getter method เข้ากับชื่อ properties ในแต่ละคอมโพเนนต์ได้
+
+ไฟล์ `ShowGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;h1&gt;<mark>{{ msg }}</mark>&lt;/h1&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  <mark>import { mapGetters } from 'vuex'</mark>
+
+  export default {
+    <mark>computed: mapGetters({</mark>
+    <mark>     msg: 'getMessage'</mark>
+    <mark>})</mark>
+  } 
+&lt;/script&gt;
+</pre>
+
+
+ไฟล์ `ChangeGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;input :value='<mark>msg</mark>' @keyup='changeMsg'&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  <mark>import { mapGetters } from 'vuex'</mark>
+
+  export default {
+    <mark>computed: mapGetters({</mark>
+    <mark>     msg: 'getMessage'</mark>
+    <mark>}),</mark>
+    methods: {
+      changeMsg(ev) {
+        this.$store.commit('changeMessage', ev.target.value)
+      }
+    }
+  } 
+&lt;/script&gt;
+</pre>
+
+<br/>
+
+#### Mutations
+
+จากตัวอย่างที่เราทำมาแล้ว ก็คงเข้าใจแล้วว่า `mutation` 
+ก็คือฟังก์ชันที่รองรับ event ที่เกิดขึ้น ซึ่งพารามิเตอร์ตัวที่หนึ่งของ `mutation` 
+จะเป็น state, เราสามารถส่งผ่านพารามิเตอร์อื่นๆ เข้ามาได้เช่นกัน
+
+ตัวอย่างเช่น ไฟล์ `store.js` :
+<pre class="prettyprint linenums">
+//store.js
+import Vue from 'vue' 
+import Vuex from 'vuex' 
+import getters from './getters'
+
+Vue.use(Vuex)
+
+const state = {
+  msg: 'Hello Vue!'
+}
+
+const mutations = {
+  <mark>changeMessage</mark>(state, msg) {
+    state.msg = msg
+  },
+  <mark>incrementCounter</mark>(state) { 
+    state.counter ++;
+  }
+}
+
+export default new Vuex.Store({
+  state: state,
+  mutations: mutations,
+  getters
+})
+</pre>
+
+
+ซึ่งเรารู้อยู่แล้วว่า เราไม่สามารถเข้าถึง `mutation` ได้โดยตรง เราต้องเรียกผ่านคำสั่ง เช่น
+
+<pre class="prettyprint linenums">
+store.commit('changeMessage', 'newMessage')
+store.commit('incrementCounter')
+</pre>
+
+
+เพื่อหลีกเลี่ยงการเรียกใช้งาน ผ่านทางชื่อที่เป็นสตริงโดยตรง 
+เราอาจจะแก้ปัญหาด้วยการเก็บชื่อของ mutations ไว้ในค่าคงที่ก่อน เพื่อใช้งานร่วมกัน ถ้ามีการแก้ไขชื่อ mutations ก็จะได้มาแก้ที่เดียว
+ทดลองสร้างไฟล์ `mutation_types.js` ในโฟลเดอร์ vuex เพื่อเก็บค่าคงที่
+
+ไฟล์ `mutation_types.js` : 
+<pre class="prettyprint linenums">
+//mutation_types.js
+export const INCREMENT_COUNTER = 'INCREMENT_COUNTER' 
+export const CHANGE_MSG = 'CHANGE_MSG'
+</pre>
+
+
+ในไฟล์ `store.js` ให้นำค่าคงที่ที่เก็บไว้ในไฟล์ `mutation_types.js` เข้ามาใช้งาน
+
+ไฟล์ `store.js` :
+<pre class="prettyprint linenums">
+//store.js
+import Vue from 'vue' 
+import Vuex from 'vuex' 
+import getters from './getters'
+<mark>import { CHANGE_MSG, INCREMENT_COUNTER } from './mutation_types'</mark>
+
+Vue.use(Vuex)
+
+const state = {
+  msg: 'Hello Vue!'
+}
+
+const mutations = {
+  <mark>[CHANGE_MSG]</mark>(state, msg) {
+    state.msg = msg
+  },
+  <mark>[INCREMENT_COUNTER]</mark>(state) { 
+    state.counter ++;
+  }
+}
+
+export default new Vuex.Store({
+  state: state,
+  mutations: mutations,
+  getters
+})
+</pre>
+
+
+ไฟล์ `ChangeGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;input :value='msg' @keyup='changeMsg'&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  import { mapGetters } from 'vuex'
+  <mark>import { CHANGE_MSG, INCREMENT_COUNTER } from '../vuex/mutation_types'</mark>
+
+  export default {
+    computed: mapGetters({
+         msg: 'getMessage'
+    }),
+    methods: {
+      changeMsg(ev) {
+        this.$store.commit(<mark>[CHANGE_MSG]</mark>, ev.target.value)
+      }
+    }
+  } 
+&lt;/script&gt;
+</pre>
+
+
+#### Actions
+
+ก่อนที่เราจะลองใช้งาน `action` 
+ให้เราเพิ่ม item ใน store ชื่อว่า `counter` กำหนดให้ค่าเริ่มต้นเป้น `0`
+
+ไฟล์ `store.js` :
+<pre class="prettyprint linenums">
+//store.js
+import Vue from 'vue' 
+import Vuex from 'vuex' 
+import getters from './getters'
+import { CHANGE_MSG, INCREMENT_COUNTER } from './mutation_types'
+
+Vue.use(Vuex)
+
+const state = {
+  msg: 'Hello Vue!',
+  <mark>counter: 0</mark>
+}
+
+const mutations = {
+  [CHANGE_MSG](state, msg) {
+    state.msg = msg
+  },
+  <mark>[INCREMENT_COUNTER]</mark>(state) { 
+    state.counter ++;
+  }
+}
+
+export default new Vuex.Store({
+  state: state,
+  mutations: mutations,
+  getters
+})
+</pre>
+
+
+ไฟล์ `getters.js` :
+
+<pre class="prettyprint linenums">
+//getters.js
+export default {
+  getMessage(state) {
+    return state.msg
+  },
+  getCounter(state) {
+    return (state.counter)
+  }
+}
+</pre>
+
+
+ไฟล์ `ShowGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;{{ msg }}&lt;/h1&gt;
+    <mark>&lt;div&gt;the message was changed {{ counter }} times&lt;/div&gt;</mark>
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  import { mapGetters } from 'vuex'
+  
+  export default {
+    computed: mapGetters({
+      msg: 'getMessage',
+      <mark>counter: 'getCounter'</mark>
+    }) 
+  }
+&lt;/script&gt;
+</pre>
+
+สร้างไฟล์ `actions.js` ในโฟลเดอร์ vuex
+
+ไฟล์ `action.js` เขียนแบบ ES2016: 
+<pre class="prettyprint linenums">
+import { CHANGE_MSG, INCREMENT_COUNTER } from './mutation_types'
+
+ export const changeMessage = (store, msg) => {
+  store.commit(CHANGE_MSG, msg)
+ }
+
+ export const incrementCounter = (store) => {
+  store.commit(INCREMENT_COUNTER)
+ }
+</pre>
+
+ไฟล์ `action.js` เขียนแบบ ES2015: 
+<pre class="prettyprint linenums">
+//actions.js
+import { CHANGE_MSG, INCREMENT_COUNTER } from './mutation_types'
+
+export default {
+  changeMessage ({ commit }, msg) {
+    commit(CHANGE_MSG, msg)
+  },
+  incrementCounter ({ commit }) {
+    commit(INCREMENT_COUNTER)
+  } 
+}  
+</pre>
+
+
+หลังจากสร้างไฟล์ `actions.js` เราก็ต้องผูก action เข้ากับ store
+
+ไฟล์ `store.js` :
+<pre class="prettyprint linenums">
+//store.js
+import Vue from 'vue' 
+import Vuex from 'vuex' 
+import getters from './getters'
+<mark>import actions from './actions'</mark>
+import { CHANGE_MSG, INCREMENT_COUNTER } from './mutation_types'
+
+Vue.use(Vuex)
+
+const state = {
+  msg: 'Hello Vue!',
+  counter: 0
+}
+
+const mutations = {
+  [CHANGE_MSG](state, msg) {
+    state.msg = msg
+  },
+  [INCREMENT_COUNTER](state) { 
+    state.counter ++;
+  }
+}
+
+export default new Vuex.Store({
+  state: state,
+  mutations: mutations,
+  getters,
+  <mark>actions</mark>
+})
+</pre>
+
+
+ไฟล์ `ChangeGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;input :value='msg' @keyup='changeMsg'&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  import { mapGetters } from 'vuex'
+
+  export default {
+    computed: mapGetters({
+         msg: 'getMessage'
+    }),
+    methods: {
+      changeMsg(ev) {
+        <mark>this.$store.dispatch('changeMessage', ev.target.value)</mark>
+      }
+    }
+  } 
+&lt;/script&gt;
+</pre>
+
+
+#### สังเกตผลลัพธ์ที่ได้ จะเห็นว่า App ของเรายังคงทำงานได้ปกติ :)
+
+
+สำหรับ Vue จะมี `mapActions` **helper** มาช่วยให้ชีวิตเราดีขึ้น
+
+
+ไฟล์ `ChangeGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;input :value='msg' @keyup='changeMessage($event.target.value)' @keyup.enter='incrementCounter' &gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  import { mapGetters } from 'vuex'
+  <mark>import { mapActions } from 'vuex'</mark>
+
+  export default {
+    computed: mapGetters({
+         msg: 'getMessage'
+    }),
+    methods: <mark>mapActions(['changeMessage', 'incrementCounter'])</mark>
+  } 
+&lt;/script&gt;
+</pre>
+
+เราสามารถเขียนแบบย่อได้อีก เพื่อความสวยงาม
+
+
+ไฟล์ `action.js` เขียนแบบ ES2015: 
+<pre class="prettyprint linenums">
+//actions.js
+import { CHANGE_MSG, INCREMENT_COUNTER } from './mutation_types'
+
+export default {
+  changeMessage ({ commit }, msg) {
+    commit(CHANGE_MSG, msg)
+  },
+  incrementCounter ({ commit }) {
+    commit(INCREMENT_COUNTER)
+  },
+<mark>  handleMessageInputChanges ({ commit }, event) {
+    commit(CHANGE_MSG, event.target.value)
+    if (event.keyCode === 13) {
+      commit(INCREMENT_COUNTER)
+    } 
+  } </mark>
+}  
+</pre>
+
+
+ไฟล์ `ChangeGreetingsComponent.vue` : 
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;input :value='msg' @keyup='handleMessageInputChanges($event)' &gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  import { mapGetters } from 'vuex'
+  <mark>import { mapActions } from 'vuex'</mark>
+
+  export default {
+    computed: mapGetters({
+         msg: 'getMessage'
+    }),
+    methods:  <mark>mapActions(['handleMessageInputChanges'])</mark>
+  } 
+&lt;/script&gt;
+</pre>

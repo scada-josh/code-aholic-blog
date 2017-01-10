@@ -1,0 +1,77 @@
+![bookmark][common-04]{: #goto-topic-08 }
+
+## การดึงค่าพารามิเตอร์ id ของคอมโพเนนต์ User มาแสดงบนหน้าจอ
+![separate line][common-07]	
+
+
+#### แก้ไขไฟล์ `User.vue`
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;div&gt;
+    User <mark>{{id}}</mark>
+  &lt;/div&gt;
+&lt;/template&gt;
+
+<mark>&lt;script&gt;
+  export default {
+    data () {
+      return {
+        id: 0
+      }
+    },
+    created () {
+      this.id = +this.$route.params.id
+    }
+  }
+&lt;/script&gt;</mark>
+</pre>
+
+[![ภาพแสดงผลลัพธ์การดึงค่าพารามิเตอร์ id ของคอมโพเนนต์ User มาแสดงบนหน้าจอ][8]](){: .fancybox-button 
+                            data-fancybox-group="vue-js-for-real-world-day03-008" 
+                            href="<%= current_page.data.baseURL %>images/categories/vuejs/vue-js-for-real-world-day03-008.png"}  
+
+
+### ทดลองเพิ่มลิ้งค์ `Next` & `Previous` เพื่อเพิ่มลดค่าของ `id`
+
+#### แก้ไขไฟล์ `User.vue`
+<pre class="prettyprint linenums">
+&lt;template&gt;
+  &lt;div&gt;
+    User {{id}}
+    &lt;br/&gt;
+    <mark>&lt;router-link :to=&quot;`/user/${id-1}`&quot;&gt;Next&lt;/router-link&gt;</mark>
+    <mark>&lt;router-link :to=&quot;`/user/${id+1}`&quot;&gt;Previous&lt;/router-link&gt;</mark>
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  export default {
+    data () {
+      return {
+        id: 0
+      }
+    },
+    created () {
+      <mark>this.reload()</mark>
+    },
+    watch: {
+      $route () {
+        <mark>this.reload()</mark>
+      }
+    },
+<mark>    methods: {
+      reload () {
+        this.id = +this.$route.params.id
+      }
+    }</mark>
+  }
+&lt;/script&gt;
+</pre>
+
+[![ภาพแสดงผลลัพธ์การเพิ่มปุ่ม Next & Previous][9]](){: .fancybox-button 
+                            data-fancybox-group="vue-js-for-real-world-day03-009" 
+                            href="<%= current_page.data.baseURL %>images/categories/vuejs/vue-js-for-real-world-day03-009.png"}  
+
+
+<br/>
+

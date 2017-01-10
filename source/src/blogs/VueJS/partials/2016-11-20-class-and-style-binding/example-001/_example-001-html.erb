@@ -1,0 +1,11 @@
+<pre class="prettyprint linenums">
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js&quot;&gt;&lt;/script&gt;
+
+&lt;div class=&quot;container text-center&quot;&gt;
+&lt;div class=&quot;box&quot; v-bind:class=&quot;{ 'red' : color, 'blue' : !color }&quot;&gt;&lt;/div&gt; 
+&lt;div class=&quot;box&quot; v-bind:class=&quot;{ 'purple' : color, 'green' : !color }&quot;&gt;&lt;/div&gt; 
+&lt;div class=&quot;box&quot; v-bind:class=&quot;{ 'red' : color, 'blue' : !color }&quot;&gt;&lt;/div&gt; 
+&lt;div class=&quot;box&quot; v-bind:class=&quot;{ 'purple' : color, 'green' : !color }&quot;&gt;&lt;/div&gt; 
+&lt;button v-on:click=&quot;flipColor&quot; class=&quot;btn btn-block btn-success&quot;&gt;Flip color! &lt;/button&gt;
+&lt;/div&gt;
+</pre>
